@@ -17,9 +17,11 @@ wait_ready_sensors(True)
 """ The method to collect color data from the sensor"""
 def collect_data():
     print("Start collecting data")
+
+    # letting tester to collect data of a color of choice
     color = input("Color? (red, green, yellow): ")
     data_location = f'./data/color_data_{color}.csv'
-
+    os.listdir
     os.system(f'touch {data_location}')
     print(f'Output data is at {data_location}')
     
