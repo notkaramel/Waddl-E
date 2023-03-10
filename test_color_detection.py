@@ -26,8 +26,12 @@ def getSampleColor(sensor:EV3ColorSensor):
     return sensor.get_rgb()
 
 def test(input_RGB:list, expected_color:str, testcode:str):
-    """A single test for color detection"""
-    print(f'{expected_color.capitalize()}: {input_RGB}\t -> Color detected: {detect_color(input_RGB)} \t| {detect_color_Antoine(input_RGB)}')
+    """
+    A single test for color detection.
+    Display result in markdown form for README.md
+    | Input Source | RGB Value | Ryan's Algo | Antoine's |
+    """
+    print(f'|{expected_color}.csv \t| {input_RGB} \t| {detect_color(input_RGB)} \t| {detect_color_Antoine(input_RGB)} |')
 
 def test_color_detection():
     """
@@ -40,6 +44,8 @@ def test_color_detection():
         # Test 2: Run with a RGB value from the sensor
     """
     print("Testing color detection... - Test 1")
+
+    print("| Input Source | RGB Value | Ryan's Algo | Antoine's |")
     # print("Blue tests")
     test([17, 33, 48], 'blue', '1.1-B')
     test([8, 17, 30], 'blue', '1.2-B')
@@ -71,6 +77,6 @@ def test_color_detection():
     while True:
         test(getSampleColor(SENSOR), 'user input', f'2.{i+1}')
         i += 1
-        sleep(1)
+        sleep(0.1)
 
 test_color_detection()
