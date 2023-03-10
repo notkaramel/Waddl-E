@@ -65,11 +65,12 @@ def test_color_detection():
     test([74, 49, 75], 'purple', '1.12-P')
 
     print("Testing color detection... - Test 2")
-    SENSOR = EV3ColorSensor()
+    SENSOR = EV3ColorSensor(3)
     wait_ready_sensors()
-
-    for i in range(10):
+    i = 0
+    while True:
         test(getSampleColor(SENSOR), 'user input', f'2.{i+1}')
+        i += 1
         sleep(1)
 
 test_color_detection()
