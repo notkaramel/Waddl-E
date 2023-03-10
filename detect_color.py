@@ -42,8 +42,8 @@ class Color:
 
         std_distance = (diffR**2 + diffG**2 + diffB**2)**0.5
         # print(f'Standard distance of {self.name} is {std_distance}')
-        return std_distance <= 2
-
+        return std_distance <= 2, std_distance
+    
     def compareWithInput_Antoine(self, input_rgb:list) -> bool:
         """
         Compare the Color data with the input RGB value

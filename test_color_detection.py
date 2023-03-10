@@ -4,15 +4,20 @@ from detect_color import Color
 from utils.brick import EV3ColorSensor, wait_ready_sensors
 
 
-AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple']
+AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'white'
 COLORS = [Color(color) for color in AVAILABLE_COLORS]
 
 def detect_color(input_RGB:list):
     """Detect the color of the input RGB value"""
+    color_error = {}
     for color in COLORS:
-        if color.compareWithInput(input_RGB):
-            return color.name
-    return None
+        detectedColor, error = color.compareWithInput(input_RGB)
+        if detectedColor:
+            color_error.update({color.name: error})
+            # return color.name
+
+    # return the color with least error:
+    return min(color_error.items(), key=lambda x: x[1])[0] if len(color_error) > 0 else None
 
 def detect_color_Antoine(input_RGB:list):
     """Detect the color of the input RGB value, using Antoine's method"""
@@ -31,7 +36,7 @@ def test(input_RGB:list, expected_color:str, testcode:str):
     Display result in markdown form for README.md
     | Input Source | RGB Value | Ryan's Algo | Antoine's |
     """
-    print(f'|{expected_color}.csv \t| {input_RGB} \t| {detect_color(input_RGB)} \t| {detect_color_Antoine(input_RGB)} |')
+    print(f'|{expected_color}.csv \t|{input_RGB} \t| {detect_color(input_RGB)} \t| {detect_color_Antoine(input_RGB)} |')
 
 def test_color_detection():
     """
