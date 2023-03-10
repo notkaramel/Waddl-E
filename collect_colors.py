@@ -31,7 +31,7 @@ def collect_data():
             rgb = COLOR_SENSOR.get_rgb()
             print(rgb)
             outfile.write(f'{rgb}\n')
-            sleep(1)
+            sleep(0.5)
     except KeyboardInterrupt:
         print("done")
         outfile.close()
