@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from time import sleep
 from detect_color import Color
 from utils.brick import EV3ColorSensor, wait_ready_sensors
