@@ -9,7 +9,7 @@ Author: Antoine Phan @notkaramel
 
 from utils.brick import EV3ColorSensor, wait_ready_sensors
 from time import sleep
-import os, subprocess
+import os
 
 COLOR_SENSOR = EV3ColorSensor(3)  # initialize color sensor at S3
 wait_ready_sensors(True)
@@ -19,7 +19,7 @@ def collect_data():
     print("Start collecting data")
 
     # letting tester to collect data of a color of choice
-    color = input("Color? (red, green, yellow): ")
+    color = input("Color? (red, green, yellow): ").lower() # making sure color's name is lowercase
     data_location = f'./data/color_data_{color}.csv'
     os.listdir
     os.system(f'touch {data_location}')
