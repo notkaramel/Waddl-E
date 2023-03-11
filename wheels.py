@@ -25,12 +25,12 @@ def run(motor:Motor, power=50):
 def stop(motor: Motor):
     motor.set_power(0)
     
-def turn(angle: int, dps=800):
+def rotate(delay: int, dps=800):
     # angle turned = wheel power * time sleep  
     stop(RightWheel) 
 #    LeftWheel.set_position_relative(angle)
 #    RightWheel.set_position_relative(-angle)
-    sleep(2)
+    sleep(delay)
 
 # main method to test things out
 if __name__=='__main__':
@@ -41,7 +41,6 @@ if __name__=='__main__':
             run(RightWheel, power=sp)
             run(LeftWheel, power=sp)
             sleep(2)
-            turn(180)
     except KeyboardInterrupt:
         BP.reset_all()
 
