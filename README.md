@@ -10,16 +10,26 @@
 
 ## Procedure
 ### Unit implementation/testing
-- Testing `Motor.set_power(power)` for continuous movement
+- [x] Testing `Motor.set_power(power)` for continuous movement
 	- `power` is a number from -100 to 100
 	- Positive `power` is for clockwise movement
 	- Negative `power` is for counter-clockwise movement
 	- Result: successful!
 
-- Collecting data using the color sensor (CollectColor.py)
+- [x] Collecting data using the color sensor (CollectColor.py)
 	- Using color sensor to obtain rgb value of a selected color
 	- Write the colected data into `./data/color_data_[color]`, where `[color]` is the selected color
 	- Data will be used for color detection
+- [ ] Accurate color detection
+	- Consider all possible parameters that would affect the result
+		- Collected data: color name, mean, standard deviation
+	- Detection algorithm: given the input data as `input_RGB`
+		- TA Ryan's: normalize the input data, compare with Color's data to obtain standard distance (in 3D space)
+			- Pros: accurate, able to differenciate the error of different detections
+			- Cons: Require math knowledge on statistics. Made life too easy for us
+		- Antoine's: verify if the input data is within range of mean +- standard deviation of the color
+			- Pros: Intuitive, easy to read and understand
+			- Cons: Not very accurate, could not differentciate error (for now)
 
 ### Component implementation/testing
 - Implementing `detect_color.py` to detect color

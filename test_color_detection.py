@@ -4,7 +4,7 @@ from detect_color import Color
 from utils.brick import EV3ColorSensor, wait_ready_sensors
 
 
-AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'white'
+AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'white']
 COLORS = [Color(color) for color in AVAILABLE_COLORS]
 
 def detect_color(input_RGB:list):
