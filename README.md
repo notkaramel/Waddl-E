@@ -1,13 +1,17 @@
 # Final Project
 > Software Lead: Antoine Phan
 
-## Software Architecture
-| Unit level | Component Level | System Level 	|
+## File Structure
+|- README.md  	# Documenting the test
+|- Diary.md	# Documenting the designing process
+|- [utils/](utils/) 	# The API for the BrickPi
+|- [wheels.py](wheels.py) 	# The wheel of the system
+|- [collect_colors](collect_colors.py) # Collecting color data and put them in data/
+|- [data/](data/)	# Contains colors' data
 |------------|-----------------|----------------|
 | Motors     | 	Wheels	       | Vehicle,Loader |
 | Sensors    |  ColorDetector  | Navigator      |
 | Button     |  Ready, StopButton | Ready, StopButton|
-
 ## Procedure
 ### Unit implementation/testing
 - [x] Testing `Motor.set_power(power)` for continuous movement
