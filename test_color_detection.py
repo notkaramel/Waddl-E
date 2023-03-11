@@ -45,7 +45,11 @@ def test_color_detection():
     """
     print("Testing color detection... - Test 1")
 
-    print("| Input Source | RGB Value | Ryan's Algo | Antoine's |")
+    print("""
+    | Input Source | RGB Value | Ryan's Algo | Antoine's |
+    |--------------|-----------|-------------|-----------|
+
+          """)
     # print("Blue tests")
     test([17, 33, 48], 'blue', '1.1-B')
     test([8, 17, 30], 'blue', '1.2-B')

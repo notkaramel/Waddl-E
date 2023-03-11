@@ -47,6 +47,23 @@
 		|purple.csv 	| [20, 15, 23] 	| orange 	| None |
 		|purple.csv 	| [74, 49, 75] 	| None 	| None |
 
+		- Test 2: More accurate purple, red; blue is better at close range
+
+		| Input Source | RGB Value | Ryan's Algo | Antoine's |
+		|---------------|-----------|---------|-------|
+		|blue.csv       | [17, 33, 48]  | blue  | blue |
+		|blue.csv       | [8, 17, 30]   | orange        | None |
+		|green.csv      | [22, 101, 32]         | green         | green |
+		|green.csv      | [17, 81, 24]  | green         | green |
+		|red.csv        | [215, 27, 26]         | orange        | None |
+		|red.csv        | [76, 12, 13]  | orange        | None |
+		|yellow.csv     | [284, 187, 22]        | None  | None |
+		|yellow.csv     | [76, 60, 9]   | yellow        | None |
+		|orange.csv     | [173, 47, 33]         | orange        | orange |
+		|orange.csv     | [76, 21, 20]  | orange        | orange |
+		|purple.csv     | [20, 15, 23]  | orange        | None |
+		|purple.csv     | [74, 49, 75]  | None  | None |
+
 
 
 
