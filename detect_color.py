@@ -15,6 +15,7 @@ from utils.brick import EV3ColorSensor, wait_ready_sensors
 from time import sleep
 
 
+
 def normalize_data(color_file):
     
 
