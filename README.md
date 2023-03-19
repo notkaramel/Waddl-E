@@ -2,11 +2,14 @@
 > Software Lead: Antoine Phan
 
 ## File Structure
+```
 |- README.md  	# Documenting the test
 |- Diary.md	# Documenting the designing process
 |- [utils/](utils/) 	# The API for the BrickPi
 |- [wheels.py](wheels.py) 	# The wheel of the system
 |- [collect_colors](collect_colors.py) # Collecting color data and put them in data/
+```
+
 |- [data/](data/)	# Contains colors' data
 |------------|-----------------|----------------|
 | Motors     | 	Wheels	       | Vehicle,Loader |
