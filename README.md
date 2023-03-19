@@ -2,8 +2,9 @@
 > Software Lead: Antoine Phan
 
 ## File Structure
-├── collect_colors.py
-├── data
+```bash
+├── collect_colors.py           # Collecting colors' data
+├── data                        # Storing data of colors
 │   ├── color_data_blue.csv
 │   ├── color_data_green.csv
 │   ├── color_data_orange.csv
@@ -11,51 +12,22 @@
 │   ├── color_data_red.csv
 │   ├── color_data_white.csv
 │   └── color_data_yellow.csv
-├── detect_color.py
-├── Diary.md
-├── docs
-│   ├── DPM Practical Design Tutorial.pdf
-│   ├── W2023 Design Week Information (highlighted).pdf
-│   ├── W2023 Design Week Information.pdf
-│   └── W2023 Final Project Client Needs Description.pdf
-├── LICENSE
-├── __pycache__
-│   └── detect_color.cpython-310.pyc
-├── README.md
-├── test_color_detection.py
-├── utils
+├── detect_color.py             # Color detection algorithm
+├── Diary.md                    # Development Diary
+├── docs                        # Users' Requirement document
+├── LICENSE                     # LICENSE of this FOSS project
+├── README.md                   # The file you're reading.
+├── test_color_detection.py     # Test for the color detection
+├── utils                       # API of the project, built by Ryan Au
 │   ├── brick.py
 │   ├── dummy.py
-│   ├── filters.py
-│   ├── __init__.py
-│   ├── __init__.pyc
-│   ├── __pycache__
-│   │   ├── brick.cpython-310.pyc
-│   │   ├── brick.cpython-39.pyc
-│   │   ├── dummy.cpython-310.pyc
-│   │   ├── __init__.cpython-310.pyc
-│   │   ├── __init__.cpython-39.pyc
-│   │   └── sound.cpython-39.pyc
 │   ├── remote.py
-│   ├── rmi.py
 │   ├── sound.py
-│   └── telemetry.py
-├── WADDLE.py
-└── wheels.py
-
-```
-|- README.md  	# Documenting the test
-|- Diary.md	# Documenting the designing process
-|- [utils/](utils/) 	# The API for the BrickPi
-|- [wheels.py](wheels.py) 	# The wheel of the system
-|- [collect_colors](collect_colors.py) # Collecting color data and put them in data/
+│   └── ...
+├── WADDLE.py                   # The final system file
+└── wheels.py                   # Controlling the wheels
 ```
 
-|- [data/](data/)	# Contains colors' data
-|------------|-----------------|----------------|
-| Motors     | 	Wheels	       | Vehicle,Loader |
-| Sensors    |  ColorDetector  | Navigator      |
-| Button     |  Ready, StopButton | Ready, StopButton|
 ## Procedure
 ### Unit implementation/testing
 - [x] Testing `Motor.set_power(power)` for continuous movement
