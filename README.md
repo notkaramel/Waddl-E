@@ -2,6 +2,47 @@
 > Software Lead: Antoine Phan
 
 ## File Structure
+├── collect_colors.py
+├── data
+│   ├── color_data_blue.csv
+│   ├── color_data_green.csv
+│   ├── color_data_orange.csv
+│   ├── color_data_purple.csv
+│   ├── color_data_red.csv
+│   ├── color_data_white.csv
+│   └── color_data_yellow.csv
+├── detect_color.py
+├── Diary.md
+├── docs
+│   ├── DPM Practical Design Tutorial.pdf
+│   ├── W2023 Design Week Information (highlighted).pdf
+│   ├── W2023 Design Week Information.pdf
+│   └── W2023 Final Project Client Needs Description.pdf
+├── LICENSE
+├── __pycache__
+│   └── detect_color.cpython-310.pyc
+├── README.md
+├── test_color_detection.py
+├── utils
+│   ├── brick.py
+│   ├── dummy.py
+│   ├── filters.py
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── __pycache__
+│   │   ├── brick.cpython-310.pyc
+│   │   ├── brick.cpython-39.pyc
+│   │   ├── dummy.cpython-310.pyc
+│   │   ├── __init__.cpython-310.pyc
+│   │   ├── __init__.cpython-39.pyc
+│   │   └── sound.cpython-39.pyc
+│   ├── remote.py
+│   ├── rmi.py
+│   ├── sound.py
+│   └── telemetry.py
+├── WADDLE.py
+└── wheels.py
+
 ```
 |- README.md  	# Documenting the test
 |- Diary.md	# Documenting the designing process
