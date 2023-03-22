@@ -14,7 +14,6 @@ SPEED_LIMIT = 1560  # [Degree per second] up to 1560dps
 def init_motor(motor: Motor):
     motor.reset_encoder()
     motor.set_limits(POWER_LIMIT, SPEED_LIMIT)
-    #motor.set_power(20)
 
 def run(motor:Motor, power=50):
     """
@@ -25,22 +24,38 @@ def run(motor:Motor, power=50):
 def stop(motor: Motor):
     motor.set_power(0)
     
-def rotate(delay: int, dps=800):
-    # angle turned = wheel power * time sleep  
-    stop(RightWheel) 
-#    LeftWheel.set_position_relative(angle)
-#    RightWheel.set_position_relative(-angle)
-    sleep(delay)
+"""
+The method below turns the system base on its direction and time delay
 
+@param direction: "left" or "right"
+@param delay (s): the system will turn for a time delay in seconds
+"""
+def turn(direction: str, delay: int):
+    print(f'Vehicle will turn {direction} for {delay}')
+    leftSpeed = LeftWheel.get_power()    
+    rightSpeed = RightWheel.get_power()
+
+    # angle turned = wheel power * time delay
+    print(f'Expected turning angle: {leftSpeed*delay}')
+    if direction == "left":
+        RightWheel.set_power(-rightSpeed)
+        sleep(delay)
+        RightWheel.set_power(rightSpeed)
+    elif direction == "right":
+        LeftWheel.set_power(-leftSpeed)
+        sleep(delay)
+        LeftWheel.set_power(leftSpeed)
+    
 # main method to test things out
 if __name__=='__main__':
     try:
-        init_motor(RightWheel)
         sp = int(input("Speed (positive: clockwise, negative: counter-clockwise): "))
-        while True:
-            run(RightWheel, power=sp)
-            run(LeftWheel, power=sp)
-            sleep(2)
+        
+
+        run(RightWheel, power=sp)
+        run(LeftWheel, power=sp)
+        sleep(2)
+        turn("left", 3)
     except KeyboardInterrupt:
         BP.reset_all()
 
