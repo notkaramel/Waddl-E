@@ -25,5 +25,5 @@ def rollTray(dps=100, delay=2, position=0):
     Make a motor roll at a certain speed for a certain time.
     """
     TRAY_ROLLER.set_dps(dps)
-    TRAY_ROLLER.set_position(position)
+    TRAY_ROLLER.set_position_relative(position)
     sleep(delay)
