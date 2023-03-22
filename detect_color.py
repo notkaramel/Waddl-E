@@ -94,12 +94,13 @@ def normalize_data(color_file):
 
 AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'white',
         'white_map', 'blue_map', 'green_map', 'red_map', 'yellow_map', 'orange_map', 'purple_map']
+
 COLORS = [Color(color) for color in AVAILABLE_COLORS]
 
-def detects_RGB(input_RGB:list) -> str:
+def detects_RGB(input_RGB:list, availableColors=COLORS) -> str:
     """Detect the color of the input RGB value"""
     color_error = {}
-    for color in COLORS:
+    for color in availableColors:
         detectedColor, error = color.compareWithInput(input_RGB)
         if detectedColor:
             color_error.update({color.name: error})
