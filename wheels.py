@@ -34,7 +34,7 @@ The method below turns the system base on its direction and time delay
 @param direction: "left" or "right"
 @param delay (s): the system will turn for a time delay in seconds
 """
-def turn(direction: str, delay: int):
+def turn(direction: str, delay: float):
     print(f'Vehicle will turn {direction} for {delay}')
     leftSpeed = LeftWheel.get_power()    
     rightSpeed = RightWheel.get_power()
@@ -61,7 +61,7 @@ if __name__=='__main__':
                 run(LeftWheel, power=sp)
                 sp = int(input("New value for speed: "))
         elif mode == "2":
-            timeDelay = 0.2 # float(input("Delay time (s): "))
+            timeDelay = float(input("Delay time (s): "))
             direction = input(f'Direction ("left" or "right"): ')
             go(sp)
             sleep(2)
