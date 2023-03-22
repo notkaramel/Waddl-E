@@ -12,9 +12,9 @@ Naming Convention: CamelCase
 System name: Waddl-E
 """
 
-import wheels
-# Import Color object and detects_RGB function
-from detect_color import Color, detects_RGB
+# Import Subsystems
+from ColorDetection import Color, detects_RGB
+from Vehicle import go, stop, turn
 from utils.brick import Motor, EV3ColorSensor, TouchSensor, wait_ready_sensors
 from time import sleep
 
@@ -34,11 +34,6 @@ Sensors:
     Buttons: the remainings
 """
 
-LeftWheel = Motor("A")
-RightWheel = Motor("D")
-CubeRack = Motor("B")
-Lever = Motor("C")
-
 FrontSensor = EV3ColorSensor(3)
 SideSensor = EV3ColorSensor(4)
 
@@ -52,30 +47,6 @@ Each action will be triggered based on the condition changes, i.e., a <color> de
 The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
-"""
-When Waddl-E sees WHITE, it goes.
-"""
-def goStraight(speed=30): # speed in %
-    print(f'Going straight at {speed}% speed.')
-    if DEBUG:
-        print(f'\tLeftWheel: {LeftWheel.get_power()}')        
-        print(f'\tRightWheel: {RightWheel.get_power()}')
-    wheels.run(LeftWheel, power=speed)
-    wheels.run(RightWheel, power=speed)
-
-"""
-When Waddl-E sees BLUE, it turns slightly to the right.
-"""
-def slightRight(delay:float):
-    print(f'Turning slightly right (delay={delay}))')
-    wheels.turn("right", delay)
-
-"""
-When Waddl-E sees RED, it turns slightly to the left.
-"""
-def slightLeft(delay):
-    print(f'Turning slightly left (delay={delay}))')
-    wheels.turn("left", delay)
 
 """
 When Waddl-E sees GREEN, it stops and start delivering.
@@ -100,37 +71,7 @@ def debug_log(DEBUG:bool):
             logfile.write(f'<----------------->')
 
 def deliver():
-    pushCube = lambda: Lever.set_position_relative(90)
-    retract = lambda: Lever.set_position_relative(-90)
-    
-    getCube = lambda color: CubeRack.set_position_relative(90)
-
-    print(f'Delivering...')
-    sideColor = detects_RGB(SideSensor.get_rgb())  
-
-    if sideColor == 'red_map':
-        print(f'\tDelivering RED cube...')
-        
-    elif sideColor == 'orange_map':
-        print(f'\tDelivering ORANGE cube...')
-    elif sideColor == 'yellow_map':
-        print(f'\tDelivering YELLOW cube...')
-    elif sideColor == 'green_map':
-        print(f'\tDelivering GREEN cube...')
-    elif sideColor == 'blue_map':
-        print(f'\tDelivering BLUE cube...')
-    elif sideColor == 'purple_map':
-        print(f'\tDelivering PURPLE cube...')
-    else:
-        print(f'\tInvalid color.')
-        return
-
-    pushCube()
-    sleep(1)
-    retract()
-    sleep(1)
-
-    print(f'\tDone delivering.')
+    pass
 
 """
 When Waddl-E sees YELLOW: it stops, turns around, maybe play a tune to tell that it's in loading mode.
@@ -150,54 +91,16 @@ Color order: Rainbow, then white
 MAP_COLORS = ['red_map', 'yellow_map', 'green_map', 'blue_map', 'white_map']
 MAP = [Color(color_i) for color_i in MAP_COLORS]
 
-"""
-There are 6 colors for the delivery zones,
-each zone corresponds to a color cube.
-[RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]
-"""
-ZONE_COLORS = ['red_map', 'orange_map', 'yellow_map', 'green_map', 'blue_map', 'purple_map']
-ZONE = [Color(color_i) for color_i in ZONE_COLORS]
+
 
 # Action based on color. 
 def colorAction(Sensor: EV3ColorSensor, color:Color):
     # Actions for the FrontSensor that detects the path.
     if Sensor == FrontSensor:
-        print("FrontSensor detected")
-        if color == MAP[0]:   # red_map
-            print("red")
-            slightLeft(0.2)
-        elif color == MAP[1]: # yellow_map
-            print("yellow")
-            loading()
-        elif color == MAP[2]: # green_map
-            print("green")
-            deliver()
-        elif color == MAP[3]: # blue_map
-            print("blue")
-            slightRight(0.2)
-        elif color == MAP[4]: # white_map
-            print("white")
-            goStraight()
-        else: # None
-            print(f'Invalid color.')
 
     # Actions for the SideSensor that detects the delivery zone.
     elif Sensor == SideSensor:
-        print("SideSensor detected")
-        if color == ZONE[0]: # red_map
-            pass
-        elif color == ZONE[1]: # orange_map
-            pass
-        elif color == ZONE[2]: # yellow_map
-            pass
-        elif color == ZONE[3]: # green_map
-            pass
-        elif color == ZONE[4]: # blue_map
-            pass
-        elif color == ZONE[5]: # purple_map
-            pass
-        else: # None
-            print(f'Invalid color.')
+        pass
     else:
         print("No sensor detected")
         print(f'Invalid sensor.')
