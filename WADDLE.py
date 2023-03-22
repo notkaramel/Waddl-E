@@ -22,6 +22,16 @@ DEBUG = True
 
 """
 Initialize Motors and Sensors
+Wheels:
+    Left: Motor A (port MA)
+    Right: Motor D (port MD)
+    Rack: Motor B (port MB)
+    Lever: Motor C (port MC)
+
+Sensors:
+    Front: port S3
+    Side: port S4
+    Buttons: the remainings
 """
 
 LeftWheel = Motor("A")
@@ -29,10 +39,10 @@ RightWheel = Motor("D")
 CubeRack = Motor("B")
 Lever = Motor("C")
 
-FrontSensor = EV3ColorSensor(1)
+FrontSensor = EV3ColorSensor(3)
 SideSensor = EV3ColorSensor(4)
 
-Button = TouchSensor(3)
+Button = TouchSensor(1)
 wait_ready_sensors(DEBUG)
 
 """
@@ -183,7 +193,6 @@ if __name__ == '__main__':
 
             if DEBUG:
                 print(f'FrontSensor: {frontColor}')
-                print(f'SideSensor: {sideColor}')
             
             if Button.is_pressed():
                 exit()
