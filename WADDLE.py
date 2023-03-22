@@ -174,7 +174,6 @@ def colorAction(Sensor: EV3ColorSensor, color:Color):
             goStraight()
         else: # None
             print(f'Invalid color.')
-            pass
 
     # Actions for the SideSensor that detects the delivery zone.
     elif Sensor == SideSensor:
@@ -192,7 +191,6 @@ def colorAction(Sensor: EV3ColorSensor, color:Color):
             pass
         else: # None
             print(f'Invalid color.')
-            pass
     else:
         print(f'Invalid sensor.')
 
