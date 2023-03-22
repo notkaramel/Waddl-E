@@ -13,8 +13,9 @@ System name: Waddl-E
 """
 
 import wheels
-import detect_color
-from utils.brick import Motor, EV3ColorSensor, TouchSensor
+from detect_color import COLORS, detects_RGB
+from utils.brick import Motor, EV3ColorSensor, TouchSensor, wait_ready_sensors
+from time import sleep
 
 """
 Initialize Motors and Sensors
@@ -24,9 +25,10 @@ RightWheel = Motor("D")
 # Lever = Motor("C")
 
 FrontSensor = EV3ColorSensor(1)
-SideSensor = EV3ColorSensor(4)
+#SideSensor = EV3ColorSensor(4)
 
-Button = TouchSensor(3)
+#Button = TouchSensor(3)
+wait_ready_sensors(True)
 
 """
 Idea #1: each color detected from the front sensor will correspond to an action. 
@@ -34,30 +36,31 @@ The program will run on an infinite `while True:` loop
 Each action will be triggered based on the condition changes, i.e., a <color> detected.
 The button (for now?) will be used for sudden stop.
 """
-
+# <-- Program starts here --> #
 """
 When Waddl-E sees WHITE, it goes.
 """
-def go(speed=30): # speed in %
+def goStraight(speed=30): # speed in %
     wheels.run(LeftWheel, power=speed)
     wheels.run(RightWheel, power=speed)
 
 """
 When Waddl-E sees BLUE, she turns slightly to the right.
 """
-def slightRight():
-    pass
+def slightRight(delay:float):
+    wheels.turn("right", delay)
 
 """
 When Waddl-E sees RED, she turns slightly to the left.
 """
-def slightLeft():
-    pass
+def slightLeft(delay):
+    wheels.turn("left", delay)
 
 """
 When Waddl-E sees GREEN, she stops and start delivering.
 """
 def deliver():
+    sleep(3)
     pass
 
 """
@@ -71,19 +74,26 @@ def loading():
 List of action based on color for the FrontSensor
 """ 
 colorAction = {
-        "WHITE" : go(),
-        "BLUE"  : slightRight(),
-        "RED"   : slightLeft(),
+        "WHITE" : goStraight(),
+#        "BLUE"  : slightRight(),
+#        "RED"   : slightLeft(),
         "GREEN" : deliver(),
         "YELLOW": loading()
         }
 
+MAP_COLOR = ['white_map', 'blue_map', 'green_map',
+        'red_map', 'yellow_map', 'orange_map', 'purple_map']
+
+# Main function
 if __name__ == '__main__':
     try:
         while True:
-            if Button.is_pressed():
-                exit()
-            go()
+            color = detects_RGB(FrontSensor.get_rgb())
+            print(f'Detecting [{color}]')
+
+            #if Button.is_pressed():
+            #    exit()
+            goStraight()
 
 
     except KeyboardInterrupt:
