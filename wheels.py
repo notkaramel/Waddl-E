@@ -39,7 +39,6 @@ def turn(direction: str, delay: float):
     leftSpeed = LeftWheel.get_power()    
     rightSpeed = RightWheel.get_power()
 
-    #print(f'Expected turning angle: {3*leftSpeed*delay}')
     if direction == "right":
         RightWheel.set_power(-rightSpeed)
         sleep(delay)
@@ -66,7 +65,19 @@ if __name__=='__main__':
             go(sp)
             sleep(2)
             turn(direction, timeDelay)
+            go(0)
+            sleep(1)
+
             go(sp)
+            sleep(2)
+            
+            go(0)
+            sleep(1)
+            print("returning...")
+            go(-sp)
+            sleep(2)
+            turn(direction, timeDelay)
+            go(-sp)
             sleep(2)
         else:
             print("Unrecognize mode")
