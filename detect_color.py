@@ -91,3 +91,20 @@ def normalize_data(color_file):
         # Close the file
         cfile.close()
     return meanRGB, stdevRGB
+
+AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'white',
+        'white_map', 'blue_map', 'green_map', 'red_map', 'yellow_map', 'orange_map', 'purple_map']
+COLORS = [Color(color) for color in AVAILABLE_COLORS]
+
+def detects_RGB(input_RGB:list) -> str:
+    """Detect the color of the input RGB value"""
+    color_error = {}
+    for color in COLORS:
+        detectedColor, error = color.compareWithInput(input_RGB)
+        if detectedColor:
+            color_error.update({color.name: error})
+            # return color.name
+
+    # return the color with least error:
+    return min(color_error.items(), key=lambda x: x[1])[0] if len(color_error) > 0 else None
+

@@ -1,24 +1,8 @@
 #!/usr/bin/env python3
 from time import sleep
-from detect_color import Color
+from detect_color import Color, COLORS, detects_RGB
 from utils.brick import EV3ColorSensor, wait_ready_sensors
 
-
-AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'white',
-        'white_map', 'blue_map', 'green_map', 'red_map', 'yellow_map', 'orange_map', 'purple_map']
-COLORS = [Color(color) for color in AVAILABLE_COLORS]
-
-def detect_color(input_RGB:list):
-    """Detect the color of the input RGB value"""
-    color_error = {}
-    for color in COLORS:
-        detectedColor, error = color.compareWithInput(input_RGB)
-        if detectedColor:
-            color_error.update({color.name: error})
-            # return color.name
-
-    # return the color with least error:
-    return min(color_error.items(), key=lambda x: x[1])[0] if len(color_error) > 0 else None
 
 def detect_color_Antoine(input_RGB:list):
     """Detect the color of the input RGB value, using Antoine's method"""
@@ -37,7 +21,7 @@ def test(input_RGB:list, expected_color:str, testcode:str):
     Display result in markdown form for README.md
     | Input Source | RGB Value | Detected Color |
     """
-    print(f'|{expected_color}\t|{input_RGB}\t\t| {detect_color(input_RGB)}\t|')
+    print(f'|{expected_color}\t|{input_RGB}\t\t| {detects_RGB(input_RGB)}\t|')
 
 def test_color_detection():
     """
