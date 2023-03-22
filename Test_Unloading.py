@@ -2,6 +2,9 @@
 
 from Unloading import swingLever, rollTray
 
+# 120 DPS for swingLever is good 
+# 300 DPS, 110 angle for rollTray is good
+
 def test_swingLever():
     dps = int(input("DPS: "))
     swingLever(dps=dps, delay=2, position=-90)
@@ -9,9 +12,10 @@ def test_swingLever():
 
 def test_rollTray():
     dps = int(input("DPS: "))
+    angle = int(input("Angle: "))
     delay = 2
-    rollTray(dps=dps, delay=delay, position=45)
-    rollTray(dps, delay, position=-45)
+    rollTray(dps=dps, delay=delay, position=angle)
+    rollTray(dps, delay, position=-angle)
 
 def test():
     try:
