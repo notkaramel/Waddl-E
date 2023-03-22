@@ -3,7 +3,6 @@ from time import sleep
 from detect_color import Color, COLORS, detects_RGB
 from utils.brick import EV3ColorSensor, wait_ready_sensors
 
-
 def detect_color_Antoine(input_RGB:list):
     """Detect the color of the input RGB value, using Antoine's method"""
     for color in COLORS:
