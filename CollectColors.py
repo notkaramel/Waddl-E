@@ -14,6 +14,7 @@ import os
 
 COLOR_SENSOR = EV3ColorSensor(3)  # initialize color sensor at S3
 wait_ready_sensors(True)
+COLOR_SENSOR.set_mode('component')
 
 """ The method to collect color data from the sensor"""
 def collect_data():
@@ -28,11 +29,13 @@ def collect_data():
     
     try:
         outfile = open(data_location, "a")
-        while True: # READY_BUTTON.is_pressed():
-            rgb = COLOR_SENSOR.get_rgb()
-            print(rgb)
-            outfile.write(f'{rgb}\n')
-            sleep(0.25)
+        
+        while True:
+            if READY_BUTTON.is_pressed():
+                rgb = COLOR_SENSOR.get_rgb()
+                print(rgb)
+                outfile.write(f'{rgb}\n')
+                sleep(0.25)
     except KeyboardInterrupt:
         print("done")
         outfile.close()

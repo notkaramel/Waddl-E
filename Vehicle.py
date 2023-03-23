@@ -83,9 +83,9 @@ def GoByColor():
         elif frontColor == 'white':
             go(power=40)
             sleep(0.2)
-        elif frontColor == "blue":
-            slightRight(0.3)
         elif frontColor == "red":
+            slightRight(0.3)
+        elif frontColor == "blue":
             slightLeft(0.3)
         elif frontColor == "green":
             pause(pauseDelay=1)
