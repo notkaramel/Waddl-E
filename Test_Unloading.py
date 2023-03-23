@@ -7,8 +7,8 @@ from Unloading import swingLever, rollTray
 
 def test_swingLever():
     dps = int(input("DPS: "))
-    swingLever(dps=dps, delay=1, position=-90)
-    swingLever(dps, 1, position=90) 
+    swingLever(dps=dps, delay=1, position=90)
+    swingLever(dps, 1, position=-90) 
 
 def test_rollTray():
     dps = int(input("DPS: "))
@@ -29,8 +29,8 @@ def test_LeverAndTray():
     
     slot = int(input("Slots to roll (+/-<int>): "))
     retrieve(slot)
-    swing(-lever_angle)
     swing(lever_angle)
+    swing(-lever_angle)
     retrieve(-slot)
 
 def test():
