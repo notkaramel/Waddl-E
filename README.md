@@ -1,5 +1,8 @@
 # Final Project
-> Software Lead: Antoine Phan
+```
+Software Lead: Antoine Phan
+Consulting for software: Adam Corbier
+```
 
 ## File Structure
 ```bash
@@ -28,6 +31,45 @@
 └── wheels.py                   # Controlling the wheels
 ```
 
+## System diagram
+### Unit level
+- Motor: testing of basic functions from the `utils.brick` API
+- Color sensor: testing different modes, getting rgb values from the sensor
+
+### Component level
+#### Wheels
+- Major design decisions:
+	- The wheels will turn the system using spinning motion around itself, rather than pivotal rotation movement.
+	- Tests will be implemented directly to the main method of the 
+
+- List of functions (can be imported from `wheels.py`)
+
+```python
+# Runs a motor at a power level (-100 to 100). Default power level is 50 [%]
+run(motor: Motor, power:int)
+
+# Make both wheels go, given an input power level. This is like a wrapper function of run(). Default power level is 50[%]
+go(power:int)
+
+# Stop a motor from running, effectively setting its power to 0
+stop(motor: Motor)
+
+# Rotate the system for a duration of time
+# The angle of rotation is relative to the delay time and current power of motor
+# Direction must be "left" or "right" string value, excluding the double quotes. Delay is a floating point number.
+turn(direction: str, delay:float)
+```
+- Testing the wheels:
+	- [x] Basic movements (forward, backward, standstill)
+	- [ ] Turning movements (turn left, turn right)
+
+#### Color Detection
+- Major design decisions:
+	- 
+- List of functions (can be imported from `detect_color.py`
+```python
+# 
+```
 ## Procedure
 ### Unit implementation/testing
 - [x] Testing `Motor.set_power(power)` for continuous movement
@@ -58,42 +100,6 @@
       - Normalized rgb value of the color data
       - Standard deviation of the color data
     - Design choice: Using `Class` instead or normal data type for scalability
-- Testing `detect_color.py`
-	-  Test 1: Using data from the training data
-		- Result: Using Ryan's algorithm vs Antoine's algorithm
-
-		| Input Source | RGB Value | Ryan's Algo | Antoine's Algo|
-		|---------------|-----------|---------|-------|
-		|blue.csv 	| [17, 33, 48] 	| blue 	| blue |
-		|blue.csv 	| [8, 17, 30] 	| orange 	| None |
-		|green.csv 	| [22, 101, 32] 	| green 	| green |
-		|green.csv 	| [17, 81, 24] 	| green 	| green |
-		|red.csv 	| [215, 27, 26] 	| red 	| None |
-		|red.csv 	| [76, 12, 13] 	| orange 	| None |
-		|yellow.csv 	| [284, 187, 22] 	| None 	| None |
-		|yellow.csv 	| [76, 60, 9] 	| yellow 	| None |
-		|orange.csv 	| [173, 47, 33] 	| orange 	| orange |
-		|orange.csv 	| [76, 21, 20] 	| orange 	| orange |
-		|purple.csv 	| [20, 15, 23] 	| orange 	| None |
-		|purple.csv 	| [74, 49, 75] 	| None 	| None |
-
-		- Test 2: More accurate purple, red; blue is better at close range
-
-		| Input Source | RGB Value | Ryan's Algo | Antoine's |
-		|---------------|-----------|---------|-------|
-		|blue.csv       | [17, 33, 48]  | blue  | blue |
-		|blue.csv       | [8, 17, 30]   | orange        | None |
-		|green.csv      | [22, 101, 32]         | green         | green |
-		|green.csv      | [17, 81, 24]  | green         | green |
-		|red.csv        | [215, 27, 26]         | orange        | None |
-		|red.csv        | [76, 12, 13]  | orange        | None |
-		|yellow.csv     | [284, 187, 22]        | None  | None |
-		|yellow.csv     | [76, 60, 9]   | yellow        | None |
-		|orange.csv     | [173, 47, 33]         | orange        | orange |
-		|orange.csv     | [76, 21, 20]  | orange        | orange |
-		|purple.csv     | [20, 15, 23]  | orange        | None |
-		|purple.csv     | [74, 49, 75]  | None  | None |
-
 
 
 
