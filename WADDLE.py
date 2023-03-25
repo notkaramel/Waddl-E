@@ -209,7 +209,6 @@ if __name__ == '__main__':
         # Debug mode: developer use only
         DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
         while True:
-            print("Been there")
             frontColor = detects_RGB(FrontSensor.get_rgb())
             colorAction(FrontSensor, frontColor)
             
