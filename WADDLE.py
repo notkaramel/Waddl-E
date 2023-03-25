@@ -164,12 +164,8 @@ def colorAction(Sensor: EV3ColorSensor, color:Color):
     if Sensor == FrontSensor:
         print("FrontSensor detected")
         if color == MAP[0]:   # red_map
-<<<<<<< HEAD
             print("red")
             slightLeft(0.2)
-=======
-            slightLeft(0.5)
->>>>>>> ce31d19687cc94c94f57851a49624bbc86e38ccc
         elif color == MAP[1]: # yellow_map
             print("yellow")
             loading()
@@ -177,12 +173,8 @@ def colorAction(Sensor: EV3ColorSensor, color:Color):
             print("green")
             deliver()
         elif color == MAP[3]: # blue_map
-<<<<<<< HEAD
             print("blue")
             slightRight(0.2)
-=======
-            slightRight(0.5)
->>>>>>> ce31d19687cc94c94f57851a49624bbc86e38ccc
         elif color == MAP[4]: # white_map
             print("white")
             goStraight()
@@ -217,6 +209,7 @@ if __name__ == '__main__':
         # Debug mode: developer use only
         DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
         while True:
+            print("Been there")
             frontColor = detects_RGB(FrontSensor.get_rgb())
             colorAction(FrontSensor, frontColor)
             
