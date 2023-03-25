@@ -46,7 +46,7 @@ Button = TouchSensor(1)
 wait_ready_sensors(DEBUG)
 
 """
-Idea #1: each color detected from the front sensor will correspond to an action. 
+Idea: each color detected from the front sensor will correspond to an action. 
 The program will run on an infinite `while True:` loop
 Each action will be triggered based on the condition changes, i.e., a <color> detected.
 The button (for now?) will be used for sudden stop.
@@ -82,6 +82,23 @@ When Waddl-E sees GREEN, it stops and start delivering.
 The color cubes are given in a fixed order from the beginning at the loading bay.
 [purple, blue, green, yellow, orange, red]
 """
+
+def debug_log(DEBUG:bool):
+    if DEBUG:
+        with open('log.txt') as logfile:
+            leftSpeed = LeftWheel.get_power()
+            rightSpeed = RightWheel.get_power()
+            front_rgb = FrontSensor.get_rgb()
+            frontColor = detects_RGB(front_rgb)
+            side_rgb = SideSensor.get_rgb()
+            sideColor = detects_RGB(side_rgb)
+
+            logfile.write(f'<----------------->')
+            logfile.write(f'Left: {leftSpeed} | Right: {rightSpeed}')
+            logfile.write(f'FRONT: RGB: {front_rgb} \t >>> {frontColor}')
+            logfile.write(f'SIDE:  RGB: {front_rgb} \t >>> {sideColor}')
+            logfile.write(f'<----------------->')
+
 def deliver():
     pushCube = lambda: Lever.set_position_relative(90)
     retract = lambda: Lever.set_position_relative(-90)
@@ -89,10 +106,8 @@ def deliver():
     getCube = lambda color: CubeRack.set_position_relative(90)
 
     print(f'Delivering...')
-    sideColor = detects_RGB(SideSensor.get_rgb())
-    if DEBUG:
-        print(f'\tSideSensor: {sideColor}')
-    
+    sideColor = detects_RGB(SideSensor.get_rgb())  
+
     if sideColor == 'red_map':
         print(f'\tDelivering RED cube...')
         
@@ -149,8 +164,12 @@ def colorAction(Sensor: EV3ColorSensor, color:Color):
     if Sensor == FrontSensor:
         print("FrontSensor detected")
         if color == MAP[0]:   # red_map
+<<<<<<< HEAD
             print("red")
             slightLeft(0.2)
+=======
+            slightLeft(0.5)
+>>>>>>> ce31d19687cc94c94f57851a49624bbc86e38ccc
         elif color == MAP[1]: # yellow_map
             print("yellow")
             loading()
@@ -158,8 +177,12 @@ def colorAction(Sensor: EV3ColorSensor, color:Color):
             print("green")
             deliver()
         elif color == MAP[3]: # blue_map
+<<<<<<< HEAD
             print("blue")
             slightRight(0.2)
+=======
+            slightRight(0.5)
+>>>>>>> ce31d19687cc94c94f57851a49624bbc86e38ccc
         elif color == MAP[4]: # white_map
             print("white")
             goStraight()
@@ -193,18 +216,12 @@ if __name__ == '__main__':
     try:
         # Debug mode: developer use only
         DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
-
-        print(detects_RGB([24, 39, 42]))
         while True:
             frontColor = detects_RGB(FrontSensor.get_rgb())
             colorAction(FrontSensor, frontColor)
-
-            if DEBUG:
-                print(f'FrontSensor: {frontColor}')
             
             if Button.is_pressed():
                 exit()
-            goStraight()
 
 
     except KeyboardInterrupt:
