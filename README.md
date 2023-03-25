@@ -6,7 +6,7 @@ Consulting for software: Adam Corbier
 
 ## File Structure
 ```bash
-├── collect_colors.py           # Collecting colors' data
+├── collect_colors.py           # (UNIT) Collecting colors' data
 ├── data                        # Storing data of colors
 │   ├── color_data_blue.csv
 │   ├── color_data_green.csv
@@ -15,12 +15,11 @@ Consulting for software: Adam Corbier
 │   ├── color_data_red.csv
 │   ├── color_data_white.csv
 │   └── color_data_yellow.csv
-├── detect_color.py             # Color detection algorithm
-├── Diary.md                    # Development Diary
+├── detect_color.py             # (UNIT) Color detection algorithm
 ├── docs                        # Users' Requirement document
 ├── LICENSE                     # LICENSE of this FOSS project
 ├── README.md                   # The file you're reading.
-├── test_color_detection.py     # Test for the color detection
+├── test_color_detection.py     # (UNIT TEST)Test for the color detection
 ├── utils                       # API of the project, built by Ryan Au
 │   ├── brick.py
 │   ├── dummy.py
@@ -35,6 +34,12 @@ Consulting for software: Adam Corbier
 ### Unit level
 - Motor: testing of basic functions from the `utils.brick` API
 - Color sensor: testing different modes, getting rgb values from the sensor
+- Files:
+	- `collect_colors.py`: collecting data of colors
+	- `test_color_detection.py`: testing color detection algorithm
+	- `detect_color.py`: color detection algorithm
+	- `wheels.py`: controlling the wheels
+	- `
 
 ### Component level
 #### Wheels

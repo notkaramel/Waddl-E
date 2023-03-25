@@ -36,7 +36,7 @@ Sensors:
 
 LeftWheel = Motor("A")
 RightWheel = Motor("D")
-CubeRack = Motor("B")
+CubeHolder = Motor("B")
 Lever = Motor("C")
 
 FrontSensor = EV3ColorSensor(3)
@@ -100,37 +100,7 @@ def debug_log(DEBUG:bool):
             logfile.write(f'<----------------->')
 
 def deliver():
-    pushCube = lambda: Lever.set_position_relative(90)
-    retract = lambda: Lever.set_position_relative(-90)
-    
-    getCube = lambda color: CubeRack.set_position_relative(90)
-
-    print(f'Delivering...')
-    sideColor = detects_RGB(SideSensor.get_rgb())  
-
-    if sideColor == 'red_map':
-        print(f'\tDelivering RED cube...')
-        
-    elif sideColor == 'orange_map':
-        print(f'\tDelivering ORANGE cube...')
-    elif sideColor == 'yellow_map':
-        print(f'\tDelivering YELLOW cube...')
-    elif sideColor == 'green_map':
-        print(f'\tDelivering GREEN cube...')
-    elif sideColor == 'blue_map':
-        print(f'\tDelivering BLUE cube...')
-    elif sideColor == 'purple_map':
-        print(f'\tDelivering PURPLE cube...')
-    else:
-        print(f'\tInvalid color.')
-        return
-
-    pushCube()
-    sleep(1)
-    retract()
-    sleep(1)
-
-    print(f'\tDone delivering.')
+    pass
 
 """
 When Waddl-E sees YELLOW: it stops, turns around, maybe play a tune to tell that it's in loading mode.
