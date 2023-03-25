@@ -14,6 +14,7 @@ Support: GitHub Copilot, ChatGPT
 
 # from utils.brick import EV3ColorSensor, wait_ready_sensors
 from statistics import mean, stdev
+import os
 
 class Color:
     def __init__(self, name:str):
@@ -82,8 +83,8 @@ def normalize_data(color_file):
         cfile.close()
     return meanRGB, stdevRGB
 
-AVAILABLE_COLORS = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'white',
-        'white_map', 'blue_map', 'green_map', 'red_map', 'yellow_map', 'orange_map', 'purple_map']
+color_files = os.listdir('data')
+AVAILABLE_COLORS = [c[11:-4] for c in color_files]
 
 COLORS = [Color(color) for color in AVAILABLE_COLORS]
 
