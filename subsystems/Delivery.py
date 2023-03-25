@@ -4,14 +4,23 @@ Author: Antoine Phan
 """
 
 #!/usr/bin/env python3
-from components.Unloading import LEVER, TRAY_ROLLER, swing
-from components.ColorDetection import SIDE_SENSOR, detects_RGB
+from components.Unloading import LEVER, TRAY_ROLLER, swingLever, rollTray
+from components.ColorDetection import Color, SIDE_SENSOR, detects_RGB
 from time import sleep
 
 """
 Idea: create a test function that only acts on the color of map
 This file will be used for delivering the cubes to the correct location zone.
 """
+
+"""
+There are 6 colors for the delivery zones,
+each zone corresponds to a color cube.
+[RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]
+"""
+ZONE_COLORS = ['red_map', 'orange_map', 'yellow_map', 'green_map', 'blue_map', 'purple_map']
+ZONE = [Color(color_i) for color_i in ZONE_COLORS]
+
 if color == ZONE[0]: # red_map
             pass
         elif color == ZONE[1]: # orange_map

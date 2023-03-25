@@ -91,13 +91,7 @@ Color order: Rainbow, then white
 MAP_COLORS = ['red_map', 'yellow_map', 'green_map', 'blue_map', 'white_map']
 MAP = [Color(color_i) for color_i in MAP_COLORS]
 
-"""
-There are 6 colors for the delivery zones,
-each zone corresponds to a color cube.
-[RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]
-"""
-ZONE_COLORS = ['red_map', 'orange_map', 'yellow_map', 'green_map', 'blue_map', 'purple_map']
-ZONE = [Color(color_i) for color_i in ZONE_COLORS]
+
 
 # Action based on color. 
 def colorAction(Sensor: EV3ColorSensor, color:Color):

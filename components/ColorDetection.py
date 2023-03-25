@@ -89,14 +89,15 @@ def normalize_data(color_file):
 color_files = os.listdir('data')
 AVAILABLE_COLORS = [c[11:-4] for c in color_files]
 
-COLORS = [Color(color) for color in AVAILABLE_COLORS]
+# COLORS = [Color(color) for color in AVAILABLE_COLORS]
 
-def detects_RGB(input_RGB:list, availableColors=COLORS) -> str:
+def detects_RGB(input_RGB:list[int], availableColors:list[Color]) -> str:
     """Detect the color of the input RGB value"""
     color_error = {}
     for color in availableColors:
         detectedColor, error = color.compareWithInput(input_RGB)
         if detectedColor:
+            # return color.name (str)
             color_error.update({color.name: error})
 
     # return the Color object with least error:
