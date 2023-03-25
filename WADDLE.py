@@ -215,6 +215,8 @@ if __name__ == '__main__':
             
             if Button.is_pressed():
                 exit()
+            
+            sleep(0.1)
 
 
     except KeyboardInterrupt:
