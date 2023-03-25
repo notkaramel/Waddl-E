@@ -147,21 +147,28 @@ ZONE = [Color(color_i) for color_i in ZONE_COLORS]
 def colorAction(Sensor: EV3ColorSensor, color:Color):
     # Actions for the FrontSensor that detects the path.
     if Sensor == FrontSensor:
+        print("FrontSensor detected")
         if color == MAP[0]:   # red_map
+            print("red")
             slightLeft(0.2)
         elif color == MAP[1]: # yellow_map
+            print("yellow")
             loading()
         elif color == MAP[2]: # green_map
+            print("green")
             deliver()
         elif color == MAP[3]: # blue_map
+            print("blue")
             slightRight(0.2)
         elif color == MAP[4]: # white_map
+            print("white")
             goStraight()
         else: # None
             print(f'Invalid color.')
 
     # Actions for the SideSensor that detects the delivery zone.
     elif Sensor == SideSensor:
+        print("SideSensor detected")
         if color == ZONE[0]: # red_map
             pass
         elif color == ZONE[1]: # orange_map
@@ -177,6 +184,7 @@ def colorAction(Sensor: EV3ColorSensor, color:Color):
         else: # None
             print(f'Invalid color.')
     else:
+        print("No sensor detected")
         print(f'Invalid sensor.')
 
 
