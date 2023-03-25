@@ -2,5 +2,5 @@
 
 from wheels import *
 
-RightWheel.goStraight(30)
+go(30)
 sleep(5)
