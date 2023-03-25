@@ -13,8 +13,8 @@ System name: Waddl-E
 """
 
 # Import Subsystems
-from ColorDetection import Color, detects_RGB
-from Vehicle import go, stop, turn
+from unit.ColorDetection import Color, detects_RGB
+from subsystems.Vehicle import go, stop, turn
 from utils.brick import Motor, EV3ColorSensor, TouchSensor, wait_ready_sensors
 from time import sleep
 
@@ -34,9 +34,6 @@ Sensors:
     Buttons: the remainings
 """
 
-CubeHolder = Motor("B")
-Lever = Motor("C")
-
 FrontSensor = EV3ColorSensor(3)
 SideSensor = EV3ColorSensor(4)
 
@@ -50,26 +47,6 @@ Each action will be triggered based on the condition changes, i.e., a <color> de
 The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
-"""
-When Waddl-E sees WHITE, it goes.
-"""
-def goStraight(speed=30): # speed in %
-    print(f'Going straight at {speed}% speed.')
-    go(speed)
-
-"""
-When Waddl-E sees BLUE, it turns slightly to the right.
-"""
-def slightRight(delay:float):
-    print(f'Turning slightly right (delay={delay}))')
-    wheels.turn("right", delay)
-
-"""
-When Waddl-E sees RED, it turns slightly to the left.
-"""
-def slightLeft(delay):
-    print(f'Turning slightly left (delay={delay}))')
-    wheels.turn("left", delay)
 
 """
 When Waddl-E sees GREEN, it stops and start delivering.
@@ -126,35 +103,11 @@ ZONE = [Color(color_i) for color_i in ZONE_COLORS]
 def colorAction(Sensor: EV3ColorSensor, color:Color):
     # Actions for the FrontSensor that detects the path.
     if Sensor == FrontSensor:
-        if color == MAP[0]:   # red_map
-            slightLeft(0.5)
-        elif color == MAP[1]: # yellow_map
-            loading()
-        elif color == MAP[2]: # green_map
-            deliver()
-        elif color == MAP[3]: # blue_map
-            slightRight(0.5)
-        elif color == MAP[4]: # white_map
-            goStraight()
-        else: # None
-            print(f'Invalid color.')
+        
 
     # Actions for the SideSensor that detects the delivery zone.
     elif Sensor == SideSensor:
-        if color == ZONE[0]: # red_map
-            pass
-        elif color == ZONE[1]: # orange_map
-            pass
-        elif color == ZONE[2]: # yellow_map
-            pass
-        elif color == ZONE[3]: # green_map
-            pass
-        elif color == ZONE[4]: # blue_map
-            pass
-        elif color == ZONE[5]: # purple_map
-            pass
-        else: # None
-            print(f'Invalid color.')
+        
     else:
         print(f'Invalid sensor.')
 

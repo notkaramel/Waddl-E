@@ -12,9 +12,12 @@ Author: Antoine Phan @notkaramel
 Support: GitHub Copilot, ChatGPT
 """
 
-# from utils.brick import EV3ColorSensor, wait_ready_sensors
+from utils.brick import EV3ColorSensor
 from statistics import mean, stdev
 import os
+
+FRONT_SENSOR = EV3ColorSensor(3)
+SIDE_SENSOR = EV3ColorSensor(4)
 
 class Color:
     def __init__(self, name:str):
@@ -95,8 +98,7 @@ def detects_RGB(input_RGB:list, availableColors=COLORS) -> str:
         detectedColor, error = color.compareWithInput(input_RGB)
         if detectedColor:
             color_error.update({color.name: error})
-            # return color.name
 
-    # return the color with least error:
+    # return the Color object with least error:
     return min(color_error.items(), key=lambda x: x[1])[0] if len(color_error) > 0 else None
 

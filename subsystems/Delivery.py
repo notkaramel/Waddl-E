@@ -4,19 +4,32 @@ Author: Antoine Phan
 """
 
 #!/usr/bin/env python3
-from utils.brick import Motor
-from ColorDetection import Color
+from components.Unloading import LEVER, TRAY_ROLLER, swing
+from components.ColorDetection import SIDE_SENSOR, detects_RGB
 from time import sleep
 
 """
 Idea: create a test function that only acts on the color of map
 This file will be used for delivering the cubes to the correct location zone.
 """
-
+if color == ZONE[0]: # red_map
+            pass
+        elif color == ZONE[1]: # orange_map
+            pass
+        elif color == ZONE[2]: # yellow_map
+            pass
+        elif color == ZONE[3]: # green_map
+            pass
+        elif color == ZONE[4]: # blue_map
+            pass
+        elif color == ZONE[5]: # purple_map
+            pass
+        else: # None
+            print(f'Invalid color.')
 
 def f():
     print(f'Delivering...')
-    sideColor = detects_RGB(SideSensor.get_rgb())  
+    sideColor = detects_RGB(SIDE_SENSOR.get_rgb())  
 
     if sideColor == 'red_map':
         print(f'\tDelivering RED cube...')

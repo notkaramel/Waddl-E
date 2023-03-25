@@ -5,11 +5,10 @@
 from utils.brick import Motor
 from time import sleep
 
-LeftWheel = Motor("A")
-RightWheel = Motor("D")
+LEFT_WHEEL = Motor("A")
+RIGHT_WHEEL = Motor("D")
 
 POWER_LIMIT = 80    # Power limit: up to 100 [%]
-SPEED_LIMIT = 1560  # [Degree per second] up to 1560dps
 
 def run(motor:Motor, power=50):
     """

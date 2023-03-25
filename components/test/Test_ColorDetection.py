@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from time import sleep
-from ColorDetection import Color, COLORS, detects_RGB
-from utils.brick import EV3ColorSensor, wait_ready_sensors
+from ColorDetection import detects_RGB, FRONT_SENSOR
+from utils.brick import wait_ready_sensors
 
 # def detect_color_Antoine(input_RGB:list):
 #     """Detect the color of the input RGB value, using Antoine's method"""
@@ -27,11 +27,10 @@ def test_color_detection():
     # print("Testing color detection... - Test 1")
 
     print("""| RGB Value | Detected Color |""")
-    SENSOR = EV3ColorSensor(3)
     wait_ready_sensors()
     i = 0
     while True:
-        test(SENSOR.get_rgb(), 'user input', f'2.{i+1}')
+        test(FRONT_SENSOR.get_rgb(), 'user input', f'2.{i+1}')
         i += 1
         sleep(0.5)
 
