@@ -5,7 +5,7 @@ Author: Antoine Phan
 
 #!/usr/bin/env python3
 from utils.brick import Motor
-from detect_color import Color
+from ColorDetection import Color
 from time import sleep
 
 """
@@ -14,7 +14,7 @@ This file will be used for delivering the cubes to the correct location zone.
 """
 
 
-
+def f():
     print(f'Delivering...')
     sideColor = detects_RGB(SideSensor.get_rgb())  
 
@@ -34,10 +34,5 @@ This file will be used for delivering the cubes to the correct location zone.
     else:
         print(f'\tInvalid color.')
         return
-
-    pushCube()
-    sleep(1)
-    retract()
-    sleep(1)
 
     print(f'\tDone delivering.')

@@ -12,9 +12,9 @@ Naming Convention: CamelCase
 System name: Waddl-E
 """
 
-import wheels
-# Import Color object and detects_RGB function
-from detect_color import Color, detects_RGB
+# Import Subsystems
+from ColorDetection import Color, detects_RGB
+from Vehicle import go, stop, turn
 from utils.brick import Motor, EV3ColorSensor, TouchSensor, wait_ready_sensors
 from time import sleep
 
@@ -34,8 +34,6 @@ Sensors:
     Buttons: the remainings
 """
 
-LeftWheel = Motor("A")
-RightWheel = Motor("D")
 CubeHolder = Motor("B")
 Lever = Motor("C")
 
@@ -57,11 +55,7 @@ When Waddl-E sees WHITE, it goes.
 """
 def goStraight(speed=30): # speed in %
     print(f'Going straight at {speed}% speed.')
-    if DEBUG:
-        print(f'\tLeftWheel: {LeftWheel.get_power()}')        
-        print(f'\tRightWheel: {RightWheel.get_power()}')
-    wheels.run(LeftWheel, power=speed)
-    wheels.run(RightWheel, power=speed)
+    go(speed)
 
 """
 When Waddl-E sees BLUE, it turns slightly to the right.

@@ -1,12 +1,21 @@
 # Final Project
-```
 Software Lead: Antoine Phan
 Consulting for software: Adam Corbier
-```
+
+## Wirings
+### Sensors
+- Front color sensor: Port S3
+- Side color sensor: Port S4
+
+### Motors
+- Left wheel: Port D
+- Right wheel: Port A
+- Cube rack/holder: Port B
+- Lever: Port C
 
 ## File Structure
-```bash
-├── collect_colors.py           # (UNIT) Collecting colors' data
+```sh
+├── collect_colors.py           # (COMPONENT) Collecting colors' data
 ├── data                        # Storing data of colors
 │   ├── color_data_blue.csv
 │   ├── color_data_green.csv
@@ -19,19 +28,21 @@ Consulting for software: Adam Corbier
 ├── docs                        # Users' Requirement document
 ├── LICENSE                     # LICENSE of this FOSS project
 ├── README.md                   # The file you're reading.
-├── test_color_detection.py     # (UNIT TEST)Test for the color detection
+├── test_color_detection.py     # (COMPONENT TEST) Test for the color detection
 ├── utils                       # API of the project, built by Ryan Au
 │   ├── brick.py
 │   ├── dummy.py
 │   ├── remote.py
 │   ├── sound.py
 │   └── ...
-├── WADDLE.py                   # The final system file
-└── wheels.py                   # Controlling the wheels
+├── WADDLE.py                   # (SYSTEM) The final system file
+├── wheels.py                   # (COMPONENT) Controlling the wheels
+└── vehicle.py					# (SUBSYSTEM + UNIT TEST) Controlling the vehicle
 ```
 
 ## System diagram
-### Unit level
+### Component level
+- Define "Component": Down to the most basic piece of hardware
 - Motor: testing of basic functions from the `utils.brick` API
 - Color sensor: testing different modes, getting rgb values from the sensor
 - Files:
@@ -39,9 +50,8 @@ Consulting for software: Adam Corbier
 	- `test_color_detection.py`: testing color detection algorithm
 	- `detect_color.py`: color detection algorithm
 	- `wheels.py`: controlling the wheels
-	- `
 
-### Component level
+### Unit level
 #### Wheels
 - Major design decisions:
 	- The wheels will turn the system using spinning motion around itself, rather than pivotal rotation movement.

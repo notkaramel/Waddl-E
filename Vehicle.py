@@ -1,32 +1,14 @@
-#!/usr/bin/env python3.9
-""" This program runs the wheel of the vehicle."""
-# Author: Antoine Phan @notkaramel
+#!/usr/bin/env python3
 
-from utils.brick import Motor, BP
-from time import sleep
-
-LeftWheel = Motor("A")
-RightWheel = Motor("D")
-
-POWER_LIMIT = 80    # Power limit: up to 100 [%]
-SPEED_LIMIT = 1560  # [Degree per second] up to 1560dps
-
-def init_motor(motor: Motor):
-    motor.reset_encoder()
-    motor.set_limits(POWER_LIMIT, SPEED_LIMIT)
-
-def run(motor:Motor, power=50):
-    """
-    Make right wheel go forward at a certain speed
-    """
-    motor.set_power(power)
-
-def stop(motor: Motor):
-    motor.set_power(0)
+from Wheels import *
 
 def go(power=50):
     run(RightWheel, power)
     run(LeftWheel, power)
+
+def stop():
+    stopMotor(RightWheel)
+    stopMotor(LeftWheel)
     
 """
 The method below turns the system base on its direction and time delay
@@ -34,8 +16,10 @@ The method below turns the system base on its direction and time delay
 @param direction: "left" or "right"
 @param delay (s): the system will turn for a time delay in seconds
 """
-def turn(direction: str, delay: float):
-    print(f'Vehicle will turn {direction} for {delay}')
+def turn(direction: str, delay: float, debug=False):
+    if debug:
+        print(f'Vehicle will turn {direction} for {delay}')
+    
     leftSpeed = LeftWheel.get_power()    
     rightSpeed = RightWheel.get_power()
 
@@ -47,7 +31,7 @@ def turn(direction: str, delay: float):
         LeftWheel.set_power(-leftSpeed)
         sleep(delay)
         LeftWheel.set_power(leftSpeed)
-    
+
 # main method to test things out
 if __name__=='__main__':
     mode = input("Select testing mode: \n\t[1] Basic motions\n\t[2] Turning motions\n")
@@ -83,4 +67,3 @@ if __name__=='__main__':
             print("Unrecognize mode")
     except KeyboardInterrupt:
         BP.reset_all()
-
