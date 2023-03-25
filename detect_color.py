@@ -26,38 +26,28 @@ class Color:
 
         # print(f'Color {name} is loaded with meanRGB {self.meanRGB} and stdevRGB {self.stdevRGB}')
 
-    def compareWithInput(self, input_rgb:list) -> bool:
+    def compareWithInput(self, input_rgb:list):
         """
+        Return a boolean (True/False) and the standard distance
         Compare the Color data with the input RGB value
         Return True if the input RGB value is within 2 standard deviations
         Method given by Ryan Au from Tutorial 4
         """
-        mR, mG, mB = self.meanRGB
-        sR, sG, sB = self.stdevRGB
-        iR, iG, iB = input_rgb
+        try:    
+            mR, mG, mB = self.meanRGB
+            sR, sG, sB = self.stdevRGB
+            iR, iG, iB = input_rgb
 
-        diffR = (mR - iR)/sR
-        diffG = (mG - iG)/sG
-        diffB = (mB - iB)/sB
+            diffR = (mR - iR)/sR
+            diffG = (mG - iG)/sG
+            diffB = (mB - iB)/sB
 
-        std_distance = (diffR**2 + diffG**2 + diffB**2)**0.5
-        # print(f'Standard distance of {self.name} is {std_distance}')
-        return std_distance <= 2, std_distance
-    
-    def compareWithInput_Antoine(self, input_rgb:list) -> bool:
-        """
-        Compare the Color data with the input RGB value
-        Method written by Antoine Phan
-        """
-        mR, mG, mB = self.meanRGB
-        sR, sG, sB = self.stdevRGB
-        iR, iG, iB = input_rgb
-
-        # Check if the input RGB value is within the range of the color
-        if (mR - sR <= iR <= mR + sR) and (mG - sG <= iG <= mG + sG) and (mB - sB <= iB <= mB + sB):
-            return True
-        return False
-    
+            std_distance = (diffR**2 + diffG**2 + diffB**2)**0.5
+            # print(f'Standard distance of {self.name} is {std_distance}')
+            return std_distance <= 2, std_distance
+        except:
+            return False, 0
+        
     def __str__(self):
         return f'Color {self.name} with meanRGB {self.meanRGB} and stdevRGB {self.stdevRGB}'
 
