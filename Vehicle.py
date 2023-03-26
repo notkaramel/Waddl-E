@@ -4,6 +4,7 @@ from Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
 from ColorDetection import FRONT_SENSOR, detects_RGB
 from time import sleep
 
+
 def go(power=50):
     run(RIGHT_WHEEL, power)
     run(LEFT_WHEEL, power)
