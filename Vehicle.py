@@ -2,6 +2,7 @@
 
 from Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
 from ColorDetection import FRONT_SENSOR, detects_RGB, Color
+from Button import STOP_BUTTON
 from time import sleep
 
 
@@ -12,7 +13,7 @@ def go(power=50):
 def stop():
     stopMotor(RIGHT_WHEEL)
     stopMotor(LEFT_WHEEL)
-    
+        
 """
 The method below turns the system base on its direction and time delay
 
@@ -35,30 +36,34 @@ def turn(direction: str, delay: float, debug=False):
         sleep(delay)
         LEFT_WHEEL.set_power(leftSpeed)
 
-MAP_COLORS_STR = ['white_map', 'blue_map', 'red_map', 'green_map', 'yellow_map']
+MAP_COLORS_STR = ['white_map', 'blue_map', 'red_map']
 MAP_COLORS = [Color(c) for c in MAP_COLORS_STR]
 
 def GoByColor():
     print(f'Waddl-E is running...')
     old_color = None
     while True:
+        if STOP_BUTTON.is_pressed():
+            print("Emergency stop pressed!")
+            exit()
         front_rgb = FRONT_SENSOR.get_rgb()
         frontColor = detects_RGB(front_rgb, MAP_COLORS)
-        print(f'{front_rgb} \t {frontColor}')
-        if (frontColor != old_color):
-            sleep(0.25)
+        print(f'FR: {front_rgb} \t{frontColor}\t OLD: {old_color}')
+        
+        if frontColor == None:
+            stop()
+            sleep(0.5)
         if frontColor == "white_map":
             go()
-            sleep(0.5)
+            sleep(1)
         elif frontColor == "blue_map":
-            slightRight(0.5)
+            slightRight(0.2)
         elif frontColor == "red_map":
-            slightLeft(0.5)
-        elif frontColor == "green_map":
-            stop()
+            slightLeft(0.2)
+
         else:
             print(f'None detected')
-            sleep(0.25)
+
         if frontColor != None:
             old_color = frontColor 
 """

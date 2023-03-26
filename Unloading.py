@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from utils.brick import Motor
+from Button import READY_BUTTON
 from time import sleep
 
 SPEED_LIMIT = 1560  # [Degree per second] up to 1560dps
@@ -27,3 +28,6 @@ def rollTray(dps=100, delay=2, position=0):
     TRAY_ROLLER.set_dps(dps)
     TRAY_ROLLER.set_position_relative(position)
     sleep(delay)
+
+def readyToDeliver():
+    return READY_BUTTON.is_pressed()
