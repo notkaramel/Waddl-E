@@ -59,6 +59,8 @@ def GoByColor():
         else:
             print(f'None detected')
             sleep(0.25)
+        if frontColor != None:
+            old_color = frontColor 
 """
 When Waddl-E sees WHITE, it goes.
 """
