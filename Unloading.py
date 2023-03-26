@@ -13,8 +13,10 @@ def swingLever(dps=400, delay=2, position=0):
     Use for `delivery.py`
     Make a motor swing at a certain speed for a certain time.
     """
+    # LEVER.reset_encoder()
     LEVER.set_dps(dps)
-    LEVER.set_position(position=position)
+    # LEVER.set_position(position=position)
+    LEVER.set_position_relative(position)
     sleep(delay)
 
 def rollTray(dps=100, delay=2, position=0):

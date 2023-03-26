@@ -1,6 +1,10 @@
+#!/usr/bin/env python3
+
 from Unloading import swingLever, rollTray
 
 def test_swingLever():
-    swingLever(dps=50, delay=3, position=90)
+    dps = int(input("DPS: "))
+    swingLever(dps=dps, delay=1, position=90)
+    swingLever(dps, 1, position=-90) 
 
 test_swingLever()
