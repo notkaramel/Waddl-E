@@ -52,11 +52,11 @@ def GoByColor():
         
         if frontColor == None:
             go(power=30)
-            sleep(0.2)
+            sleep(0.1)
         elif frontColor == "blue_map":
-            slightRight(0.2)
+            slightRight(0.3)
         elif frontColor == "red_map":
-            slightLeft(0.2)
+            slightLeft(0.3)
 
         else:
             print(f'None detected')
