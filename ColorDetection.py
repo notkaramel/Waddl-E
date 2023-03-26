@@ -101,5 +101,5 @@ def detects_RGB(input_RGB:list, availableColors:list[Color]) -> str:
             color_error.update({color.name: error})
 
     # return the Color object with least error:
-    return min(color_error.items(), key=lambda x: x[1]) if len(color_error) > 0 else None
+    return min(color_error.items(), key=lambda x: x[1])[0] if len(color_error) > 0 else None
 
