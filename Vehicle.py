@@ -47,17 +47,17 @@ def GoByColor():
         print(f'{front_rgb} \t {frontColor}')
         if (frontColor != old_color):
             sleep(0.25)
-        elif frontColor == "white":
+        elif frontColor == "white_map":
             go()
             sleep(0.5)
-        elif frontColor == "blue":
+        elif frontColor == "blue_map":
             slightRight(0.5)
-        elif frontColor == "red":
+        elif frontColor == "red_map":
             slightLeft(0.5)
-        elif frontColor == "green":
+        elif frontColor == "green_map":
             stop()
         else:
-            print(f'None detected: {frontColor}')
+            print(f'None detected')
             sleep(0.25)
 """
 When Waddl-E sees WHITE, it goes.
