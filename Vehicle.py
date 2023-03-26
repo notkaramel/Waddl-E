@@ -51,10 +51,10 @@ def GoByColor():
         print(f'FR: {front_rgb} \t{frontColor}\t OLD: {old_color}')
         
         if frontColor == None:
-            go()
+            go(power=10)
             sleep(0.2)
         elif frontColor == "white_map":
-            go()
+            go(power=30)
             sleep(1)
         elif frontColor == "blue_map":
             slightRight(0.2)
