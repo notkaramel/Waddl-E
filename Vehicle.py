@@ -44,6 +44,7 @@ def GoByColor():
     while True:
         front_rgb = FRONT_SENSOR.get_rgb()
         frontColor = detects_RGB(front_rgb, MAP_COLORS)
+        print(f'{front_rgb} \t {frontColor}')
         if (frontColor != old_color):
             sleep(0.25)
         elif frontColor == "white":
