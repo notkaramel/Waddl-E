@@ -36,7 +36,7 @@ def turn(direction: str, delay: float, debug=False):
         sleep(delay)
         LEFT_WHEEL.set_power(leftSpeed)
 
-MAP_COLORS_STR = ['white_map', 'blue_map', 'red_map']
+MAP_COLORS_STR = ['blue_map', 'red_map']
 MAP_COLORS = [Color(c) for c in MAP_COLORS_STR]
 
 def GoByColor():
