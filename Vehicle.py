@@ -47,7 +47,7 @@ def GoByColor():
         print(f'{front_rgb} \t {frontColor}')
         if (frontColor != old_color):
             sleep(0.25)
-        elif frontColor == "white_map":
+        if frontColor == "white_map":
             go()
             sleep(0.5)
         elif frontColor == "blue_map":
