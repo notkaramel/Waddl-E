@@ -12,12 +12,14 @@ Author: Antoine Phan @notkaramel
 Support: GitHub Copilot, ChatGPT
 """
 
-from utils.brick import EV3ColorSensor
+from utils.brick import EV3ColorSensor, wait_ready_sensors
 from statistics import mean, stdev
 import os
 
 FRONT_SENSOR = EV3ColorSensor(3)
 SIDE_SENSOR = EV3ColorSensor(4)
+
+wait_ready_sensors(True)
 
 class Color:
     def __init__(self, name:str):
