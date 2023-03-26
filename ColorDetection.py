@@ -87,7 +87,7 @@ def normalize_data(color_file):
     return meanRGB, stdevRGB
 
 color_files = os.listdir('data')
-AVAILABLE_COLORS = [c[11:-4] for c in color_files]
+AVAILABLE_COLORS = [Color(c[11:-4]) for c in color_files]
 
 # COLORS = [Color(color) for color in AVAILABLE_COLORS]
 
