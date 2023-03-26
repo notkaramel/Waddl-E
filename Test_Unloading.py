@@ -27,10 +27,11 @@ def test_LeverAndTray():
     lever_angle = 90
     swing = lambda angle : swingLever(lever_dps, 2, angle)
     
-    retrieve(1)
+    slot = int(input("Slots to roll (+/-<int>): "))
+    retrieve(slot)
     swing(-lever_angle)
     swing(lever_angle)
-    retrieve(-1)
+    retrieve(-slot)
 
 def test():
     try:
