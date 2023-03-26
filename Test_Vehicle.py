@@ -1,0 +1,3 @@
+from Vehicle import *
+
+GoByColor()

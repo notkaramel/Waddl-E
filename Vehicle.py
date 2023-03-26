@@ -37,21 +37,24 @@ def turn(direction: str, delay: float, debug=False):
 
 def GoByColor():
     print(f'Waddl-E is running...')
+    old_color = None
     while True:
         front_rgb = FRONT_SENSOR.get_rgb()
         frontColor = detects_RGB(front_rgb)
-        if frontColor == "white":
+        if (frontColor != old_color):
+            sleep(0.25)
+        elif frontColor == "white":
             go()
+            sleep(0.5)
         elif frontColor == "blue":
             slightRight(0.5)
         elif frontColor == "red":
             slightLeft(0.5)
         elif frontColor == "green":
             stop()
-            break
         else:
-            print(f'Invalid color detected: {frontColor}')
-            break
+            print(f'None detected: {frontColor}')
+            sleep(0.25)
 """
 When Waddl-E sees WHITE, it goes.
 """
