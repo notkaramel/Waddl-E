@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-
+import sys
+sys.path.append("../components")
 from components.Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
 from components.ColorDetection import FRONT_SENSOR, detects_RGB
 from time import sleep
