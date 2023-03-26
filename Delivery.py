@@ -4,8 +4,8 @@ Author: Antoine Phan
 """
 
 #!/usr/bin/env python3
-from components.Unloading import LEVER, TRAY_ROLLER, swingLever, rollTray
-from components.ColorDetection import Color, SIDE_SENSOR, detects_RGB
+from Unloading import LEVER, TRAY_ROLLER, swingLever, rollTray
+from ColorDetection import Color, SIDE_SENSOR, detects_RGB
 from time import sleep
 
 """

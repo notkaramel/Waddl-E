@@ -13,8 +13,8 @@ System name: Waddl-E
 """
 
 # Import Subsystems
-from unit.ColorDetection import Color, detects_RGB
-from subsystems.Vehicle import go, stop, turn
+from ColorDetection import Color, detects_RGB
+from Vehicle import go, stop, turn
 from utils.brick import Motor, EV3ColorSensor, TouchSensor, wait_ready_sensors
 from time import sleep
 
