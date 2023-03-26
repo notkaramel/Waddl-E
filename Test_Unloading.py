@@ -10,7 +10,7 @@ def test_swingLever():
 def test_rollTray():
     dps = int(input("DPS: "))
     delay = 2
-    rollTray(dps=dps,delay, position=45)
+    rollTray(dps=dps, delay=delay, position=45)
     rollTray(dps, delay, position=-45)
 
 def test():
