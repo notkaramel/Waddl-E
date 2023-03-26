@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
-from ColorDetection import FRONT_SENSOR, detects_RGB
+from ColorDetection import FRONT_SENSOR, detects_RGB, Color
 from time import sleep
 
 
@@ -35,14 +35,15 @@ def turn(direction: str, delay: float, debug=False):
         sleep(delay)
         LEFT_WHEEL.set_power(leftSpeed)
 
-MAP_COLOR_VEHICLE = ['white_map', 'blue_map', 'red_map', 'green_map', 'yellow_map']
+MAP_COLORS_STR = ['white_map', 'blue_map', 'red_map', 'green_map', 'yellow_map']
+MAP_COLORS = [Color(c) for c in MAP_COLORS_STR]
 
 def GoByColor():
     print(f'Waddl-E is running...')
     old_color = None
     while True:
         front_rgb = FRONT_SENSOR.get_rgb()
-        frontColor = detects_RGB(front_rgb, MAP_COLOR_VEHICLE)
+        frontColor = detects_RGB(front_rgb, MAP_COLORS)
         if (frontColor != old_color):
             sleep(0.25)
         elif frontColor == "white":
