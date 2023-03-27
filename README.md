@@ -14,50 +14,54 @@ Consulting for software: Adam Corbier
 - Lever: Port C
 
 ## File Structure
-```sh
-├── collect_colors.py           # (COMPONENT) Collecting colors' data
-├── data                        # Storing data of colors
-│   ├── color_data_blue.csv
-│   ├── color_data_green.csv
-│   ├── color_data_orange.csv
-│   ├── color_data_purple.csv
-│   ├── color_data_red.csv
-│   ├── color_data_white.csv
-│   └── color_data_yellow.csv
-├── detect_color.py             # (UNIT) Color detection algorithm
-├── docs                        # Users' Requirement document
-├── LICENSE                     # LICENSE of this FOSS project
-├── README.md                   # The file you're reading.
-├── test_color_detection.py     # (COMPONENT TEST) Test for the color detection
-├── utils                       # API of the project, built by Ryan Au
-│   ├── brick.py
-│   ├── dummy.py
-│   ├── remote.py
-│   ├── sound.py
-│   └── ...
-├── WADDLE.py                   # (SYSTEM) The final system file
-├── wheels.py                   # (COMPONENT) Controlling the wheels
-└── vehicle.py					# (SUBSYSTEM + UNIT TEST) Controlling the vehicle
+```shell
+├── Button.py							# (Unit) Buttons
+├── CollectColors.py					# (Unit) Collecting color data
+├── ColorDetection.py					# (Component) Color detection algorithm
+├── ColorTestData.md					# Color test data
+├── data								# Color data
+│   ├── color_data_blue_map.csv
+│   ├── ...
+├── Delivery.py							# (Subsystem) Delivery
+├── docs								# User's Requirement Documents
+├── LICENSE								# MIT License
+├── README.md							# Documentation for the project
+├── Test_ColorDetection.py				# (Component Test) Testing accuracy of color detection
+├── Test_Unloading.py					# (Component Test) Testing unloading mechanism
+├── Test_Vehicle.py						# (Subsystem Test) Testing vehicle subsystem
+├── Unloading.py						# (Component) Unloading mechanism
+├── utils								# The utils API
+│   ├── brick.py
+│   ├── ...
+├── Vehicle.py							# (Subsystem) Vehicle
+├── WADDLE.py							# (System) The final product
+└── Wheels.py							# (Unit) Basic motion for the wheels/motors
 ```
 
-## System diagram
-### Component level
-- Define "Component": Down to the most basic piece of hardware
-- Motor: testing of basic functions from the `utils.brick` API
-- Color sensor: testing different modes, getting rgb values from the sensor
-- Files:
-	- `collect_colors.py`: collecting data of colors
-	- `test_color_detection.py`: testing color detection algorithm
-	- `detect_color.py`: color detection algorithm
-	- `wheels.py`: controlling the wheels
-
+## System breakdown
 ### Unit level
+- Define "Unit": Down to the most basic piece of hardware (e.g. motor, sensor, button)
+- Motor: testing of basic functions from the `utils.brick` API
+  - Testing `Motor.set_power(power)` for continuous movement
+	- `power` is a number from -100 to 100
+	- Positive `power` is for clockwise movement
+	- Negative `power` is for counter-clockwise movement
+- Color sensor: testing different modes, getting rgb values from the sensor
+- Unit files:
+	- `CollectColors.py`: 
+    	- Collecting data using the color sensor
+    	- Using color sensor to obtain rgb value of a selected color
+    	- Write the colected data into `./data/color_data_[color]`, where `[color]` is the selected color
+    	- Data will be used for color detection
+	- `Wheels.py`: controlling the wheels
+
+### Component level
 #### Wheels
 - Major design decisions:
 	- The wheels will turn the system using spinning motion around itself, rather than pivotal rotation movement.
 	- Tests will be implemented directly to the main method of the 
 
-- List of functions (can be imported from `wheels.py`)
+- List of functions (can be imported from `Wheels.py`)
 
 ```python
 # Runs a motor at a power level (-100 to 100). Default power level is 50 [%]
@@ -76,45 +80,42 @@ turn(direction: str, delay:float)
 ```
 - Testing the wheels:
 	- [x] Basic movements (forward, backward, standstill)
-	- [ ] Turning movements (turn left, turn right)
+	- [x] Turning movements (turn left, turn right)
 
 #### Color Detection
-- Major design decisions:
-	- 
-- List of functions (can be imported from `detect_color.py`
+- Files: 
+  - `ColorDetection.py`: color detection algorithm
+- Component testings
+	- `Test_ColorDetection.py`: testing color detection algorithm
+
+- List of functions (can be imported from `ColorDetection.py`)
 ```python
-# 
+# Color class/object
+Color()
+# attributes: name, meanRGB, stdevRGB
+
+# Given a list of RGB values (and a list of wanted colors as Color objects), return the color that is closest to the input RGB values
+detects_RGB(input_RGB:list, availableColors:list[Color])
+
+# Sensors
+FRONT_SENSOR, SIDE_SENSOR
 ```
-## Procedure
-### Unit implementation/testing
-- [x] Testing `Motor.set_power(power)` for continuous movement
-	- `power` is a number from -100 to 100
-	- Positive `power` is for clockwise movement
-	- Negative `power` is for counter-clockwise movement
-	- Result: successful!
+#### Unloading
 
-- [x] Collecting data using the color sensor (CollectColor.py)
-	- Using color sensor to obtain rgb value of a selected color
-	- Write the colected data into `./data/color_data_[color]`, where `[color]` is the selected color
-	- Data will be used for color detection
-- [ ] Accurate color detection
-	- Consider all possible parameters that would affect the result
-		- Collected data: color name, mean, standard deviation
-	- Detection algorithm: given the input data as `input_RGB`
-		- TA Ryan's: normalize the input data, compare with Color's data to obtain standard distance (in 3D space)
-			- Pros: accurate, able to differenciate the error of different detections
-			- Cons: Require math knowledge on statistics. Made life too easy for us
-		- Antoine's: verify if the input data is within range of mean +- standard deviation of the color
-			- Pros: Intuitive, easy to read and understand
-			- Cons: Not very accurate, could not differentciate error (for now)
+### Subsystem level
+#### Vehicle
 
-### Component implementation/testing
-- Implementing `detect_color.py` to detect color
-    - Implementing `Color` class to store:
-      - Name of the color
-      - Normalized rgb value of the color data
-      - Standard deviation of the color data
-    - Design choice: Using `Class` instead or normal data type for scalability
+#### Delivery
+
+### System level
+#### WADDLE
+
+
+
+
+
+
+
 
 
 
