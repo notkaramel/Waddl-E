@@ -8,6 +8,7 @@ Author: Antoine Phan @notkaramel
 """
 
 from utils.brick import EV3ColorSensor, wait_ready_sensors
+from Button import READY_BUTTON
 from time import sleep
 import os
 
@@ -20,17 +21,18 @@ def collect_data():
 
     # letting tester to collect data of a color of choice
     color = input("Color? (red, green, yellow): ").lower() # making sure color's name is lowercase
-    data_location = f'./data/color_data_{color}.csv'
-    os.system(f'touch {data_location}')
+    data_location = f'data/color_data_{color}.csv'
+    if (data_location in os.listdir('./data')):
+        os.system(f'touch {data_location}')
     print(f'Output data is at {data_location}')
     
     try:
-        outfile = open(data_location, "w")
-        while True:
+        outfile = open(data_location, "a")
+        while True: # READY_BUTTON.is_pressed():
             rgb = COLOR_SENSOR.get_rgb()
             print(rgb)
             outfile.write(f'{rgb}\n')
-            sleep(0.5)
+            sleep(0.25)
     except KeyboardInterrupt:
         print("done")
         outfile.close()

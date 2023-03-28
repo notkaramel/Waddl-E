@@ -5,7 +5,9 @@ from ColorDetection import FRONT_SENSOR, detects_RGB, Color
 from Button import STOP_BUTTON
 from time import sleep
 
-
+"""
+Waddl-E just go straight
+"""
 def go(power=50):
     run(RIGHT_WHEEL, power)
     run(LEFT_WHEEL, power)
@@ -13,14 +15,31 @@ def go(power=50):
 def stop():
     stopMotor(RIGHT_WHEEL)
     stopMotor(LEFT_WHEEL)
-        
-"""
-The method below turns the system base on its direction and time delay
 
-@param direction: "left" or "right"
-@param delay (s): the system will turn for a time delay in seconds
 """
+Waddl-E sees green, she stops for pauseDelay seconds
+then she goes straight for afterPauseDelay seconds to make sure she is not stuck on green
+"""
+def pause(pauseDelay: float, afterPauseDelay: float = 0.5):
+    leftPower_temp = LEFT_WHEEL.get_power()
+    rightPower_temp = RIGHT_WHEEL.get_power()
+    stop()
+    sleep(pauseDelay)
+    run(LEFT_WHEEL, leftPower_temp)
+    run(RIGHT_WHEEL, rightPower_temp)
+    sleep(afterPauseDelay)
+                
+
 def turn(direction: str, delay: float, debug=False):
+    """
+    The method below turns the system base on its direction and time delay
+
+    Args:
+        direction (str): "left" or "right"
+        delay (float): [in seconds] the system will turn for a time delay in seconds
+        debug (bool, optional): Print turning direction and delay. Defaults to False.
+    """    """"""
+        
     if debug:
         print(f'Vehicle will turn {direction} for {delay}')
     
@@ -36,7 +55,15 @@ def turn(direction: str, delay: float, debug=False):
         sleep(delay)
         LEFT_WHEEL.set_power(leftSpeed)
 
-MAP_COLORS_STR = ['white_map','blue_map', 'red_map']
+"""
+"""
+def turnAround():
+    """_summary_: Turn around 180 degrees
+    
+    """
+    turn("left", 1.5)
+
+MAP_COLORS_STR = ['white', 'blue', 'red', 'green', 'yellow']
 MAP_COLORS = [Color(c) for c in MAP_COLORS_STR]
 
 def GoByColor():
@@ -53,14 +80,17 @@ def GoByColor():
         if frontColor == None:
             go(power=20)
             sleep(0.1)
-        elif frontColor == 'white_map':
+        elif frontColor == 'white':
             go(power=40)
             sleep(0.2)
-        elif frontColor == "blue_map":
+        elif frontColor == "blue":
             slightRight(0.3)
-        elif frontColor == "red_map":
+        elif frontColor == "red":
             slightLeft(0.3)
-
+        elif frontColor == "green":
+            pause(pauseDelay=1)
+        elif frontColor == "yellow":
+            turnAround()
         else:
             print(f'None detected')
 

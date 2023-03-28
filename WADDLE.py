@@ -13,12 +13,9 @@ System name: Waddl-E
 """
 
 # Import Subsystems
-from ColorDetection import Color, detects_RGB
-from Vehicle import go, stop, turn
-from utils.brick import Motor, EV3ColorSensor, TouchSensor, wait_ready_sensors
+from Vehicle import *
+from Delivery import *
 from time import sleep
-
-DEBUG = True
 
 """
 Initialize Motors and Sensors
@@ -33,12 +30,6 @@ Sensors:
     Side: port S4
     Buttons: the remainings
 """
-
-FrontSensor = EV3ColorSensor(3)
-SideSensor = EV3ColorSensor(4)
-
-Button = TouchSensor(1)
-wait_ready_sensors(DEBUG)
 
 """
 Idea: each color detected from the front sensor will correspond to an action. 
@@ -57,11 +48,11 @@ The color cubes are given in a fixed order from the beginning at the loading bay
 def debug_log(DEBUG:bool):
     if DEBUG:
         with open('log.txt') as logfile:
-            leftSpeed = LeftWheel.get_power()
-            rightSpeed = RightWheel.get_power()
-            front_rgb = FrontSensor.get_rgb()
+            leftSpeed = LEFT_WHEEL.get_power()
+            rightSpeed = RIGHT_WHEEL.get_power()
+            front_rgb = FRONT_SENSOR.get_rgb()
             frontColor = detects_RGB(front_rgb)
-            side_rgb = SideSensor.get_rgb()
+            side_rgb = SIDE_SENSOR.get_rgb()
             sideColor = detects_RGB(side_rgb)
 
             logfile.write(f'<----------------->')
@@ -70,16 +61,6 @@ def debug_log(DEBUG:bool):
             logfile.write(f'SIDE:  RGB: {front_rgb} \t >>> {sideColor}')
             logfile.write(f'<----------------->')
 
-def deliver():
-    pass
-
-"""
-When Waddl-E sees YELLOW: it stops, turns around, maybe play a tune to tell that it's in loading mode.
-"""
-def loading():
-    print(f'Entering loading mode...')
-    sleep(3)
-    pass
 
 
 """
@@ -93,32 +74,13 @@ MAP = [Color(color_i) for color_i in MAP_COLORS]
 
 
 
-# Action based on color. 
-def colorAction(Sensor: EV3ColorSensor, color:Color):
-    # Actions for the FrontSensor that detects the path.
-    if Sensor == FrontSensor:
-
-    # Actions for the SideSensor that detects the delivery zone.
-    elif Sensor == SideSensor:
-        pass
-    else:
-        print("No sensor detected")
-        print(f'Invalid sensor.')
-
-
 # Main function
 if __name__ == '__main__':
     try:
         # Debug mode: developer use only
         DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
         while True:
-            frontColor = detects_RGB(FrontSensor.get_rgb())
-            colorAction(FrontSensor, frontColor)
-            
-            if Button.is_pressed():
-                exit()
-            
-            sleep(0.1)
+
 
 
     except KeyboardInterrupt:
