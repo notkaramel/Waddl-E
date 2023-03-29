@@ -1,5 +1,5 @@
 """
-This programe is for the unloading mechanism of the system
+This program is for the unloading mechanism of the system
 Author: Antoine Phan
 """
 
@@ -18,13 +18,13 @@ There are 6 colors for the delivery zones,
 each zone corresponds to a color cube.
 [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]
 """
-ZONE_COLORS = ['red_map', 'orange_map', 'yellow_map', 'green_map', 'blue_map', 'purple_map']
+ZONE_COLORS = ['red', 'orange', 'yellow', 'green', 'blue_map', 'purple_map']
 ZONE = [Color(color_i) for color_i in ZONE_COLORS]
 
 if color == ZONE[0]: # red_map
             pass
         elif color == ZONE[1]: # orange_map
-            pass
+            pass``
         elif color == ZONE[2]: # yellow_map
             pass
         elif color == ZONE[3]: # green_map

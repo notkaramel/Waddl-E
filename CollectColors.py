@@ -24,20 +24,20 @@ def collect_data():
     color = input("Color? (red, green, yellow): ").lower() # making sure color's name is lowercase
     data_location = f'data/color_data_{color}.csv'
     if (data_location in os.listdir('./data')):
-        os.system(f'touch {data_location}')
+        os.system(f'touch ./{data_location}')
     print(f'Output data is at {data_location}')
     
     try:
         outfile = open(data_location, "a")
         
         while True:
+            rgb = COLOR_SENSOR.get_rgb()
             if READY_BUTTON.is_pressed():
-                rgb = COLOR_SENSOR.get_rgb()
                 print(rgb)
                 outfile.write(f'{rgb}\n')
-                sleep(0.25)
+                sleep(0.2)
     except KeyboardInterrupt:
-        print("done")
+        print("Done!")
         outfile.close()
         exit()
 
