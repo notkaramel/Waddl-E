@@ -25,9 +25,9 @@ def test_color_detection():
     while True:
         frontRGB = FRONT_SENSOR.get_rgb()
         sideRGB = SIDE_SENSOR.get_rgb()
-        print(f"Front: \t{frontRGB} \t{detects_RGB(frontRGB)}")
+        print(f"Front: \t{frontRGB} \t{detects_RGB(frontRGB, AVAILABLE_COLORS)}")
         # test(FRONT_SENSOR.get_rgb())
-        print(f"Side: \t{sideRGB} \t{detects_RGB(sideRGB)}")
+        print(f"Side: \t{sideRGB} \t{detects_RGB(sideRGB, AVAILABLE_COLORS)}")
         # test(SIDE_SENSOR.get_rgb())
         sleep(0.75)
 
