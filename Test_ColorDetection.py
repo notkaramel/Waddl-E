@@ -18,8 +18,8 @@ def test_color_detection():
     Procedure:
         #1: Run with a RGB value from the sensor
     """
-    FRONT_SENSOR.set_mode("component")
-    SIDE_SENSOR.set_mode("component")
+    # FRONT_SENSOR.set_mode("component")
+    # SIDE_SENSOR.set_mode("component")
     print("""| RGB Value \t| Detected Color |""")
     wait_ready_sensors(True)
     while True:
