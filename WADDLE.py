@@ -10,17 +10,9 @@ Author: Antoine Phan @notkaramel
 
 Naming Convention: CamelCase
 System name: Waddl-E
-"""
 
-# Import Subsystems
-from ColorDetection import Color, detects_RGB
-from Vehicle import go, stop, turn
-from utils.brick import Motor, EV3ColorSensor, TouchSensor, wait_ready_sensors
-from time import sleep
+<----------------->
 
-DEBUG = True
-
-"""
 Initialize Motors and Sensors
 Wheels:
     Left: Motor A (port MA)
@@ -32,13 +24,16 @@ Sensors:
     Front: port S3
     Side: port S4
     Buttons: the remainings
+    
+<----------------->
 """
 
-FrontSensor = EV3ColorSensor(3)
-SideSensor = EV3ColorSensor(4)
+# Import Subsystems
+from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor, MAP_COLORS
+from Delivery import getSideColor, deliverCube, ZONE_COLORS
+from Button import READY_BUTTON, STOP_BUTTON
+from time import sleep
 
-Button = TouchSensor(1)
-wait_ready_sensors(DEBUG)
 
 """
 Idea: each color detected from the front sensor will correspond to an action. 
@@ -48,20 +43,20 @@ The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
 
-"""
-When Waddl-E sees GREEN, it stops and start delivering.
-The color cubes are given in a fixed order from the beginning at the loading bay.
-[purple, blue, green, yellow, orange, red]
-"""
-
 def debug_log(DEBUG:bool):
+    """
+    [Not yet finished]
+    Log file for debugging
+    """
     if DEBUG:
+        from ColorDetection import FRONT_SENSOR, SIDE_SENSOR, detects_RGB
+        from Vehicle import LEFT_WHEEL, RIGHT_WHEEL
         with open('log.txt') as logfile:
-            leftSpeed = LeftWheel.get_power()
-            rightSpeed = RightWheel.get_power()
-            front_rgb = FrontSensor.get_rgb()
+            leftSpeed = LEFT_WHEEL.get_power()
+            rightSpeed = RIGHT_WHEEL.get_power()
+            front_rgb = FRONT_SENSOR.get_rgb()
             frontColor = detects_RGB(front_rgb)
-            side_rgb = SideSensor.get_rgb()
+            side_rgb = SIDE_SENSOR.get_rgb()
             sideColor = detects_RGB(side_rgb)
 
             logfile.write(f'<----------------->')
@@ -70,57 +65,59 @@ def debug_log(DEBUG:bool):
             logfile.write(f'SIDE:  RGB: {front_rgb} \t >>> {sideColor}')
             logfile.write(f'<----------------->')
 
-def deliver():
-    pass
+def WaddleGo(debug=False):
+    """
+    The main function of Waddl-E
+    WADDL-E GOOOO!!! 
+    TODO: add a debug mode, add buttons
+    """
+    while True:
+        if STOP_BUTTON.is_pressed():
+            print("Terminate program suddenly")
+        
+        frontColor = getFrontColor()
+        sideColor = getSideColor()
+        
+        if frontColor == None:
+            goStraight(power=18)
+            sleep(0.1)
+        elif frontColor == 'white':
+            goStraight(power=42)
+            sleep(0.1)
+        elif frontColor == "red":
+            slightTurn("left", 0.4)
+        elif frontColor == "blue":
+            slightTurn("right", 0.4)
+        elif frontColor == "green": # Delivering
+            stop() 
+            deliverCube(sideColor)
+        elif frontColor == "yellow": # Reloading
+            turnAround()
+            stop()
+            print("""
+                  Please reload the cubes in order:
+                  [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]\n
+                  Press the button when done.
+                  """)
+            NotFinished = True
+            while NotFinished:
+                if READY_BUTTON.is_pressed():
+                    print(f'Waddl-E is ready to go!')
+                    NotFinished = False
+                if STOP_BUTTON.is_pressed():
+                    print(f'Waddl-E is stopped while reloading.')
+                    NotFinished = False
+        else:
+            print(f'None detected')
 
-"""
-When Waddl-E sees YELLOW: it stops, turns around, maybe play a tune to tell that it's in loading mode.
-"""
-def loading():
-    print(f'Entering loading mode...')
-    sleep(3)
-    pass
-
-
-"""
-List of action based on color for the FrontSensor.
-The FrontSensor only detects 5 colors of the map.
-Color order: Rainbow, then white
-[RED, YELLOW, GREEN, BLUE, WHITE]
-""" 
-MAP_COLORS = ['red_map', 'yellow_map', 'green_map', 'blue_map', 'white_map']
-MAP = [Color(color_i) for color_i in MAP_COLORS]
-
-
-
-# Action based on color. 
-def colorAction(Sensor: EV3ColorSensor, color:Color):
-    # Actions for the FrontSensor that detects the path.
-    if Sensor == FrontSensor:
-
-    # Actions for the SideSensor that detects the delivery zone.
-    elif Sensor == SideSensor:
-        pass
-    else:
-        print("No sensor detected")
-        print(f'Invalid sensor.')
 
 
 # Main function
 if __name__ == '__main__':
     try:
         # Debug mode: developer use only
-        DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
-        while True:
-            frontColor = detects_RGB(FrontSensor.get_rgb())
-            colorAction(FrontSensor, frontColor)
-            
-            if Button.is_pressed():
-                exit()
-            
-            sleep(0.1)
-
-
+        # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
+        WaddleGo()
     except KeyboardInterrupt:
         exit()
 

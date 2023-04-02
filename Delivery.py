@@ -1,5 +1,5 @@
 """
-This programe is for the unloading mechanism of the system
+This program is for the unloading mechanism of the system
 Author: Antoine Phan
 """
 
@@ -18,43 +18,100 @@ There are 6 colors for the delivery zones,
 each zone corresponds to a color cube.
 [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]
 """
-ZONE_COLORS = ['red_map', 'orange_map', 'yellow_map', 'green_map', 'blue_map', 'purple_map']
-ZONE = [Color(color_i) for color_i in ZONE_COLORS]
+ZONE_COLORS_STR = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+ZONE_COLORS = [Color(color_i) for color_i in ZONE_COLORS_STR]
 
-if color == ZONE[0]: # red_map
-            pass
-        elif color == ZONE[1]: # orange_map
-            pass
-        elif color == ZONE[2]: # yellow_map
-            pass
-        elif color == ZONE[3]: # green_map
-            pass
-        elif color == ZONE[4]: # blue_map
-            pass
-        elif color == ZONE[5]: # purple_map
-            pass
-        else: # None
-            print(f'Invalid color.')
+"""
+Idea: the lever will be used to push the cubes to the correct location.
+It starts at position 0, which is the red cube.
+The lever position will be updated after each delivery.
+To deliver other cubes, the lever will get to the relative position of the cube.
+"""
+LEVER_POSITION = 0
 
-def f():
-    print(f'Delivering...')
-    sideColor = detects_RGB(SIDE_SENSOR.get_rgb())  
-
-    if sideColor == 'red_map':
-        print(f'\tDelivering RED cube...')
-        
-    elif sideColor == 'orange_map':
-        print(f'\tDelivering ORANGE cube...')
-    elif sideColor == 'yellow_map':
-        print(f'\tDelivering YELLOW cube...')
-    elif sideColor == 'green_map':
-        print(f'\tDelivering GREEN cube...')
-    elif sideColor == 'blue_map':
-        print(f'\tDelivering BLUE cube...')
-    elif sideColor == 'purple_map':
-        print(f'\tDelivering PURPLE cube...')
+"""
+This function rolls the tray to the cube color.
+@param:
+- color: the color of the cube (use getSideColor())
+- trayDPS: the speed of the tray
+- trayAngle: the angle the tray will roll. Default: 120 degrees clockwise
+"""   
+def rollTrayToCube(color:str, trayDPS: int, trayDelay:int, trayAngle:int=120) -> bool:
+    DONE = False
+    global LEVER_POSITION # int, [0 - 5]
+    
+    # Get the relative position of the cube
+    relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
+    
+    if(color in ZONE_COLORS_STR):
+        rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
+        LEVER_POSITION = ZONE_COLORS_STR.index(color)
     else:
-        print(f'\tInvalid color.')
-        return
+        print(f'ERROR: {color} is not a valid color. Recalibrating...')
+        return DONE
 
-    print(f'\tDone delivering.')
+    print(f'Rolled tray to {color} cube.')
+    DONE = True
+    return DONE
+
+"""
+This function unloads the cube by swinging the lever.
+@param: 
+- leverDPS: the speed of the lever
+- leverDelay: the time the lever will swing each way
+- leverAngle: the angle the lever will swing. By default it's 90
+"""
+def unloadCube(leverDPS:int, leverDelay:float, leverAngle:int=90) -> bool:
+    DONE = False
+    swingLever(leverDPS, leverDelay, leverAngle)
+    swingLever(leverDPS, leverDelay, -leverAngle)
+    DONE = True
+    return DONE
+
+"""
+Reset the rack to the initial position (red cube)
+"""
+def resetRack(power=30) -> bool:
+    DONE = False
+    TRAY_ROLLER.set_power(power) # 30% power
+    DONE = True
+    return DONE
+
+"""
+Get color from the side sensor, using debouncing technique to avoid false detection.
+"""
+def getSideColor() -> str:
+    sideColor = None
+    while sideColor == None:
+        sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
+        sleep(0.1)
+        
+    print(f'Delivering {sideColor.capitalize()} cube...')
+    return str(sideColor)
+
+
+def deliverCube(color:str):
+    """
+    deliverCube: Deliver the cube based on the color detected from the side sensor
+    
+    IDEA: The sensor will detect a color based on the RGB value from the sensor.
+    The detects_RGB() will take in 2 arguments: the rgb value as list [R, G, B],
+    and ZONE which is a list of Color object defined aboved (only the Zone's colors)
+    """
+    
+    # Settings parameters
+    leverDPS = 400
+    leverDelay = 1
+    leverAngle = 90
+    
+    trayDPS = 200
+    trayAngle = 120
+    
+    sideColor = getSideColor()
+    if rollTrayToCube(color=sideColor, trayDPS=trayDPS, trayAngle=trayAngle):
+        if unloadCube(leverDPS, leverDelay, leverAngle):
+            print(f'Delivered!')
+            sleep(1)
+            
+    else:
+        print(f'ERROR: Could not deliver cube.')
