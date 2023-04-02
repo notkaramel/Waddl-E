@@ -78,17 +78,17 @@ def GoByColor():
         print(f'FR: {front_rgb} \t{frontColor}\t OLD: {old_color}')
         
         if frontColor == None:
-            go(power=20)
+            go(power=18)
             sleep(0.1)
         elif frontColor == 'white':
-            go(power=40)
-            sleep(0.2)
+            go(power=42)
+            sleep(0.1)
         elif frontColor == "red":
-            slightRight(0.3)
+            slightRight(0.4)
         elif frontColor == "blue":
-            slightLeft(0.3)
+            slightLeft(0.4)
         elif frontColor == "green":
-            pause(pauseDelay=1)
+            pause(pauseDelay=1, afterPauseDelay=0.2)
         elif frontColor == "yellow":
             turnAround()
         else:
