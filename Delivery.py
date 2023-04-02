@@ -43,7 +43,7 @@ def rollTrayToCube(color:str, trayDPS: int,trayAngle:int=110) -> bool:
     # Get the relative position of the cube
     if(color in ZONE_COLORS_STR):
         relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
-        trayDelay = abs(relativePosition*1.5)
+        trayDelay = abs(relativePosition)
         
         rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
         LEVER_POSITION = ZONE_COLORS_STR.index(color)
@@ -88,7 +88,6 @@ Reset the rack to the initial position (red cube)
 def resetRack(power=30) -> bool:
     DONE = False
     rollTrayToCube('red',400,110)
-    
     DONE = True
     return DONE
 
