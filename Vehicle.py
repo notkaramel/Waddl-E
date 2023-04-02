@@ -74,13 +74,13 @@ def getFrontColor() -> str:
     return frontColor
     
 
-def goStraight(speed=30): # speed in %
+def goStraight(power=30): # speed in %
     """
     When Waddl-E sees WHITE, it goes.
     The function uses go()
     """
-    print(f'Going straight at {speed}% speed.')
-    go(speed)
+    print(f'Going straight at {power}% speed.')
+    go(power)
 
 def slightTurn(direction:str, delay:float):
     """
