@@ -14,7 +14,8 @@ def GoByColor():
         frontColor = detects_RGB(front_rgb, MAP_COLORS)
         print(f'FR: {front_rgb} \t{frontColor}\t OLD: {old_color}')
         
-        if frontColor == None:
+        if frontColor == 'None':
+            print(f'None detected')
             goStraight(power=18)
             sleep(0.1)
         elif frontColor == 'white':
@@ -28,8 +29,6 @@ def GoByColor():
             pause(pauseDelay=1, afterPauseDelay=0.2) 
         elif frontColor == "yellow": # Reloading
             turnAround()
-        else:
-            print(f'None detected')
 
         if frontColor != None:
             old_color = frontColor 
