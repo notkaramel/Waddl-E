@@ -34,9 +34,9 @@ This function rolls the tray to the cube color.
 @param:
 - color: the color of the cube (use getSideColor())
 - trayDPS: the speed of the tray
-- trayAngle: the angle the tray will roll. Default: 120 degrees clockwise
+- trayAngle: the angle the tray will roll. Default: 110 degrees clockwise
 """   
-def rollTrayToCube(color:str, trayDPS: int, trayAngle:int=120) -> bool:
+def rollTrayToCube(color:str, trayDPS: int, trayAngle:int=110) -> bool:
     DONE = False
     global LEVER_POSITION # int, [0 - 5]
     
