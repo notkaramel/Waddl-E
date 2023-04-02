@@ -15,10 +15,10 @@ def GoByColor():
         print(f'FR: {front_rgb} \t{frontColor}\t OLD: {old_color}')
         
         if frontColor == None:
-            go(power=18)
+            goStraight(power=18)
             sleep(0.1)
         elif frontColor == 'white':
-            go(power=42)
+            goStraight(power=42)
             sleep(0.1)
         elif frontColor == "red":
             slightTurn("left", 0.4)
@@ -37,17 +37,18 @@ def GoByColor():
 
 # main method to test things out
 if __name__=='__main__':
-    mode = input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\nSelect testing mode [1/2/3]: ")
+    mode = int(input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\nSelect testing mode [1/2/3]: "))
 
     try:
-        sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
-        if mode == "1":
+        if mode == 1:
+            sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
             while True:
                 # Could be replaced with go(sp)
                 run(RIGHT_WHEEL, power=sp)
                 run(LEFT_WHEEL, power=sp)
                 sp = int(input("New value for speed: "))
-        elif mode == "2":
+        elif mode == 2:
+            sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
             timeDelay = float(input("Delay time (s): "))
             direction = input(f'Direction ("left" or "right"): ')
             go(sp)
