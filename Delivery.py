@@ -108,7 +108,7 @@ def deliverCube(color:str):
     leverAngle = 90
     
     trayDPS = 200
-    trayAngle = 120
+    trayAngle = 110
     
     sideColor = getSideColor()
     if rollTrayToCube(color=sideColor, trayDPS=trayDPS, trayAngle=trayAngle):
