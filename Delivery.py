@@ -36,12 +36,13 @@ This function rolls the tray to the cube color.
 - trayDPS: the speed of the tray
 - trayAngle: the angle the tray will roll. Default: 120 degrees clockwise
 """   
-def rollTrayToCube(color:str, trayDPS: int, trayDelay:int, trayAngle:int=120) -> bool:
+def rollTrayToCube(color:str, trayDPS: int,trayAngle:int=120) -> bool:
     DONE = False
     global LEVER_POSITION # int, [0 - 5]
     
     # Get the relative position of the cube
     relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
+    trayDelay = relativePosition*1.5
     
     if(color in ZONE_COLORS_STR):
         rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
