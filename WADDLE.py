@@ -10,14 +10,9 @@ Author: Antoine Phan @notkaramel
 
 Naming Convention: CamelCase
 System name: Waddl-E
-"""
 
-# Import Subsystems
-from Vehicle import *
-from Delivery import *
-from time import sleep
+<----------------->
 
-"""
 Initialize Motors and Sensors
 Wheels:
     Left: Motor A (port MA)
@@ -29,7 +24,16 @@ Sensors:
     Front: port S3
     Side: port S4
     Buttons: the remainings
+    
+<----------------->
 """
+
+# Import Subsystems
+from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor, MAP_COLORS
+from Delivery import getSideColor, deliverCube, ZONE_COLORS
+from Button import READY_BUTTON, STOP_BUTTON
+from time import sleep
+
 
 """
 Idea: each color detected from the front sensor will correspond to an action. 
@@ -39,14 +43,14 @@ The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
 
-"""
-When Waddl-E sees GREEN, it stops and start delivering.
-The color cubes are given in a fixed order from the beginning at the loading bay.
-[purple, blue, green, yellow, orange, red]
-"""
-
 def debug_log(DEBUG:bool):
+    """
+    [Not yet finished]
+    Log file for debugging
+    """
     if DEBUG:
+        from ColorDetection import FRONT_SENSOR, SIDE_SENSOR, detects_RGB
+        from Vehicle import LEFT_WHEEL, RIGHT_WHEEL
         with open('log.txt') as logfile:
             leftSpeed = LEFT_WHEEL.get_power()
             rightSpeed = RIGHT_WHEEL.get_power()
@@ -61,16 +65,50 @@ def debug_log(DEBUG:bool):
             logfile.write(f'SIDE:  RGB: {front_rgb} \t >>> {sideColor}')
             logfile.write(f'<----------------->')
 
-
-
-"""
-List of action based on color for the FrontSensor.
-The FrontSensor only detects 5 colors of the map.
-Color order: Rainbow, then white
-[RED, YELLOW, GREEN, BLUE, WHITE]
-""" 
-MAP_COLORS = ['red_map', 'yellow_map', 'green_map', 'blue_map', 'white_map']
-MAP = [Color(color_i) for color_i in MAP_COLORS]
+def WaddleGo(debug=False):
+    """
+    The main function of Waddl-E
+    WADDL-E GOOOO!!! 
+    TODO: add a debug mode, add buttons
+    """
+    while True:
+        if STOP_BUTTON.is_pressed():
+            print("Terminate program suddenly")
+        
+        frontColor = getFrontColor()
+        sideColor = getSideColor()
+        
+        if frontColor == None:
+            goStraight(power=18)
+            sleep(0.1)
+        elif frontColor == 'white':
+            goStraight(power=42)
+            sleep(0.1)
+        elif frontColor == "red":
+            slightTurn("left", 0.4)
+        elif frontColor == "blue":
+            slightTurn("right", 0.4)
+        elif frontColor == "green": # Delivering
+            stop() 
+            deliverCube(sideColor)
+        elif frontColor == "yellow": # Reloading
+            turnAround()
+            stop()
+            print("""
+                  Please reload the cubes in order:
+                  [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]\n
+                  Press the button when done.
+                  """)
+            NotFinished = True
+            while NotFinished:
+                if READY_BUTTON.is_pressed():
+                    print(f'Waddl-E is ready to go!')
+                    NotFinished = False
+                if STOP_BUTTON.is_pressed():
+                    print(f'Waddl-E is stopped while reloading.')
+                    NotFinished = False
+        else:
+            print(f'None detected')
 
 
 
@@ -78,11 +116,8 @@ MAP = [Color(color_i) for color_i in MAP_COLORS]
 if __name__ == '__main__':
     try:
         # Debug mode: developer use only
-        DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
-        while True:
-
-
-
+        # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
+        WaddleGo()
     except KeyboardInterrupt:
         exit()
 

@@ -94,7 +94,15 @@ AVAILABLE_COLORS = [Color(c[11:-4]) for c in color_files]
 # COLORS = [Color(color) for color in AVAILABLE_COLORS]
 
 def detects_RGB(input_RGB:list, availableColors:list[Color]) -> str:
-    """Detect the color of the input RGB value"""
+    """
+    Detect the color of the input RGB value
+    Possible output: 'red', 'green', 'blue', 'yellow', 'white', 'orange', 'purple'
+    If not detected, return 'None' as a string
+    
+    @params:
+    - input_RGB: list of 3 ints, representing the RGB value
+    - availableColors: list of Color objects to search/compare
+    """
     color_error = {}
     for color in availableColors:
         detectedColor, error = color.compareWithInput(input_RGB)
@@ -103,5 +111,5 @@ def detects_RGB(input_RGB:list, availableColors:list[Color]) -> str:
             color_error.update({color.name: error})
 
     # return the Color object with least error:
-    return min(color_error.items(), key=lambda x: x[1])[0] if len(color_error) > 0 else None
+    return min(color_error.items(), key=lambda x: x[1])[0] if len(color_error) > 0 else 'None'
 

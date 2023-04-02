@@ -2,25 +2,36 @@
 
 from Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
 from ColorDetection import FRONT_SENSOR, detects_RGB, Color
-from Button import STOP_BUTTON
 from time import sleep
 
 """
-Waddl-E just go straight
+Define map colors
 """
+MAP_COLORS_STR = ['white', 'blue', 'red', 'green', 'yellow']
+MAP_COLORS = [Color(c) for c in MAP_COLORS_STR]
+
 def go(power=50):
+    """
+    ~ Small action ~ 
+    Waddl-E just go straight
+    """
     run(RIGHT_WHEEL, power)
     run(LEFT_WHEEL, power)
 
 def stop():
+    """
+    ~ Small action ~ 
+    Waddl-E stops
+    """
     stopMotor(RIGHT_WHEEL)
     stopMotor(LEFT_WHEEL)
 
-"""
-Waddl-E sees green, she stops for pauseDelay seconds
-then she goes straight for afterPauseDelay seconds to make sure she is not stuck on green
-"""
 def pause(pauseDelay: float, afterPauseDelay: float = 0.5):
+    """
+    ~ Small action ~ 
+    Waddl-E sees green, she stops for pauseDelay seconds
+    then she goes straight for afterPauseDelay seconds to make sure she is not stuck on green
+    """
     leftPower_temp = LEFT_WHEEL.get_power()
     rightPower_temp = RIGHT_WHEEL.get_power()
     stop()
@@ -29,16 +40,16 @@ def pause(pauseDelay: float, afterPauseDelay: float = 0.5):
     run(RIGHT_WHEEL, rightPower_temp)
     sleep(afterPauseDelay)
                 
-
 def turn(direction: str, delay: float, debug=False):
     """
-    The method below turns the system base on its direction and time delay
+    ~ Small action, but a bit complex ~ 
+    The method turns the system base on its direction and time delay
 
-    Args:
-        direction (str): "left" or "right"
-        delay (float): [in seconds] the system will turn for a time delay in seconds
-        debug (bool, optional): Print turning direction and delay. Defaults to False.
-    """    """"""
+    @params:
+    - direction (str): "left" or "right"
+    - delay (float): [in seconds] the system will turn for a time delay in seconds
+    - debug (bool, optional): Print turning direction and delay. Defaults to False.
+    """
         
     if debug:
         print(f'Vehicle will turn {direction} for {delay}')
@@ -55,104 +66,37 @@ def turn(direction: str, delay: float, debug=False):
         sleep(delay)
         LEFT_WHEEL.set_power(leftSpeed)
 
-"""
-"""
-def turnAround():
-    """_summary_: Turn around 180 degrees
+
+# <-- IMPORT THESE FUNCTIONS TO INTEGRATION -->
+def getFrontColor() -> str:
+    frontRGB = FRONT_SENSOR.get_rgb()
+    frontColor = detects_RGB(frontRGB, MAP_COLORS)
+    return frontColor
     
-    """
-    turn("left", 1.5)
 
-MAP_COLORS_STR = ['white', 'blue', 'red', 'green', 'yellow']
-MAP_COLORS = [Color(c) for c in MAP_COLORS_STR]
-
-def GoByColor():
-    print(f'Waddl-E is running...')
-    old_color = None
-    while True:
-        if STOP_BUTTON.is_pressed():
-            print("Emergency stop pressed!")
-            exit()
-        front_rgb = FRONT_SENSOR.get_rgb()
-        frontColor = detects_RGB(front_rgb, MAP_COLORS)
-        print(f'FR: {front_rgb} \t{frontColor}\t OLD: {old_color}')
-        
-        if frontColor == None:
-            go(power=18)
-            sleep(0.1)
-        elif frontColor == 'white':
-            go(power=42)
-            sleep(0.1)
-        elif frontColor == "red":
-            slightRight(0.4)
-        elif frontColor == "blue":
-            slightLeft(0.4)
-        elif frontColor == "green":
-            pause(pauseDelay=1, afterPauseDelay=0.2)
-        elif frontColor == "yellow":
-            turnAround()
-        else:
-            print(f'None detected')
-
-        if frontColor != None:
-            old_color = frontColor 
-"""
-When Waddl-E sees WHITE, it goes.
-"""
 def goStraight(speed=30): # speed in %
+    """
+    When Waddl-E sees WHITE, it goes.
+    The function uses go()
+    """
     print(f'Going straight at {speed}% speed.')
     go(speed)
 
-"""
-When Waddl-E sees BLUE, it turns slightly to the right.
-"""
-def slightRight(delay:float):
+def slightTurn(direction:str, delay:float):
+    """
+    When Waddl-E sees BLUE, it turns slightly to the right.
+    When Waddl-E sees RED, it turns slightly to the left.
+
+    @params:
+    - direction (str): "left" or "right"
+    - delay (float): [in seconds] the system will turn for a time delay in seconds
+    """
     print(f'Turning slightly right (delay={delay}))')
-    turn("right", delay)
+    turn(direction, delay)
 
-"""
-When Waddl-E sees RED, it turns slightly to the left.
-"""
-def slightLeft(delay):
-    print(f'Turning slightly left (delay={delay}))')
-    turn("left", delay)
-
-
-# main method to test things out
-if __name__=='__main__':
-    mode = input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation mode\nSelect testing mode [1/2/3]: ")
-
-    try:
-        sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
-        if mode == "1":
-            while True:
-                # Could be replaced with go(sp)
-                run(RIGHT_WHEEL, power=sp)
-                run(LEFT_WHEEL, power=sp)
-                sp = int(input("New value for speed: "))
-        elif mode == "2":
-            timeDelay = float(input("Delay time (s): "))
-            direction = input(f'Direction ("left" or "right"): ')
-            go(sp)
-            sleep(2)
-            turn(direction, timeDelay)
-            go(0)
-            sleep(1)
-
-            go(sp)
-            sleep(2)
-            
-            go(0)
-            sleep(1)
-            print("returning...")
-            go(-sp)
-            sleep(2)
-            turn(direction, timeDelay)
-            go(-sp)
-            sleep(2)
-        elif mode == 3:
-            GoByColor()
-        else:
-            print("Unrecognize mode")
-    except KeyboardInterrupt:
-        exit()
+def turnAround():
+    """
+    ~ Small action ~ [NOT IMPLEMENTED]
+    When Waddl-E sees YELLOW, it turns around to reload (second trip)
+    """
+    turn("left", 1.5)
