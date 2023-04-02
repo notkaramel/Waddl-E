@@ -3,6 +3,10 @@ from time import sleep
 from ColorDetection import detects_RGB, SIDE_SENSOR, FRONT_SENSOR, AVAILABLE_COLORS
 from utils.brick import wait_ready_sensors
 
+FRONT_SENSOR.set_mode("component")
+SIDE_SENSOR.set_mode("component")
+
+
 def test(input_RGB:list):
     """
     A single test for color detection.
