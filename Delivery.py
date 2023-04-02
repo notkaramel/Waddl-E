@@ -29,53 +29,40 @@ To deliver other cubes, the lever will get to the relative position of the cube.
 """
 LEVER_POSITION = 0
 
-def rollTrayToCube(color:str, trayDPS: int,trayAngle:int=110) -> bool:
-    """
-    This function rolls the tray to the cube color.
-    @param:
-    - color: the color of the cube (use getSideColor())
-    - trayDPS: the speed of the tray
-    - trayAngle: the angle the tray will roll. Default: 110 degrees clockwise
-    """   
+"""
+This function rolls the tray to the cube color.
+@param:
+- color: the color of the cube (use getSideColor())
+- trayDPS: the speed of the tray
+- trayAngle: the angle the tray will roll. Default: 120 degrees clockwise
+"""   
+def rollTrayToCube(color:str, trayDPS: int, trayAngle:int=120) -> bool:
     DONE = False
     global LEVER_POSITION # int, [0 - 5]
     
     # Get the relative position of the cube
+    relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
+    
     if(color in ZONE_COLORS_STR):
-        relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
         trayDelay = abs(relativePosition)
-        
         rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
         LEVER_POSITION = ZONE_COLORS_STR.index(color)
-        print(f'Rolled tray to {color} cube.')
     else:
         print(f'ERROR: {color} is not a valid color. Recalibrating...')
         return DONE
 
+    print(f'Rolled tray to {color} cube.')
     DONE = True
     return DONE
 
-def getSideColor() -> str:
-    """
-    Get color from the side sensor, using debouncing technique to avoid false detection.
-    """
-    sideColor = None
-    while sideColor == None:
-        sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
-        sleep(0.1)
-        
-    print(f'Delivering {sideColor.capitalize()} cube...')
-    return str(sideColor)
-
-
+"""
+This function unloads the cube by swinging the lever.
+@param: 
+- leverDPS: the speed of the lever
+- leverDelay: the time the lever will swing each way
+- leverAngle: the angle the lever will swing. By default it's 90
+"""
 def unloadCube(leverDPS:int, leverDelay:float, leverAngle:int=90) -> bool:
-    """
-    This function unloads the cube by swinging the lever.
-    @param: 
-    - leverDPS: the speed of the lever
-    - leverDelay: the time the lever will swing each way
-    - leverAngle: the angle the lever will swing. By default it's 90
-    """
     DONE = False
     swingLever(leverDPS, leverDelay, leverAngle)
     swingLever(leverDPS, leverDelay, -leverAngle)
@@ -87,10 +74,21 @@ Reset the rack to the initial position (red cube)
 """
 def resetRack(power=30) -> bool:
     DONE = False
-    rollTrayToCube('red',400,110)
+    rollTrayToCube('red',400,2,110)
     DONE = True
     return DONE
 
+"""
+Get color from the side sensor, using debouncing technique to avoid false detection.
+"""
+def getSideColor() -> str:
+    sideColor = None
+    while sideColor == None:
+        sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
+        sleep(0.1)
+        
+    print(f'Delivering {sideColor.capitalize()} cube...')
+    return str(sideColor)
 
 
 def deliverCube(color:str):
