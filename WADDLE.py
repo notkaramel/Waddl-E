@@ -43,7 +43,7 @@ The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
 
-def debug_log(DEBUG:bool):
+def debugLog(DEBUG:bool):
     """
     [Not yet finished]
     Log file for debugging
@@ -65,11 +65,12 @@ def debug_log(DEBUG:bool):
             logfile.write(f'SIDE:  RGB: {front_rgb} \t >>> {sideColor}')
             logfile.write(f'<----------------->')
 
-def WaddleGo(debug=False):
+def WaddleGoNormally(debug=False):
     """
-    The main function of Waddl-E
+    The main function of Waddl-E.
+    Waddl-E will go normally on the map until she sees green to "deliver mode".
     WADDL-E GOOOO!!! 
-    TODO: add a debug mode, add buttons
+    TODO: add a debug mode
     """
     while True:
         if STOP_BUTTON.is_pressed():
@@ -89,7 +90,11 @@ def WaddleGo(debug=False):
         elif frontColor == "blue":
             slightTurn("right", 0.4)
         elif frontColor == "green": # Delivering
-            stop() 
+            stop()
+            while(sideColor not in ZONE_COLORS):
+                sideColor = getSideColor()
+                goStraight(power=10)
+                sleep(0.1)
             deliverCube(sideColor)
         elif frontColor == "yellow": # Reloading
             turnAround()
@@ -110,14 +115,23 @@ def WaddleGo(debug=False):
         else:
             print(f'None detected')
 
+def WaddleDeliver():
+    """
+    Waddl-E will deliver the cubes to their corresponding location.
+    She will get the color of the zone from the side sensor, save it as a variable.
+    She will go as normal but with less speed (using front sensor data).
+    In the meantime, she will detect the zone color on the side sensor.
+    When she detects WHITE again on the side, she will stop and deliver the cube.
+    Calibration might be needed.
+    """
 
-
+    
 # Main function
 if __name__ == '__main__':
     try:
         # Debug mode: developer use only
         # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
-        WaddleGo()
+        WaddleGoNormally()
     except KeyboardInterrupt:
         exit()
 
