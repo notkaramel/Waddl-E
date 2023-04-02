@@ -4,7 +4,7 @@ Author: Antoine Phan
 """
 
 #!/usr/bin/env python3
-from Unloading import LEVER, TRAY_ROLLER, swingLever, rollTray
+from Unloading import swingLever, rollTray
 from ColorDetection import Color, SIDE_SENSOR, detects_RGB
 from time import sleep
 
@@ -29,13 +29,13 @@ To deliver other cubes, the lever will get to the relative position of the cube.
 """
 LEVER_POSITION = 0
 
-def rollTrayToCube(color:str, trayDPS: int,trayAngle:int=120) -> bool:
+def rollTrayToCube(color:str, trayDPS: int,trayAngle:int=110) -> bool:
     """
     This function rolls the tray to the cube color.
     @param:
     - color: the color of the cube (use getSideColor())
     - trayDPS: the speed of the tray
-    - trayAngle: the angle the tray will roll. Default: 120 degrees clockwise
+    - trayAngle: the angle the tray will roll. Default: 110 degrees clockwise
     """   
     DONE = False
     global LEVER_POSITION # int, [0 - 5]
@@ -87,7 +87,8 @@ Reset the rack to the initial position (red cube)
 """
 def resetRack(power=30) -> bool:
     DONE = False
-    TRAY_ROLLER.set_power(power) # 30% power
+    rollTrayToCube('red',400,110)
+    
     DONE = True
     return DONE
 
