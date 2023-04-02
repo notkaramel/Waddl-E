@@ -79,7 +79,7 @@ def WaddleGoNormally(debug=False):
         frontColor = getFrontColor()
         sideColor = getSideColor()
         
-        if frontColor == None:
+        if frontColor == 'None':
             goStraight(power=18)
             sleep(0.1)
         elif frontColor == 'white':
@@ -90,7 +90,7 @@ def WaddleGoNormally(debug=False):
         elif frontColor == "blue":
             slightTurn("right", 0.4)
         elif frontColor == "green": # Delivering
-            stop()
+            # stop()
             while(sideColor not in ZONE_COLORS):
                 sideColor = getSideColor()
                 goStraight(power=10)
