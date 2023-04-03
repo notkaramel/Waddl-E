@@ -131,6 +131,7 @@ def WaddleDeliver(debug=False):
     """
     global REMAINING_CUBES
     sideColor = getSideColor()
+    toBeDelivered = 'None'
     while sideColor == 'None':
         WaddleCalibrateToDeliver()        
         sideColor = toBeDelivered = getSideColor()
@@ -207,6 +208,7 @@ if __name__ == '__main__':
     try:
         # Debug mode: developer use only
         # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
+        resetRack()
         WaddleGoNormally()
     except KeyboardInterrupt:
         stop()
