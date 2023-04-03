@@ -152,10 +152,9 @@ def WaddleDeliver(debug=False):
     while detects_RGB(SIDE_SENSOR.get_rgb(), outOfZone) != 'white':
         WaddleCalibrateToDeliver()
         print(f"got into here, toBeDelivered: {toBeDelivered}")
+        if toBeDelivered == 'None':
+            WaddleGoBackwardToCatchColorAgain()
     
-    if toBeDelivered == 'None':
-        WaddleGoBackwardToCatchColorAgain()
-        WaddleDeliver()
     
     stop()
     if deliverCube(toBeDelivered):
