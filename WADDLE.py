@@ -116,6 +116,10 @@ def WaddleCalibrateToDeliver(debug=False):
     elif frontColor == "blue":
         slightTurn("right", 0.3, debug=debug)
     
+def WaddleGoBackwardToCatchColorAgain(debug=False):
+    goStraight(power=-20)
+    sleep(1)
+    stop()
 
 def WaddleDeliver(debug=False):
     """
@@ -129,6 +133,7 @@ def WaddleDeliver(debug=False):
     Calibration might be needed.
     """
     global REMAINING_CUBES
+    
     sideColor = getSideColor()
     toBeDelivered = 'None'
     while sideColor == 'None':
@@ -142,6 +147,10 @@ def WaddleDeliver(debug=False):
     while detects_RGB(SIDE_SENSOR.get_rgb(), outOfZone) != 'white':
         WaddleCalibrateToDeliver()
         print(f"got into here, toBeDelivered: {toBeDelivered}")
+    
+    # if toBeDelivered == 'None':
+    #     WaddleGoBackwardToCatchColorAgain()
+    #     WaddleDeliver()
     
     stop()
     if deliverCube(toBeDelivered):

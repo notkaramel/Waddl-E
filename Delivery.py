@@ -85,7 +85,6 @@ def getSideColor() -> str:
     sideColor = None
     while sideColor == None:
         sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
-        sleep(0.1)
         
     # print(f'Delivering {sideColor.capitalize()} cube...')
     return str(sideColor)
