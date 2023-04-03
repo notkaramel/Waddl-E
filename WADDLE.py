@@ -35,6 +35,7 @@ from ColorDetection import Color, detects_RGB, SIDE_SENSOR
 from Button import READY_BUTTON, STOP_BUTTON
 from time import sleep
 
+REMAINING_CUBES = 5
 
 """
 Idea: each color detected from the front sensor will correspond to an action. 
@@ -91,12 +92,7 @@ def WaddleGoNormally(debug=False):
         elif frontColor == "blue":
             slightTurn("right", 0.4)
         elif frontColor == "green": # Delivering
-            # stop()
-            while(sideColor not in ZONE_COLORS):
-                sideColor = getSideColor()
-                goStraight(power=10)
-                sleep(0.1)
-            deliverCube(sideColor)
+            WaddleDeliver()
         elif frontColor == "yellow": # Reloading
             pass
         else:
@@ -125,6 +121,7 @@ def WaddleDeliver():
     When she detects WHITE again on the side, she will stop and deliver the cube.
     Calibration might be needed.
     """
+    global REMAINING_CUBES
     sideColor = getSideColor()
     while sideColor == 'None':
         WaddleGoSlowToDeliver()        
@@ -138,7 +135,8 @@ def WaddleDeliver():
         WaddleGoSlowToDeliver()
     
     deliverCube(toBeDelivered)
-        
+    REMAINING_CUBES -= 1
+    
         
     
 def WaddleGoBackToLoadingBay():
