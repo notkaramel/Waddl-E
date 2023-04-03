@@ -208,7 +208,16 @@ if __name__ == '__main__':
     try:
         # Debug mode: developer use only
         # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
-        resetRack()
+        print("""
+            Please reload the cubes in order:
+            [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]\n
+            Press the button when done.
+        """)
+        while not READY_BUTTON.is_pressed():
+            pass
+        print(f'Departure in 1 second!')
+        sleep(1)
+        
         WaddleGoNormally()
     except KeyboardInterrupt:
         stop()
