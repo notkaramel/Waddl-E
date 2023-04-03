@@ -74,7 +74,7 @@ Reset the rack to the initial position (red cube)
 """
 def resetRack(power=30) -> bool:
     DONE = False
-    rollTrayToCube('red',400,2,110)
+    rollTrayToCube('red',400,110)
     DONE = True
     return DONE
 
