@@ -107,10 +107,10 @@ def turnAround(power=50, timeDelay=0.9):
     
     Default values are taken from the tests for optimal motions.
     """
-    go(power=50)
+    go(power=power)
     import random
     direction = random.choice(['left', 'right'])
-    turn(direction=direction, delay=2)
+    turn(direction=direction, delay=timeDelay)
     stop()
     
     
