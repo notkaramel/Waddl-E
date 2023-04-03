@@ -87,6 +87,7 @@ def WaddleGoNormally(debug=False):
             print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")
             WaddleGoBackToLoadingBay()
             reset()
+            break
         
         if frontColor == 'None':
             goStraight(power=15)

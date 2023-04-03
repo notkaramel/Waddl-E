@@ -33,6 +33,12 @@ def GoByColor():
         if frontColor != None:
             old_color = frontColor 
 
+def testTurningAround(power, delay):
+    go(power=power)
+    import random
+    direction = random.choice(['left', 'right'])
+    turn(direction=direction, delay=delay)
+    stop()
 
 # main method to test things out
 if __name__=='__main__':
@@ -69,6 +75,10 @@ if __name__=='__main__':
             sleep(2)
         elif mode == 3:
             GoByColor()
+        elif mode == 4:
+            power = int(input("Input power (%): "))
+            delay = float(input("Input delay (s): "))
+            testTurningAround(power=power, delay=delay)
         else:
             print("Unrecognize mode")
     except KeyboardInterrupt:
