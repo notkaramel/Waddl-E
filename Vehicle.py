@@ -96,7 +96,12 @@ def slightTurn(direction:str, delay:float):
 
 def turnAround():
     """
-    ~ Small action ~ [NOT IMPLEMENTED]
+    ~ Small action ~
     When Waddl-E sees YELLOW, it turns around to reload (second trip)
     """
-    turn("left", 1.5)
+    go(power=30)
+    import random
+    direction = random.choice(['left', 'right'])
+    turn(direction=direction, delay=2)
+    
+    
