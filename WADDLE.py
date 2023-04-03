@@ -98,7 +98,7 @@ def WaddleGoNormally(debug=False):
         else:
             print(f'None detected')
 
-def WaddleGoSlowToDeliver(debug=False):
+def WaddleCalibrateToDeliver(debug=False):
     frontColor = getFrontColor()
     # Proceed to travel as normal, but slowly
     if frontColor == 'None' or frontColor == "green" or frontColor == "white":
@@ -124,7 +124,7 @@ def WaddleDeliver(debug=False):
     global REMAINING_CUBES
     sideColor = getSideColor()
     while sideColor == 'None':
-        WaddleGoSlowToDeliver()        
+        WaddleCalibrateToDeliver()        
         sideColor = toBeDelivered = getSideColor()
         
     # Assume that the sideColor is detected
@@ -132,11 +132,13 @@ def WaddleDeliver(debug=False):
         print(f"DELIVERING: {toBeDelivered}")
     outOfZone = [Color('white')]
     while detects_RGB(SIDE_SENSOR.get_rgb(), outOfZone) != 'white':
-        WaddleGoSlowToDeliver()
+        WaddleCalibrateToDeliver()
         print(f"got into here, toBeDelivered: {toBeDelivered}")
     
-    deliverCube(toBeDelivered)
-    REMAINING_CUBES -= 1
+    stop()
+    if deliverCube(toBeDelivered):
+        goStraight(10)
+        REMAINING_CUBES -= 1
     
         
     
