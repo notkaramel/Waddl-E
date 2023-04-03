@@ -20,7 +20,7 @@ def mainTest():
     elif testMode == 3:
         WaddleDeliver(DEBUG)
         
-if '__name__' == '__main__':
+if __name__ == '__main__':
     try:
         chooseDebug = input("Debug Mode [Y/n]: ")
         if chooseDebug == 'Y' or chooseDebug == '\n':
