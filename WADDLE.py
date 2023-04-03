@@ -197,8 +197,8 @@ def WaddleGoBackToLoadingBay():
             slightTurn("left", 0.2)
         elif frontColor == "yellow": # Reloading
             turnAround()
-            stop()
-            main()
+            reset()
+            break
 
             # NotLoaded = True
             # while NotLoaded:
