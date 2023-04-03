@@ -243,7 +243,7 @@ def WaddleMain():
         print(f'Departure in 1 second!')
         sleep(1)
         
-        WaddleGoNormally(True)
+        WaddleGoNormally()
 
 # Main function
 if __name__ == '__main__':
