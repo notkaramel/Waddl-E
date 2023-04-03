@@ -100,7 +100,6 @@ def WaddleGoNormally(debug=False):
             slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
             WaddleDeliver(debug=True)
-            break
         elif frontColor == "yellow": # Reloading
             pass
         else:
