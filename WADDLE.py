@@ -45,12 +45,12 @@ The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
 
-def debugLog(DEBUG:bool):
+def debugLog(debug:False):
     """
     [Not yet finished]
     Log file for debugging
     """
-    if DEBUG:
+    if debug:
         from ColorDetection import FRONT_SENSOR, SIDE_SENSOR, detects_RGB
         from Vehicle import LEFT_WHEEL, RIGHT_WHEEL
         with open('log.txt') as logfile:
@@ -85,32 +85,32 @@ def WaddleGoNormally(debug=False):
             goStraight(power=18)
             sleep(0.1)
         elif frontColor == 'white':
-            goStraight(power=42)
+            goStraight(power=32)
             sleep(0.1)
         elif frontColor == "red":
             slightTurn("left", 0.4)
         elif frontColor == "blue":
             slightTurn("right", 0.4)
         elif frontColor == "green": # Delivering
-            WaddleDeliver()
+            WaddleDeliver(debug=True)
         elif frontColor == "yellow": # Reloading
             pass
         else:
             print(f'None detected')
 
-def WaddleGoSlowToDeliver():
+def WaddleGoSlowToDeliver(debug=False):
     frontColor = getFrontColor()
     # Proceed to travel as normal, but slowly
     if frontColor == 'None' or frontColor == "green" or frontColor == "white":
-        goStraight(power=10)
+        goStraight(power=20,debug=debug)
         sleep(0.1)
     elif frontColor == "red":
-        slightTurn("left", 0.3)
+        slightTurn("left", 0.3, debug=debug)
     elif frontColor == "blue":
-        slightTurn("right", 0.3)
+        slightTurn("right", 0.3, debug=debug)
     
 
-def WaddleDeliver():
+def WaddleDeliver(debug=False):
     """
     Waddl-E will deliver the cubes to their corresponding location.
     This is called when she detects frontColor = green.
@@ -125,11 +125,11 @@ def WaddleDeliver():
     sideColor = getSideColor()
     while sideColor == 'None':
         WaddleGoSlowToDeliver()        
-        sideColor = getSideColor()
+        sideColor = toBeDelivered = getSideColor()
         
     # Assume that the sideColor is detected
-    
-    toBeDelivered = sideColor
+    if debug:
+        print(f"DELIVERING: {toBeDelivered}")
     outOfZone = [Color('white')]
     while detects_RGB(SIDE_SENSOR.get_rgb(), outOfZone) != 'white':
         WaddleGoSlowToDeliver()
