@@ -12,13 +12,13 @@ def mainTest():
                          [3] Waddl-E delivers
                          """))
     if testMode == 1:
-        WaddleGoNormally(DEBUG)
+        WaddleGoNormally()
     
     elif testMode == 2:
-        WaddleGoBackToLoadingBay(DEBUG)
+        WaddleGoBackToLoadingBay()
     
     elif testMode == 3:
-        WaddleDeliver(DEBUG)
+        WaddleDeliver()
         
 if __name__ == '__main__':
     try:
