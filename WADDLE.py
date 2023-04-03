@@ -30,7 +30,7 @@ Sensors:
 
 # Import Subsystems
 from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor, MAP_COLORS
-from Delivery import getSideColor, deliverCube, ZONE_COLORS
+from Delivery import getSideColor, deliverCube, ZONE_COLORS, resetRack
 from ColorDetection import Color, detects_RGB, SIDE_SENSOR
 from Button import READY_BUTTON, STOP_BUTTON
 from time import sleep
@@ -82,7 +82,7 @@ def WaddleGoNormally(debug=False):
         sideColor = getSideColor()
         
         if frontColor == 'None':
-            goStraight(power=18)
+            goStraight(power=15)
             sleep(0.1)
         elif frontColor == 'white':
             goStraight(power=32)
@@ -198,5 +198,6 @@ if __name__ == '__main__':
         # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
         WaddleGoNormally()
     except KeyboardInterrupt:
+        resetRack()
         exit()
 
