@@ -40,47 +40,52 @@ def testTurningAround(power, delay):
     turn(direction=direction, delay=delay)
     stop()
 
-# main method to test things out
-if __name__=='__main__':
+def main():
     mode = int(input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\nSelect testing mode [1/2/3]: "))
 
-    try:
-        if mode == 1:
-            sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
-            while True:
-                # Could be replaced with go(sp)
-                run(RIGHT_WHEEL, power=sp)
-                run(LEFT_WHEEL, power=sp)
-                sp = int(input("New value for speed: "))
-        elif mode == 2:
-            sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
-            timeDelay = float(input("Delay time (s): "))
-            direction = input(f'Direction ("left" or "right"): ')
-            go(sp)
-            sleep(2)
-            turn(direction, timeDelay)
-            go(0)
-            sleep(1)
 
-            go(sp)
-            sleep(2)
-            
-            go(0)
-            sleep(1)
-            print("returning...")
-            go(-sp)
-            sleep(2)
-            turn(direction, timeDelay)
-            go(-sp)
-            sleep(2)
-        elif mode == 3:
-            GoByColor()
-        elif mode == 4:
-            power = int(input("Input power (%): "))
-            delay = float(input("Input delay (s): "))
-            testTurningAround(power=power, delay=delay)
-        else:
-            print("Unrecognize mode")
+    if mode == 1:
+        sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
+        while True:
+            # Could be replaced with go(sp)
+            run(RIGHT_WHEEL, power=sp)
+            run(LEFT_WHEEL, power=sp)
+            sp = int(input("New value for speed: "))
+    elif mode == 2:
+        sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
+        timeDelay = float(input("Delay time (s): "))
+        direction = input(f'Direction ("left" or "right"): ')
+        go(sp)
+        sleep(2)
+        turn(direction, timeDelay)
+        go(0)
+        sleep(1)
+
+        go(sp)
+        sleep(2)
+        
+        go(0)
+        sleep(1)
+        print("returning...")
+        go(-sp)
+        sleep(2)
+        turn(direction, timeDelay)
+        go(-sp)
+        sleep(2)
+    elif mode == 3:
+        GoByColor()
+    elif mode == 4:
+        power = int(input("Input power (%): "))
+        delay = float(input("Input delay (s): "))
+        testTurningAround(power=power, delay=delay)
+    else:
+        print("Unrecognize mode")
+
+# main method to test things out
+if __name__=='__main__':
+    try:
+        while True:
+            main()
     except KeyboardInterrupt:
         exit()
 
