@@ -92,14 +92,15 @@ def WaddleGoNormally(debug=False):
             goStraight(power=15)
             sleep(0.1)
         elif frontColor == 'white':
-            goStraight(power=30)
+            goStraight(power=32)
             sleep(0.1)
         elif frontColor == "red":
-            slightTurn("left", 0.2)
+            slightTurn("left", 0.3)
         elif frontColor == "blue":
-            slightTurn("right", 0.2)
+            slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
             WaddleDeliver(debug=True)
+            break
         elif frontColor == "yellow": # Reloading
             pass
         else:
@@ -123,7 +124,7 @@ def WaddleCalibrateToDeliver(debug=False):
     
 def WaddleGoBackwardToCatchColorAgain(debug=False):
     goStraight(power=-20)
-    sleep(1)
+    sleep(0.7)
     stop()
 
 def WaddleDeliver(debug=False):
@@ -237,7 +238,8 @@ def main():
 # Main function
 if __name__ == '__main__':
     try:
-        main()
+        while True:
+            main()
     except KeyboardInterrupt:
         reset()
         exit()
