@@ -76,7 +76,10 @@ def WaddleGoNormally(debug=False):
     """
     while True:
         if STOP_BUTTON.is_pressed():
+            stop()
+            resetRack()
             print("Terminate program suddenly")
+            exit()
         
         frontColor = getFrontColor()
         sideColor = getSideColor()
@@ -99,6 +102,11 @@ def WaddleGoNormally(debug=False):
             print(f'None detected')
 
 def WaddleCalibrateToDeliver(debug=False):
+    if STOP_BUTTON.is_pressed():
+        stop()
+        resetRack()
+        print("Terminate program suddenly")
+        exit()
     frontColor = getFrontColor()
     # Proceed to travel as normal, but slowly
     if frontColor == 'None' or frontColor == "green" or frontColor == "white":
@@ -157,7 +165,10 @@ def WaddleGoBackToLoadingBay():
     turnAround()
     while True:
         if STOP_BUTTON.is_pressed():
+            stop()
+            resetRack()
             print("Terminate program suddenly")
+            exit()
         
         frontColor = getFrontColor()
         
@@ -198,6 +209,7 @@ if __name__ == '__main__':
         # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
         WaddleGoNormally()
     except KeyboardInterrupt:
+        stop()
         resetRack()
         exit()
 
