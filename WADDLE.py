@@ -74,6 +74,8 @@ def WaddleGoNormally(debug=False):
     WADDL-E GOOOO!!! 
     TODO: add a debug mode
     """
+    if debug:
+        print("----- Go Normally -----")
     global REMAINING_CUBES
     while True:
         if STOP_BUTTON.is_pressed():
@@ -100,13 +102,15 @@ def WaddleGoNormally(debug=False):
         elif frontColor == "blue":
             slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
-            WaddleDeliver(debug=True)
+            WaddleDeliver()
         elif frontColor == "yellow": # Reloading
             pass
         else:
             print(f'None detected')
 
 def WaddleCalibrateToDeliver(debug=False):
+    if debug:
+        print("----- Calibrate to Deliver -----")
     if STOP_BUTTON.is_pressed():
         stop()
         resetRack()
@@ -123,6 +127,8 @@ def WaddleCalibrateToDeliver(debug=False):
         slightTurn("right", 0.2, debug=debug)
     
 def WaddleGoBackwardToCatchColorAgain(debug=False):
+    if debug:
+        print("----- Go backward to catch color -----")
     goStraight(power=-20)
     sleep(0.5)
     stop()
@@ -138,6 +144,8 @@ def WaddleDeliver(debug=False):
     When she detects WHITE again on the side, she will stop and deliver the cube.
     Calibration might be needed.
     """
+    if debug:
+        print("----- Delivering -----")
     global REMAINING_CUBES
     
     sideColor = getSideColor()
@@ -163,7 +171,7 @@ def WaddleDeliver(debug=False):
         goStraight(20)
         REMAINING_CUBES -= 1
     
-def WaddleGoBackToLoadingBay():
+def WaddleGoBackToLoadingBay(debug=False):
     """
     Waddl-E will go back to loading bay once all cubes are delivered.
     If she sees blue, she will turn left.
@@ -174,6 +182,8 @@ def WaddleGoBackToLoadingBay():
     
     Implementation will be similar to WaddleGoNormally()
     """
+    if debug:
+        print("----- Going back to Loading Bay -----")
     
     turnAround()
     while True:
