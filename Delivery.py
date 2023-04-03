@@ -78,18 +78,17 @@ def resetRack(power=30) -> bool:
     DONE = True
     return DONE
 
-"""
-Get color from the side sensor, using debouncing technique to avoid false detection.
-"""
 def getSideColor() -> str:
+    """
+    Get color from the side sensor, using debouncing technique to avoid false detection.
+    """
     sideColor = None
     while sideColor == None:
         sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
         sleep(0.1)
         
-    print(f'Delivering {sideColor.capitalize()} cube...')
+    # print(f'Delivering {sideColor.capitalize()} cube...')
     return str(sideColor)
-
 
 def deliverCube(color:str):
     """
