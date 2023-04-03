@@ -79,8 +79,7 @@ def WaddleGoNormally(debug=False):
             stop()
             resetRack()
             print("Terminate program suddenly")
-            exit()
-        
+            main()
         frontColor = getFrontColor()
         sideColor = getSideColor()
         
@@ -88,12 +87,12 @@ def WaddleGoNormally(debug=False):
             goStraight(power=15)
             sleep(0.1)
         elif frontColor == 'white':
-            goStraight(power=32)
+            goStraight(power=30)
             sleep(0.1)
         elif frontColor == "red":
-            slightTurn("left", 0.4)
+            slightTurn("left", 0.5)
         elif frontColor == "blue":
-            slightTurn("right", 0.4)
+            slightTurn("right", 0.5)
         elif frontColor == "green": # Delivering
             WaddleDeliver(debug=True)
         elif frontColor == "yellow": # Reloading
@@ -106,7 +105,7 @@ def WaddleCalibrateToDeliver(debug=False):
         stop()
         resetRack()
         print("Terminate program suddenly")
-        exit()
+        main()
     frontColor = getFrontColor()
     # Proceed to travel as normal, but slowly
     if frontColor == 'None' or frontColor == "green" or frontColor == "white":
@@ -169,7 +168,7 @@ def WaddleGoBackToLoadingBay():
             stop()
             resetRack()
             print("Terminate program suddenly")
-            exit()
+            main()
         
         frontColor = getFrontColor()
         
@@ -202,11 +201,8 @@ def WaddleGoBackToLoadingBay():
         else:
             print(f'None detected')
 
-
-# Main function
-if __name__ == '__main__':
-    try:
-        # Debug mode: developer use only
+def main():
+    # Debug mode: developer use only
         # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
         print("""
             Please reload the cubes in order:
@@ -219,6 +215,11 @@ if __name__ == '__main__':
         sleep(1)
         
         WaddleGoNormally()
+
+# Main function
+if __name__ == '__main__':
+    try:
+        main()
     except KeyboardInterrupt:
         stop()
         resetRack()
