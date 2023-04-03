@@ -90,7 +90,7 @@ def getSideColor() -> str:
     # print(f'Delivering {sideColor.capitalize()} cube...')
     return str(sideColor)
 
-def deliverCube(color:str):
+def deliverCube(color:str) -> bool:
     """
     deliverCube: Deliver the cube based on the color detected from the side sensor
     
@@ -107,10 +107,14 @@ def deliverCube(color:str):
     trayDPS = 200
     trayAngle = 110
     
+    Delivered = False
     if rollTrayToCube(color=color, trayDPS=trayDPS, trayAngle=trayAngle):
         if unloadCube(leverDPS, leverDelay, leverAngle):
             print(f'Delivered!')
             sleep(1)
+            Delivered = True
             
     else:
         print(f'ERROR: Could not deliver cube.')
+        
+    return Delivered
