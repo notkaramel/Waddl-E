@@ -80,7 +80,7 @@ def WaddleGoNormally(debug=False):
             stop()
             resetRack()
             print("Terminate program suddenly")
-            main()
+            WaddleMain()
         frontColor = getFrontColor()
         
         if REMAINING_CUBES == 0:
@@ -111,7 +111,7 @@ def WaddleCalibrateToDeliver(debug=False):
         stop()
         resetRack()
         print("Terminate program suddenly")
-        main()
+        WaddleMain()
     frontColor = getFrontColor()
     # Proceed to travel as normal, but slowly
     if frontColor == 'None' or frontColor == "green" or frontColor == "white":
@@ -124,7 +124,7 @@ def WaddleCalibrateToDeliver(debug=False):
     
 def WaddleGoBackwardToCatchColorAgain(debug=False):
     goStraight(power=-20)
-    sleep(0.7)
+    sleep(0.5)
     stop()
 
 def WaddleDeliver(debug=False):
@@ -163,8 +163,6 @@ def WaddleDeliver(debug=False):
         goStraight(10)
         REMAINING_CUBES -= 1
     
-        
-    
 def WaddleGoBackToLoadingBay():
     """
     Waddl-E will go back to loading bay once all cubes are delivered.
@@ -182,7 +180,7 @@ def WaddleGoBackToLoadingBay():
         if STOP_BUTTON.is_pressed():
             reset()
             print("Terminate program suddenly")
-            main()
+            WaddleMain()
         
         frontColor = getFrontColor()
         
@@ -220,7 +218,7 @@ def reset():
     stop()
     resetRack()
 
-def main():
+def WaddleMain():
     # Debug mode: developer use only
         # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
         print("""
@@ -239,7 +237,7 @@ def main():
 if __name__ == '__main__':
     try:
         while True:
-            main()
+            WaddleMain()
     except KeyboardInterrupt:
         reset()
         exit()

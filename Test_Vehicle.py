@@ -33,13 +33,6 @@ def GoByColor():
         if frontColor != None:
             old_color = frontColor 
 
-def testTurningAround(power, delay):
-    go(power=power)
-    import random
-    direction = random.choice(['left', 'right'])
-    turn(direction=direction, delay=delay)
-    stop()
-
 def main():
     mode = int(input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\nSelect testing mode [1/2/3]: "))
 
@@ -77,7 +70,7 @@ def main():
     elif mode == 4:
         power = int(input("Input power (%): "))
         delay = float(input("Input delay (s): "))
-        testTurningAround(power=power, delay=delay)
+        turnAround(power=power, delay=delay)
     else:
         print("Unrecognize mode")
 

@@ -97,12 +97,17 @@ def slightTurn(direction:str, delay:float, debug=False):
         print(f'Turning slightly right (delay={delay}))')
     turn(direction, delay)
 
-def turnAround():
+def turnAround(power=50, timeDelay=0.9):
     """
     ~ Small action ~
     When Waddl-E sees YELLOW, it turns around to reload (second trip)
+    @param:
+    - power [%]: vehicle power level
+    - timeDelay [s]: delay time for the turning motion
+    
+    Default values are taken from the tests for optimal motions.
     """
-    go(power=30)
+    go(power=50)
     import random
     direction = random.choice(['left', 'right'])
     turn(direction=direction, delay=2)
