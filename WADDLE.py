@@ -133,6 +133,7 @@ def WaddleDeliver(debug=False):
     outOfZone = [Color('white')]
     while detects_RGB(SIDE_SENSOR.get_rgb(), outOfZone) != 'white':
         WaddleGoSlowToDeliver()
+        print(f"got into here, toBeDelivered: {toBeDelivered}")
     
     deliverCube(toBeDelivered)
     REMAINING_CUBES -= 1
