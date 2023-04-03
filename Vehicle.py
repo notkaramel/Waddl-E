@@ -56,6 +56,10 @@ def turn(direction: str, delay: float, debug=False):
     
     leftSpeed = LEFT_WHEEL.get_power()    
     rightSpeed = RIGHT_WHEEL.get_power()
+    
+    if(leftSpeed == 0 or rightSpeed == 0):
+        LEFT_WHEEL.set_power(10)
+        RIGHT_WHEEL.set_power(10)
 
     if direction == "right":
         RIGHT_WHEEL.set_power(-rightSpeed)

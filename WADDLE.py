@@ -160,7 +160,7 @@ def WaddleDeliver(debug=False):
     stop()
     if deliverCube(toBeDelivered):
         # if cube is delivered, set speed to continue
-        goStraight(10)
+        goStraight(20)
         REMAINING_CUBES -= 1
     
 def WaddleGoBackToLoadingBay():

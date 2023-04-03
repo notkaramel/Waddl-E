@@ -34,9 +34,9 @@ This function rolls the tray to the cube color.
 @param:
 - color: the color of the cube (use getSideColor())
 - trayDPS: the speed of the tray
-- trayAngle: the angle the tray will roll. Default: 110 degrees clockwise
+- trayAngle: the angle the tray will roll. Default: 120 degrees clockwise
 """   
-def rollTrayToCube(color:str, trayDPS: int, trayAngle:int=110) -> bool:
+def rollTrayToCube(color:str, trayDPS: int, trayAngle:int=120) -> bool:
     DONE = False
     global LEVER_POSITION # int, [0 - 5]
     
@@ -72,9 +72,9 @@ def unloadCube(leverDPS:int, leverDelay:float, leverAngle:int=90) -> bool:
 """
 Reset the rack to the initial position (red cube)
 """
-def resetRack(power=30) -> bool:
+def resetRack(dps=400, angle=120) -> bool:
     DONE = False
-    rollTrayToCube('red',400,110)
+    rollTrayToCube('red',dps,angle)
     DONE = True
     return DONE
 
@@ -104,7 +104,7 @@ def deliverCube(color:str) -> bool:
     leverAngle = 90
     
     trayDPS = 400
-    trayAngle = 110
+    trayAngle = 120
     
     Delivered = False
     if rollTrayToCube(color=color, trayDPS=trayDPS, trayAngle=trayAngle):
