@@ -102,6 +102,6 @@ def turnAround():
     go(power=30)
     import random
     direction = random.choice(['left', 'right'])
-    turn(direction=direction, delay=10)
+    turn(direction=direction, delay=7)
     
     
