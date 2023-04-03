@@ -74,6 +74,7 @@ def WaddleGoNormally(debug=False):
     WADDL-E GOOOO!!! 
     TODO: add a debug mode
     """
+    global REMAINING_CUBES
     while True:
         if STOP_BUTTON.is_pressed():
             stop()
@@ -81,7 +82,11 @@ def WaddleGoNormally(debug=False):
             print("Terminate program suddenly")
             main()
         frontColor = getFrontColor()
-        sideColor = getSideColor()
+        
+        if REMAINING_CUBES == 0:
+            print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")
+            WaddleGoBackToLoadingBay()
+            REMAINING_CUBES = 5
         
         if frontColor == 'None':
             goStraight(power=15)
