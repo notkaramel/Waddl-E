@@ -34,7 +34,7 @@ def GoByColor():
             old_color = frontColor 
 
 def main():
-    mode = int(input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\nSelect testing mode [1/2/3]: "))
+    mode = int(input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\n\t[4] Turn Around motion\nSelect testing mode [1/2/3]: "))
 
 
     if mode == 1:
@@ -70,7 +70,7 @@ def main():
     elif mode == 4:
         power = int(input("Input power (%): "))
         delay = float(input("Input delay (s): "))
-        turnAround(power=power, delay=delay)
+        turnAround(power=power, timeDelay=delay)
     else:
         print("Unrecognize mode")
 
