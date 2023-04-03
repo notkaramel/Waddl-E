@@ -23,7 +23,7 @@ def mainTest():
 if __name__ == '__main__':
     try:
         chooseDebug = input("Debug Mode [Y/n]: ")
-        if chooseDebug == 'Y' or chooseDebug == '\n':
+        if chooseDebug == 'Y' or chooseDebug == '':
             DEBUG = True
         while True:
             mainTest()

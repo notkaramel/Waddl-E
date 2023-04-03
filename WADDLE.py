@@ -249,7 +249,7 @@ def WaddleMain():
 if __name__ == '__main__':
     try:
         debugChoice = input("Debug? [Y/n]: ")
-        if debugChoice.lower == 'Y' or debugChoice == '\n':
+        if debugChoice.lower == 'Y' or debugChoice == '':
             DEBUG = True
             
         while True:
