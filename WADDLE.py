@@ -148,9 +148,9 @@ def WaddleDeliver(debug=False):
         WaddleCalibrateToDeliver()
         print(f"got into here, toBeDelivered: {toBeDelivered}")
     
-    # if toBeDelivered == 'None':
-    #     WaddleGoBackwardToCatchColorAgain()
-    #     WaddleDeliver()
+    if toBeDelivered == 'None':
+        WaddleGoBackwardToCatchColorAgain()
+        WaddleDeliver()
     
     stop()
     if deliverCube(toBeDelivered):
