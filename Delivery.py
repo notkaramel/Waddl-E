@@ -44,7 +44,7 @@ def rollTrayToCube(color:str, trayDPS: int, trayAngle:int=110) -> bool:
     
     if(color in ZONE_COLORS_STR):
         relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
-        trayDelay = abs(relativePosition)
+        trayDelay = abs(relativePosition)/2
         rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
         LEVER_POSITION = ZONE_COLORS_STR.index(color)
     else:
@@ -99,11 +99,11 @@ def deliverCube(color:str) -> bool:
     """
     
     # Settings parameters
-    leverDPS = 400
+    leverDPS = 500
     leverDelay = 1
     leverAngle = 90
     
-    trayDPS = 200
+    trayDPS = 400
     trayAngle = 110
     
     Delivered = False
