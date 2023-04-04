@@ -104,7 +104,8 @@ def slightTurn(direction:str, delay:float, debug=False):
 def turnAround(power=50, timeDelay=0.9):
     """
     ~ Small action ~
-    When Waddl-E sees YELLOW, it turns around to reload (second trip)
+    When Waddl-E sees YELLOW, it turns around to reload (second trip).
+    Waddl-E turns to her left to avoid collecting the cube that just gets dropped
     @param:
     - power [%]: vehicle power level
     - timeDelay [s]: delay time for the turning motion
@@ -112,8 +113,9 @@ def turnAround(power=50, timeDelay=0.9):
     Default values are taken from the tests for optimal motions.
     """
     go(power=power)
-    import random
-    direction = random.choice(['left', 'right'])
+    # import random
+    # direction = random.choice(['left', 'right'])
+    direction = 'left'
     turn(direction=direction, delay=timeDelay)
     stop()
     

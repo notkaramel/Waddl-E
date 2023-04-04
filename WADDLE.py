@@ -187,7 +187,10 @@ def WaddleGoBackToLoadingBay():
     if DEBUG:
         print("----- Going back to Loading Bay -----")
     
+    # Reset rack to avoid imbalance, because going back will be very fast
+    resetRack()
     turnAround()
+    
     while True:
         if STOP_BUTTON.is_pressed():
             reset()
