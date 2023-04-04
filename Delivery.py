@@ -4,7 +4,7 @@ Author: Antoine Phan
 """
 
 #!/usr/bin/env python3
-from Unloading import LEVER, TRAY_ROLLER, swingLever, rollTray
+from Unloading import swingLever, rollTray
 from ColorDetection import Color, SIDE_SENSOR, detects_RGB
 from time import sleep
 
@@ -36,14 +36,15 @@ This function rolls the tray to the cube color.
 - trayDPS: the speed of the tray
 - trayAngle: the angle the tray will roll. Default: 120 degrees clockwise
 """   
-def rollTrayToCube(color:str, trayDPS: int, trayDelay:int, trayAngle:int=120) -> bool:
+def rollTrayToCube(color:str, trayDPS: int, trayAngle:int=120) -> bool:
     DONE = False
     global LEVER_POSITION # int, [0 - 5]
     
     # Get the relative position of the cube
-    relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
     
     if(color in ZONE_COLORS_STR):
+        relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
+        trayDelay = abs(relativePosition)/2
         rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
         LEVER_POSITION = ZONE_COLORS_STR.index(color)
     else:
@@ -71,26 +72,24 @@ def unloadCube(leverDPS:int, leverDelay:float, leverAngle:int=90) -> bool:
 """
 Reset the rack to the initial position (red cube)
 """
-def resetRack(power=30) -> bool:
+def resetRack(dps=400, angle=120) -> bool:
     DONE = False
-    TRAY_ROLLER.set_power(power) # 30% power
+    rollTrayToCube('red',dps,angle)
     DONE = True
     return DONE
 
-"""
-Get color from the side sensor, using debouncing technique to avoid false detection.
-"""
 def getSideColor() -> str:
+    """
+    Get color from the side sensor, using debouncing technique to avoid false detection.
+    """
     sideColor = None
     while sideColor == None:
         sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
-        sleep(0.1)
         
-    print(f'Delivering {sideColor.capitalize()} cube...')
+    # print(f'Delivering {sideColor.capitalize()} cube...')
     return str(sideColor)
 
-
-def deliverCube(color:str):
+def deliverCube(color:str) -> bool:
     """
     deliverCube: Deliver the cube based on the color detected from the side sensor
     
@@ -100,18 +99,21 @@ def deliverCube(color:str):
     """
     
     # Settings parameters
-    leverDPS = 400
+    leverDPS = 500
     leverDelay = 1
     leverAngle = 90
     
-    trayDPS = 200
+    trayDPS = 400
     trayAngle = 120
     
-    sideColor = getSideColor()
-    if rollTrayToCube(color=sideColor, trayDPS=trayDPS, trayAngle=trayAngle):
+    Delivered = False
+    if rollTrayToCube(color=color, trayDPS=trayDPS, trayAngle=trayAngle):
         if unloadCube(leverDPS, leverDelay, leverAngle):
             print(f'Delivered!')
             sleep(1)
+            Delivered = True
             
     else:
         print(f'ERROR: Could not deliver cube.')
+        
+    return Delivered

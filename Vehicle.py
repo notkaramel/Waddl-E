@@ -56,6 +56,10 @@ def turn(direction: str, delay: float, debug=False):
     
     leftSpeed = LEFT_WHEEL.get_power()    
     rightSpeed = RIGHT_WHEEL.get_power()
+    
+    if(leftSpeed == 0 or rightSpeed == 0):
+        LEFT_WHEEL.set_power(10)
+        RIGHT_WHEEL.set_power(10)
 
     if direction == "right":
         RIGHT_WHEEL.set_power(-rightSpeed)
@@ -74,15 +78,16 @@ def getFrontColor() -> str:
     return frontColor
     
 
-def goStraight(speed=30): # speed in %
+def goStraight(power=30, debug=False): # speed in %
     """
     When Waddl-E sees WHITE, it goes.
     The function uses go()
     """
-    print(f'Going straight at {speed}% speed.')
-    go(speed)
+    if debug:
+        print(f'Going straight at {power}% speed.')
+    go(power)
 
-def slightTurn(direction:str, delay:float):
+def slightTurn(direction:str, delay:float, debug=False):
     """
     When Waddl-E sees BLUE, it turns slightly to the right.
     When Waddl-E sees RED, it turns slightly to the left.
@@ -91,12 +96,25 @@ def slightTurn(direction:str, delay:float):
     - direction (str): "left" or "right"
     - delay (float): [in seconds] the system will turn for a time delay in seconds
     """
-    print(f'Turning slightly right (delay={delay}))')
+    
+    if debug:
+        print(f'Turning slightly right (delay={delay}))')
     turn(direction, delay)
 
-def turnAround():
+def turnAround(power=50, timeDelay=0.9):
     """
-    ~ Small action ~ [NOT IMPLEMENTED]
+    ~ Small action ~
     When Waddl-E sees YELLOW, it turns around to reload (second trip)
+    @param:
+    - power [%]: vehicle power level
+    - timeDelay [s]: delay time for the turning motion
+    
+    Default values are taken from the tests for optimal motions.
     """
-    turn("left", 1.5)
+    go(power=power)
+    import random
+    direction = random.choice(['left', 'right'])
+    turn(direction=direction, delay=timeDelay)
+    stop()
+    
+    

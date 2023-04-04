@@ -29,7 +29,7 @@ class Color:
 
         # Normalize the data and set attributes
         self.meanRGB, self.stdevRGB = normalize_data(color_file)
-
+ 
         # print(f'Color {name} is loaded with meanRGB {self.meanRGB} and stdevRGB {self.stdevRGB}')
 
     def compareWithInput(self, input_rgb:list):
