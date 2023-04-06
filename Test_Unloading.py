@@ -8,8 +8,8 @@ from Unloading import swingLever, rollTray
 def test_swingLever():
     dps = int(input("DPS: "))
     delay = float(input("Delay: "))
-    swingLever(dps=dps, delay=delay, angle=90)
-    swingLever(dps, 1, angle=-90) 
+    swingLever(dps=dps, delay=delay, angle=45)
+    swingLever(dps, 1, angle=-45) 
 
 def test_rollTray():
     dps = int(input("DPS: "))
@@ -25,7 +25,7 @@ def test_LeverAndTray():
     retrieve = lambda slot: rollTray(tray_dps, abs(slot//2), slot*tray_angle)
     
     lever_dps = 600
-    lever_angle = 90
+    lever_angle = 45
     swing = lambda angle : swingLever(lever_dps, 0.3, angle)
     
     slot = int(input("Slots to roll (+/-<int>): "))
