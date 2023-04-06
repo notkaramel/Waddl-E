@@ -9,7 +9,7 @@ SPEED_LIMIT = 1560  # [Degree per second] up to 1560dps
 LEVER = Motor("C")
 TRAY_ROLLER = Motor("B")
 
-def swingLever(dps=400, delay=2, angle=90):
+def swingLever(dps=600, delay=1, angle=90):
     """
     Use for `delivery.py`
     Make a motor swing at a certain speed for a certain time.
@@ -20,7 +20,7 @@ def swingLever(dps=400, delay=2, angle=90):
     LEVER.set_position_relative(angle)
     sleep(delay)
 
-def rollTray(dps=400, delay=2, angle=120):
+def rollTray(dps=500, delay=2, angle=120):
     """
     Use for `delivery.py`
     Make a motor roll at a certain speed for a certain time.

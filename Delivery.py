@@ -107,18 +107,17 @@ def deliverCube(color:str) -> bool:
     """
     
     # Settings parameters
-    leverDPS = 500
+    leverDPS = 600
     leverDelay = 1
-    leverAngle = 50
+    leverAngle = 80
     
-    trayDPS = 400
-    trayAngle = 110
+    trayDPS = 500
+    trayAngle = 120
     
     Delivered = False
     if rollTrayToCube(color=color, trayDPS=trayDPS, trayAngle=trayAngle):
         if unloadCube(leverDPS, leverDelay, leverAngle):
             print(f'Delivered!')
-            sleep(1)
             Delivered = True
             
     else:
