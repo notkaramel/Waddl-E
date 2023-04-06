@@ -1,12 +1,117 @@
 <html>
-    <head>
-        <title>Waddl-E</title>
-        <!-- <style link="index.css"/> -->
-    </head>
 
-    <body>
-        <h1>
-            Welcome to Waddl-E wiki!
-        </h1>
-    </body>
+<head>
+    <title>Waddl-E</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="#intro">Introduction</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <div class="main">
+        <section id="intro">
+            <h1>Welcome to our website!</h1>
+            <p>This is the introduction section.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo elit eget odio eleifend, quis fermentum nisi
+            rhoncus. Suspendisse non tellus nulla. Nulla eu urna ut nisi pharetra commodo nec vel velit. Praesent lacinia dolor
+            quam, sed ullamcorper purus ullamcorper ut. Nam posuere ipsum nec sapien dictum ultricies. Aliquam ac arcu ut risus
+            molestie convallis. Aenean gravida turpis vitae purus consectetur, sed semper quam commodo.
+            
+            Vestibulum semper congue eros, at aliquam lorem facilisis sit amet. In vel tellus a magna ultrices suscipit. Duis
+            tristique commodo velit, eget rhoncus nibh faucibus eget. Quisque sodales elit a elit accumsan, eu venenatis enim
+            tristique. In malesuada, leo non facilisis sollicitudin, metus lectus ornare nisi, sit amet volutpat lectus ipsum vel
+            libero. Etiam posuere justo felis, a luctus quam malesuada vel. Curabitur bibendum urna ac erat vestibulum, id malesuada
+            velit lobortis. Aenean dictum quam eu quam placerat, vel ullamcorper lorem vulputate. Suspendisse eget lacinia mi. Sed
+            ac sapien in nibh faucibus consectetur. Sed vel sapien euismod, hendrerit nulla eget, rhoncus libero. In efficitur nisl
+            non metus lacinia, nec ultrices elit lacinia. Sed fringilla, odio vel scelerisque malesuada, nibh nisi bibendum ex, at
+            molestie justo lorem vel orci.</p>
+        </section>
+
+        <section id="services">
+            <h2>Our Services</h2>
+            <p>These are the services we offer.</p>
+        </section>
+
+        <section id="portfolio">
+            <h2>Our Portfolio</h2>
+            <p>Here are some examples of our work.</p>
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Learn more about our company.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Get in touch with us.</p>
+        </section>
+    </div>
+</body>
+
 </html>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #333;
+        padding: 20px;
+    }
+
+    .navbar a {
+        display: block;
+        color: #fff;
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-decoration: none;
+    }
+
+    .navbar a:hover {
+        color: #f00;
+    }
+
+    .main {
+        margin-left: 200px;
+        padding: 20px;
+    }
+
+    h1,
+    h2 {
+        color: #f00;
+        margin-top: 0;
+    }
+
+    section {
+        margin-bottom: 50px;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js">
+    $(document).ready(function () {
+            $(window).scroll(function () {
+                var navbarHeight = $('.navbar').height();
+                if ($(window).scrollTop() >= navbarHeight) {
+                    $('.navbar').addClass('fixed');
+                    $('.main').css('margin-top', navbarHeight);
+                } else {
+                    $('.navbar').removeClass('fixed');
+                    $('.main').css('margin-top', '0');
+                }
+            });
+        });
+
+</script>

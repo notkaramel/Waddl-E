@@ -132,7 +132,7 @@ def WaddleGoBackwardToCatchColorAgain():
     if DEBUG:
         print("----- Go backward to catch color -----")
     goStraight(power=-20)
-    sleep(0.5)
+    sleep(0.3)
     stop()
 
 def WaddleDeliver():
