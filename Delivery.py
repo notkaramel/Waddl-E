@@ -49,15 +49,15 @@ def rollTrayToCube(color:str, trayDPS:int=600, trayAngle:int=120) -> bool:
     
     if(color in ZONE_COLORS_STR):
         relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
-        trayDelay = abs(relativePosition//2)
+        trayDelay = abs(relativePosition/2)
         rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
         LEVER_POSITION = ZONE_COLORS_STR.index(color)
+        DONE = True
     else:
         print(f'ERROR: {color} is not a valid color. Recalibrating...')
         return DONE
 
     print(f'Rolled tray to {color} cube.')
-    DONE = True
     return DONE
 
 """
