@@ -94,7 +94,7 @@ def WaddleGoNormally():
             break
         
         if frontColor == 'None':
-            goStraight(power=15)
+            goStraight(power=18)
             sleep(0.1)
         elif frontColor == 'white':
             goStraight(power=32)
@@ -146,8 +146,7 @@ def WaddleDeliver():
     When she detects WHITE again on the side, she will stop and deliver the cube.
     Calibration might be needed.
     """
-    if DEBUG:
-        print("----- Delivering -----")
+    print("----- Delivering -----")
     global REMAINING_CUBES
     
     sideColor = getSideColor()

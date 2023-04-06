@@ -111,7 +111,7 @@ def deliverCube(color:str) -> bool:
     leverDelay = 1
     leverAngle = 90
     
-    trayDPS = 600
+    trayDPS = 400
     trayAngle = 120
     
     Delivered = False
