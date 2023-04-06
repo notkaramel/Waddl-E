@@ -21,7 +21,7 @@ def test_rollTray():
 def test_LeverAndTray():
     print("TRAY: (using blind test results)")
     tray_dps = 400 # int(input("Tray DPS: ")) 
-    tray_angle = 110
+    tray_angle = 120
     retrieve = lambda slot: rollTray(tray_dps, abs(slot/2), slot*tray_angle)
     
     lever_dps = 600
