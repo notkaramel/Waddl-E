@@ -84,7 +84,7 @@ def WaddleGoNormally():
         elif frontColor == "green": # Delivering
             WaddleDeliver()
         elif frontColor == "yellow": # Reloading
-            pass
+            break
         else:
             print(f'None detected')
 
