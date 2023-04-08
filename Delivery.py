@@ -18,7 +18,7 @@ There are 6 colors for the delivery zones,
 each zone corresponds to a color cube.
 [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]
 """
-ZONE_COLORS_STR = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+ZONE_COLORS_STR = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'white']
 ZONE_COLORS = [Color(color_i) for color_i in ZONE_COLORS_STR]
 
 """
@@ -27,7 +27,7 @@ It starts at position 0, which is the red cube.
 The lever position will be updated after each delivery.
 To deliver other cubes, the lever will get to the relative position of the cube.
 """
-LEVER_POSITION = 0
+LEVER_POSITION = 0 # int, [0 - 5]
 
 """
 This function rolls the tray to the cube color.
@@ -43,21 +43,21 @@ Default values are from tests.
 """   
 def rollTrayToCube(color:str, trayDPS:int=600, trayAngle:int=120) -> bool:
     DONE = False
-    global LEVER_POSITION # int, [0 - 5]
+    global LEVER_POSITION # int, [0 -> 5]
     
     # Get the relative position of the cube
     
     if(color in ZONE_COLORS_STR):
         relativePosition = ZONE_COLORS_STR.index(color) - LEVER_POSITION
-        trayDelay = abs(relativePosition//2)
+        trayDelay = abs(relativePosition/2)
         rollTray(trayDPS, trayDelay, trayAngle*relativePosition)
         LEVER_POSITION = ZONE_COLORS_STR.index(color)
+        DONE = True
     else:
         print(f'ERROR: {color} is not a valid color. Recalibrating...')
         return DONE
 
     print(f'Rolled tray to {color} cube.')
-    DONE = True
     return DONE
 
 """
@@ -74,13 +74,13 @@ def unloadCube(leverDPS:int, leverDelay:float, leverAngle:int=90) -> bool:
     DONE = True
     return DONE
 
-"""
-Reset the rack to the initial position (red cube)
-Default value taken from the tests
-- DPS: xxx
-- Angle: 120deg
-"""
 def resetRack(dps=400, angle=120) -> bool:
+    """
+    Reset the rack to the initial position (red cube)
+    Default value taken from the tests
+    - DPS: xxx
+    - Angle: 120deg
+    """
     DONE = False
     rollTrayToCube('red',dps,angle)
     DONE = True
@@ -92,6 +92,7 @@ def getSideColor() -> str:
     """
     sideColor = None
     while sideColor == None:
+        sleep(0.1)
         sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
         
     # print(f'Delivering {sideColor.capitalize()} cube...')
@@ -107,21 +108,24 @@ def deliverCube(color:str) -> bool:
     """
     
     # Settings parameters
-    leverDPS = 600
+    leverDPS = 400 
     leverDelay = 1
-    leverAngle = 90
+    leverAngle = 80
     
-    trayDPS = 600
+    trayDPS = 500
     trayAngle = 120
     
     Delivered = False
     if rollTrayToCube(color=color, trayDPS=trayDPS, trayAngle=trayAngle):
         if unloadCube(leverDPS, leverDelay, leverAngle):
             print(f'Delivered!')
-            sleep(1)
             Delivered = True
             
     else:
         print(f'ERROR: Could not deliver cube.')
+        
+    if LEVER_POSITION in [4,5]:
+        # This is to make sure the system is balanced
+        resetRack()
         
     return Delivered

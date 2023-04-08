@@ -31,11 +31,11 @@ def collect_data():
         outfile = open(data_location, "a")
         
         while True:
+            sleep(0.2)
             rgb = COLOR_SENSOR.get_rgb()
             if READY_BUTTON.is_pressed():
                 print(rgb)
                 outfile.write(f'{rgb}\n')
-                sleep(0.2)
     except KeyboardInterrupt:
         print("Done!")
         outfile.close()
