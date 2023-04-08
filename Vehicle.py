@@ -73,7 +73,7 @@ def turn(direction: str, delay: float, debug=False):
 
 # <-- IMPORT THESE FUNCTIONS TO INTEGRATION -->
 def getFrontColor() -> str:
-    sleep(0.1)
+    # sleep(0.1)
     frontRGB = FRONT_SENSOR.get_rgb()
     frontColor = detects_RGB(frontRGB, MAP_COLORS)
     return frontColor
