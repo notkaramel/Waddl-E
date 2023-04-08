@@ -82,6 +82,7 @@ def WaddlEGoesNormally():
         elif frontColor == "blue":
             slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
+            slightTurn("left", 0.1)
             WaddlEDelivers()
         elif frontColor == "yellow": # Reloading
             break
