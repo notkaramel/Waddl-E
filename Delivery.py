@@ -108,7 +108,7 @@ def deliverCube(color:str) -> bool:
     """
     
     # Settings parameters
-    leverDPS = 400 
+    leverDPS = 500 
     leverDelay = 1
     leverAngle = 80
     

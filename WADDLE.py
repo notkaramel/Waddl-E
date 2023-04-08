@@ -104,6 +104,7 @@ def WaddlETriesToCatchColor() -> str:
     
     # Here, she goes backward to catch the color again.
     """
+    
     toBeDelivered = 'None'
     while True:
         sideColor = getSideColor()
