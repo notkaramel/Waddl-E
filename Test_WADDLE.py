@@ -28,5 +28,5 @@ if __name__ == '__main__':
         while True:
             mainTest()
     except KeyboardInterrupt:
-        reset()
+        WaddleReset()
         exit()

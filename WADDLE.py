@@ -29,8 +29,8 @@ Sensors:
 """
 
 # Import Subsystems
-from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor, MAP_COLORS
-from Delivery import getSideColor, deliverCube, ZONE_COLORS, resetRack
+from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor
+from Delivery import getSideColor, deliverCube, resetRack, ZONE_COLORS_STR, ZONE_COLORS
 from ColorDetection import Color, detects_RGB, SIDE_SENSOR
 from Button import READY_BUTTON, STOP_BUTTON
 from time import sleep
@@ -45,28 +45,6 @@ Each action will be triggered based on the condition changes, i.e., a <color> de
 The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
-
-def debugLog(debug:False):
-    """
-    [Not yet finished]
-    Log file for debugging
-    """
-    if debug:
-        from ColorDetection import FRONT_SENSOR, SIDE_SENSOR, detects_RGB
-        from Vehicle import LEFT_WHEEL, RIGHT_WHEEL
-        with open('log.txt') as logfile:
-            leftSpeed = LEFT_WHEEL.get_power()
-            rightSpeed = RIGHT_WHEEL.get_power()
-            front_rgb = FRONT_SENSOR.get_rgb()
-            frontColor = detects_RGB(front_rgb)
-            side_rgb = SIDE_SENSOR.get_rgb()
-            sideColor = detects_RGB(side_rgb)
-
-            logfile.write(f'<----------------->')
-            logfile.write(f'Left: {leftSpeed} | Right: {rightSpeed}')
-            logfile.write(f'FRONT: RGB: {front_rgb} \t >>> {frontColor}')
-            logfile.write(f'SIDE:  RGB: {front_rgb} \t >>> {sideColor}')
-            logfile.write(f'<----------------->')
 
 def WaddleGoNormally():
     """
@@ -90,7 +68,7 @@ def WaddleGoNormally():
         if REMAINING_CUBES == 0:
             print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")
             WaddleGoBackToLoadingBay()
-            reset()
+            WaddleReset()
             break
         
         if frontColor == 'None':
@@ -113,14 +91,15 @@ def WaddleGoNormally():
 def WaddleCalibrateToDeliver():
     if DEBUG:
         print("----- Calibrate to Deliver -----")
+    
     if STOP_BUTTON.is_pressed():
-        stop()
-        resetRack()
-        print("Terminate program suddenly")
+        WaddleReset()
+        print("Terminated Delivery")
         WaddleMain()
     frontColor = getFrontColor()
     # Proceed to travel as normal, but slowly
-    if frontColor == 'None' or frontColor == "green" or frontColor == "white":
+    
+    if frontColor == 'None' or frontColor == "white":
         goStraight(power=20,debug=DEBUG)
         sleep(0.1)
     elif frontColor == "red":
@@ -132,46 +111,61 @@ def WaddleGoBackwardToCatchColorAgain():
     if DEBUG:
         print("----- Go backward to catch color -----")
     goStraight(power=-20)
+    slightTurn("left", 0.1) # will turn right because power is negative
     sleep(0.3)
     stop()
 
 def WaddleDeliver():
     """
-    Waddl-E will deliver the cubes to their corresponding location.
-    This is called when she detects frontColor = green.
+    Waddl-E will deliver the cube to the corresponding zone. 
+    """
+    """
+    # Below is the pseudocode:
+    # 1. She will get the color of the side sensor.
+    sideColor = getSideColor()
     
-    She will get the color of the zone from the side sensor, save it as a variable.
-    She will go as normal but with less speed (using front sensor data).
-    In the meantime, she will detect the zone color on the side sensor.
-    When she detects WHITE again on the side, she will stop and deliver the cube.
-    Calibration might be needed.
+    # 2. If the color is not detected/ is white, she will calibrate.
+    # Calibrate means that she will go backward and turn left/right to see the color again.
+    
+    if sideColor == none or sideColor == white:
+        calibrateToGetColor()
+            
+    # 3. Once a color is detected, she assigns the color to a variable.
+    if sideColor != none and sideColor != white:
+        toBeDelivered = sideColor
+        
+    # 4. She has to align to the zone before delivering, i.e., go until see white on the side sensor
+    while getSideColor() != white:
+        calibrateToDeliver()
+        
+    # 5. Once she sees white, she will stop to deliver the cube.
+    deliverCube(toBeDelivered)    
+    
     """
     print("----- Delivering -----")
     global REMAINING_CUBES
-    
-    sideColor = getSideColor()
-    toBeDelivered = 'None'
-    while sideColor == 'None':
-        WaddleCalibrateToDeliver()        
-        sideColor = toBeDelivered = getSideColor()
         
-    # Assume that the sideColor is detected
+    # 1, 2
+    while getSideColor() == 'None' or getSideColor() == 'white':
+        # calibrate
+        WaddleGoBackwardToCatchColorAgain()
+    
+    # 3
+    toBeDelivered = getSideColor()        
     if DEBUG:
         print(f"DELIVERING: {toBeDelivered}")
-    outOfZone = [Color('white')]
-    while detects_RGB(SIDE_SENSOR.get_rgb(), outOfZone) != 'white':
+    
+    # 4
+    while getSideColor() != 'white':
         WaddleCalibrateToDeliver()
-        print(f"got into here, toBeDelivered: {toBeDelivered}")
-        if toBeDelivered == 'None':
-            WaddleGoBackwardToCatchColorAgain()
     
-    
+    # 5
     stop()
     if deliverCube(toBeDelivered):
         # if cube is delivered, set speed to continue
         goStraight(20)
         REMAINING_CUBES -= 1
-    
+
 def WaddleGoBackToLoadingBay():
     """
     Waddl-E will go back to loading bay once all cubes are delivered.
@@ -186,13 +180,12 @@ def WaddleGoBackToLoadingBay():
     if DEBUG:
         print("----- Going back to Loading Bay -----")
     
-    # Reset rack to avoid imbalance, because going back will be very fast
     resetRack()
     turnAround()
     
     while True:
         if STOP_BUTTON.is_pressed():
-            reset()
+            WaddleReset()
             print("Terminate program suddenly")
             WaddleMain()
         
@@ -208,44 +201,27 @@ def WaddleGoBackToLoadingBay():
             slightTurn("right", 0.2)
         elif frontColor == "blue":
             slightTurn("left", 0.2)
-        elif frontColor == "yellow": # Reloading
+        elif frontColor == "yellow": # Finished returning
             turnAround()
-            reset()
             break
-
-            # NotLoaded = True
-            # while NotLoaded:
-            #     if READY_BUTTON.is_pressed():
-            #         print(f'Waddl-E is ready to go!')
-            #         NotLoaded = False
-                    
-            #     if STOP_BUTTON.is_pressed():
-            #         reset()
-            #         print(f'Waddl-E is stopped while reloading.')
-            #         NotLoaded = False
         else:
             print(f'None detected')
 
-def reset():
+def WaddleReset():
     global REMAINING_CUBES 
     REMAINING_CUBES = 6
     stop()
     resetRack()
 
 def WaddleMain():
-    # Debug mode: developer use only
-        # DEBUG = True # (input('Debug mode? (y/n): ') == 'y')
-        print("""
-            Please reload the cubes in order:
-            [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]\n
-            Press the button when done.
-        """)
-        while not READY_BUTTON.is_pressed():
-            pass
-        print(f'Departure in 1 second!')
-        sleep(1)
-        
-        WaddleGoNormally()
+    print("Please reload the cubes in order: [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]\nPress the button when done.")
+    while True:
+        if READY_BUTTON.is_pressed():
+            break
+    print(f'Departure in 1 second!')
+    sleep(1)
+    
+    WaddleGoNormally()
 
 # Main function
 if __name__ == '__main__':
@@ -257,6 +233,6 @@ if __name__ == '__main__':
         while True:
             WaddleMain()
     except KeyboardInterrupt:
-        reset()
+        WaddleReset()
         exit()
 
