@@ -107,10 +107,10 @@ def WaddlETriesToCatchColor() -> str:
     toBeDelivered = 'None'
     while True:
         sideColor = getSideColor()
-        if sideColor == 'None':
-            WaddlECalibratesToDeliver()
-        elif sideColor == 'white':
-            WaddlEGoesBackwardToCatchColorAgain()
+        if sideColor in ['None', 'white'] : # act according to the side sensor
+            WaddlECalibratesToDeliver() # go according to the front sensor
+        # elif sideColor == 'white': # ahead of the zone | ? before the zone
+            # WaddlEGoesBackwardToCatchColorAgain() # go backward to catch the color again
         else:
             toBeDelivered = sideColor
             if DEBUG:
@@ -177,7 +177,7 @@ def WaddlEDelivers():
     # 1. Go until she sees white on the side sensor
     # 2. Stop to deliver the cube
             
-    while getSideColor() != 'white':
+    while getSideColor() != 'white': # ahead of the zone
         WaddlECalibratesToDeliver()
         
     stop()
