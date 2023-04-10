@@ -108,12 +108,12 @@ def deliverCube(color:str) -> bool:
     """
     
     # Settings parameters
-    leverDPS = 500 
-    leverDelay = 1
+    leverDPS = 400
+    leverDelay = 0.4
     leverAngle = 80
     
     trayDPS = 500
-    trayAngle = 120
+    trayAngle = 115
     
     Delivered = False
     if rollTrayToCube(color=color, trayDPS=trayDPS, trayAngle=trayAngle):
