@@ -46,7 +46,7 @@ The button (for now?) will be used for sudden stop.
 """
 # <-- Program starts here --> #
 
-def WaddleGoNormally():
+def WaddlEGoesNormally():
     """
     The main function of Waddl-E.
     Waddl-E will go normally on the map until she sees green to "deliver mode".
@@ -82,13 +82,45 @@ def WaddleGoNormally():
         elif frontColor == "blue":
             slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
-            WaddleDeliver()
+            slightTurn("left", 0.1)
+            WaddlEDelivers()
         elif frontColor == "yellow": # Reloading
-            pass
+            break
         else:
             print(f'None detected')
 
-def WaddleCalibrateToDeliver():
+def WaddlETriesToCatchColor() -> str:
+    """
+    Waddl-E will try to catch the color from the side sensor.
+    # Below is the pseudocode:
+    # 1. She will get the color of the side sensor.
+    sideColor = getSideColor()
+
+    # 2.1. Assume that she has detected the color, she will just deliver the cube.
+    toBeDelivered = sideColor
+    
+    # 2.2. Assume that Waddl-E has NOT detected the color, she will calibrate.
+    # Waddl-E will see if she sees white, meaning that she's already passed the zone.
+    ? what if she sees white but she hasn't passed the zone yet?
+    
+    # Here, she goes backward to catch the color again.
+    """
+    
+    toBeDelivered = 'None'
+    while True:
+        sideColor = getSideColor()
+        if sideColor in ['None', 'white'] : # act according to the side sensor
+            WaddlECalibratesToDeliver() # go according to the front sensor
+        # elif sideColor == 'white': # ahead of the zone | ? before the zone
+            # WaddlEGoesBackwardToCatchColorAgain() # go backward to catch the color again
+        else:
+            toBeDelivered = sideColor
+            if DEBUG:
+                print(f"DELIVERING: {toBeDelivered}")
+            break
+    return toBeDelivered
+
+def WaddlECalibratesToDeliver():
     if DEBUG:
         print("----- Calibrate to Deliver -----")
     
@@ -107,7 +139,7 @@ def WaddleCalibrateToDeliver():
     elif frontColor == "blue":
         slightTurn("right", 0.2, debug=DEBUG)
     
-def WaddleGoBackwardToCatchColorAgain():
+def WaddlEGoesBackwardToCatchColorAgain():
     if DEBUG:
         print("----- Go backward to catch color -----")
     goStraight(power=-20)
@@ -115,16 +147,15 @@ def WaddleGoBackwardToCatchColorAgain():
     sleep(0.3)
     stop()
 
-def WaddleDeliver():
+def WaddlEDelivers():
     """
+    Triggered when Waddl-E sees green.
     Waddl-E will deliver the cube to the corresponding zone. 
     """
+    print("----- Delivering -----")
+    global REMAINING_CUBES
+        
     """
-    # Below is the pseudocode:
-    # 1. She will get the color of the side sensor.
-    sideColor = getSideColor()
-    
-    # 2. If the color is not detected/ is white, she will calibrate.
     # Calibrate means that she will go backward and turn left/right to see the color again.
     
     if sideColor == none or sideColor == white:
@@ -142,29 +173,25 @@ def WaddleDeliver():
     deliverCube(toBeDelivered)    
     
     """
-    print("----- Delivering -----")
-    global REMAINING_CUBES
+    toBeDelivered = WaddlETriesToCatchColor()
+    
+    # Assume that Waddl-E has detected the color, she will:
+    # 1. Go until she sees white on the side sensor
+    # 2. Stop to deliver the cube
+            
+    while getSideColor() != 'white': # ahead of the zone
+        WaddlECalibratesToDeliver()
         
-    # 1, 2
-    while getSideColor() == 'None' or getSideColor() == 'white':
-        # calibrate
-        WaddleGoBackwardToCatchColorAgain()
-    
-    # 3
-    toBeDelivered = getSideColor()        
-    if DEBUG:
-        print(f"DELIVERING: {toBeDelivered}")
-    
-    # 4
-    while getSideColor() != 'white':
-        WaddleCalibrateToDeliver()
-    
-    # 5
     stop()
     if deliverCube(toBeDelivered):
         # if cube is delivered, set speed to continue
-        goStraight(20)
+        goStraight(30)
         REMAINING_CUBES -= 1
+    
+    if DEBUG:
+        print(f'DELIVERED: {toBeDelivered}\nREMAINING CUBES: {REMAINING_CUBES}')
+    
+    sleep(0.5)
 
 def WaddleGoBackToLoadingBay():
     """
@@ -221,7 +248,7 @@ def WaddleMain():
     print(f'Departure in 1 second!')
     sleep(1)
     
-    WaddleGoNormally()
+    WaddlEGoesNormally()
 
 # Main function
 if __name__ == '__main__':

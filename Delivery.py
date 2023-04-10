@@ -92,7 +92,7 @@ def getSideColor() -> str:
     """
     sideColor = None
     while sideColor == None:
-        sleep(0.1)
+        # sleep(0.1)
         sideColor = detects_RGB(SIDE_SENSOR.get_rgb(), ZONE_COLORS)
         
     # print(f'Delivering {sideColor.capitalize()} cube...')
@@ -108,7 +108,7 @@ def deliverCube(color:str) -> bool:
     """
     
     # Settings parameters
-    leverDPS = 400 
+    leverDPS = 500 
     leverDelay = 1
     leverAngle = 80
     
