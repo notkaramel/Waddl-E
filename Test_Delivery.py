@@ -6,8 +6,9 @@ if '__main__' == __name__:
     try:
         while True:
             sideColor = getSideColor()
-            deliverCube(sideColor)
-            print(f'Delivered {sideColor.capitalize()} cube!')
+            if (sideColor != 'white'):
+                deliverCube(sideColor)
+                print(f'Delivered {sideColor.capitalize()} cube!')
     except KeyboardInterrupt:
         resetRack()
         exit()
