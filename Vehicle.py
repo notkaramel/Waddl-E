@@ -105,7 +105,7 @@ def slightTurn(direction:str, delay:float, debug=False):
     
 def betterTurn(direction:str, debug=False):
     currentSpeed = abs(LEFT_WHEEL.get_power())
-    delay = 2*exp(-7.7*currentSpeed)+10
+    delay = 2*exp(-7.7*10**-2*currentSpeed)+0.01
     turn(direction=direction, delay=delay, debug=debug)
     
 
