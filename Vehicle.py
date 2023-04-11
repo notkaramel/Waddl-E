@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from math import exp
 from Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
 from ColorDetection import FRONT_SENSOR, detects_RGB, Color
 from time import sleep
@@ -104,7 +105,7 @@ def slightTurn(direction:str, delay:float, debug=False):
     
 def betterTurn(direction:str, debug=False):
     currentSpeed = abs(LEFT_WHEEL.get_power())
-    delay = currentSpeed
+    delay = 2*exp(-7.7*currentSpeed)+10
     turn(direction=direction, delay=delay, debug=debug)
     
 
