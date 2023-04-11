@@ -138,9 +138,11 @@ def WaddlECalibratesToDeliver():
         goStraight(power=20,debug=DEBUG)
         sleep(0.1)
     elif frontColor == "red":
-        slightTurn("left", 0.2, debug=DEBUG)
+        betterTurn("left")
+        # slightTurn("left", 0.2, debug=DEBUG)
     elif frontColor == "blue":
-        slightTurn("right", 0.2, debug=DEBUG)
+        betterTurn("right")
+        # slightTurn("right", 0.2, debug=DEBUG)
     
 def WaddlEGoesBackwardToCatchColorAgain():
     if DEBUG:
@@ -228,9 +230,11 @@ def WaddleGoBackToLoadingBay():
             goStraight(power=40)
             sleep(0.1)
         elif frontColor == "red":
-            slightTurn("right", 0.2)
+            betterTurn("right")
+            # slightTurn("right", 0.2)
         elif frontColor == "blue":
-            slightTurn("left", 0.2)
+            betterTurn("left")
+            # slightTurn("left", 0.2)
         elif frontColor == "yellow": # Finished returning
             turnAround()
             break
