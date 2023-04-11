@@ -29,7 +29,7 @@ Sensors:
 """
 
 # Import Subsystems
-from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor
+from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor, betterTurn
 from Delivery import getSideColor, deliverCube, resetRack, ZONE_COLORS_STR, ZONE_COLORS
 from ColorDetection import Color, detects_RGB, SIDE_SENSOR
 from Button import READY_BUTTON, STOP_BUTTON
@@ -78,14 +78,17 @@ def WaddlEGoesNormally():
             goStraight(power=32)
             sleep(0.1)
         elif frontColor == "red":
-            slightTurn("left", 0.25)
+            betterTurn("left")
+            # slightTurn("left", 0.3)
         elif frontColor == "blue":
-            slightTurn("right", 0.25)
+            betterTurn("right")
+            # slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
             # slightTurn("left", 0.1)
             WaddlEDelivers()
         elif frontColor == "yellow": # Reloading
-            break
+            # break
+            pass
         else:
             print(f'None detected')
 

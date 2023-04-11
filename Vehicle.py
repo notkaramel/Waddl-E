@@ -101,6 +101,12 @@ def slightTurn(direction:str, delay:float, debug=False):
     if debug:
         print(f'Turning slightly right (delay={delay}))')
     turn(direction, delay)
+    
+def betterTurn(direction:str, debug=False):
+    currentSpeed = abs(LEFT_WHEEL.get_power())
+    delay = currentSpeed
+    turn(direction=direction, delay=delay, debug=debug)
+    
 
 def turnAround(power=50, timeDelay=0.9):
     """
