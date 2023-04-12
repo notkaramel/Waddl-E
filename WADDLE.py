@@ -229,7 +229,7 @@ def WaddleGoBackToLoadingBay():
             sleep(0.05)
         elif frontColor == "green":
             if LAST_TURN != None:
-                slightTurn(LAST_TURN, 0.08)
+                slightTurn(LAST_TURN, 0.12)
             goStraight(power=30)
             LAST_TURN = None
             sleep(0.05)
