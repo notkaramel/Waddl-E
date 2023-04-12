@@ -74,7 +74,7 @@ def turn(direction: str, delay: float, debug=False):
 
 # <-- IMPORT THESE FUNCTIONS TO INTEGRATION -->
 def getFrontColor() -> str:
-    # sleep(0.1)
+    sleep(0.001)
     frontRGB = FRONT_SENSOR.get_rgb()
     frontColor = detects_RGB(frontRGB, MAP_COLORS)
     return frontColor
@@ -105,7 +105,7 @@ def slightTurn(direction:str, delay:float, debug=False):
     
 def betterTurn(direction:str, debug=False):
     currentSpeed = abs(LEFT_WHEEL.get_power())
-    delay = 2*exp(-7.7*10**-2*currentSpeed)+0.01
+    delay = 1.5*exp(-6*10**-2*currentSpeed)+0.07
     turn(direction=direction, delay=delay, debug=debug)
     
 
