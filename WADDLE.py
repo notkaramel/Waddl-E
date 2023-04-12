@@ -67,6 +67,8 @@ def WaddlEGoesNormally():
         
         if REMAINING_CUBES == 0:
             print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")
+            goStraight(20)
+            sleep(1)
             WaddleGoBackToLoadingBay()
             WaddleReset()
             break
@@ -86,8 +88,10 @@ def WaddlEGoesNormally():
             LAST_TURN = "right"
             # slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
-            slightTurn(LAST_TURN, 0.05)
+            if LAST_TURN != None:
+                slightTurn(LAST_TURN, 0.05)
             WaddlEDelivers()
+            LAST_TURN = None
         elif frontColor == "yellow": # Reloading
             # break
             pass
@@ -140,20 +144,12 @@ def WaddlECalibratesToDeliver():
         goStraight(power=20,debug=DEBUG)
         sleep(0.05)
     elif frontColor == "red":
-        betterTurn("left")
-        # slightTurn("left", 0.2, debug=DEBUG)
+        # betterTurn("left")
+        slightTurn("left", 0.1, debug=DEBUG)
     elif frontColor == "blue":
-        betterTurn("right")
-        # slightTurn("right", 0.2, debug=DEBUG)
+        # betterTurn("right")
+        slightTurn("right", 0.1, debug=DEBUG)
     
-def WaddlEGoesBackwardToCatchColorAgain():
-    if DEBUG:
-        print("----- Go backward to catch color -----")
-    goStraight(power=-20)
-    slightTurn("left", 0.1) # will turn right because power is negative
-    sleep(0.3)
-    stop()
-
 def WaddlEDelivers():
     """
     Triggered when Waddl-E sees green.
@@ -230,11 +226,13 @@ def WaddleGoBackToLoadingBay():
             goStraight(power=18)
             sleep(0.05)
         elif frontColor == "green":
-            slightTurn(LAST_TURN, 0.05)
-            goStraight(power=40)
-            sleep(0.1)
+            if LAST_TURN != None:
+                slightTurn(LAST_TURN, 0.05)
+            goStraight(power=30)
+            LAST_TURN = None
+            sleep(0.05)
         elif frontColor == 'white':
-            goStraight(power=40)
+            goStraight(power=32)
             sleep(0.05)
         elif frontColor == "red":
             betterTurn("right")
