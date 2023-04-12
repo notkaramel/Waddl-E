@@ -41,7 +41,7 @@ def pause(pauseDelay: float, afterPauseDelay: float = 0.5):
     run(RIGHT_WHEEL, rightPower_temp)
     sleep(afterPauseDelay)
                 
-def turn(direction: str, delay: float, debug=False):
+def turn(direction: str, delay: float, speed:int, debug=False):
     """
     ~ Small action, but a bit complex ~ 
     The method turns the system base on its direction and time delay
@@ -55,22 +55,18 @@ def turn(direction: str, delay: float, debug=False):
     if debug:
         print(f'Vehicle will turn {direction} for {delay}')
     
-    leftSpeed = LEFT_WHEEL.get_power()    
-    rightSpeed = RIGHT_WHEEL.get_power()
+    speed = abs(LEFT_WHEEL.get_speed())
+    if speed < 10:
+        speed = 20
     
-    if(leftSpeed == 0 or rightSpeed == 0):
-        LEFT_WHEEL.set_power(10)
-        RIGHT_WHEEL.set_power(10)
-        sleep(0.02)
-
     if direction == "right":
-        RIGHT_WHEEL.set_power(-rightSpeed)
+        RIGHT_WHEEL.set_power(-speed)
         sleep(delay)
-        RIGHT_WHEEL.set_power(rightSpeed)
+        RIGHT_WHEEL.set_power(speed)
     elif direction == "left":
-        LEFT_WHEEL.set_power(-leftSpeed)
+        LEFT_WHEEL.set_power(-speed)
         sleep(delay)
-        LEFT_WHEEL.set_power(leftSpeed)
+        LEFT_WHEEL.set_power(speed)
 
 
 # <-- IMPORT THESE FUNCTIONS TO INTEGRATION -->
