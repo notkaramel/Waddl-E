@@ -70,7 +70,7 @@ def WaddlEGoesNormally():
         if REMAINING_CUBES == 0:
             print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")
             goStraight(20)
-            sleep(2)
+            sleep(2.1)
             WaddleGoBackToLoadingBay()
             WaddleReset()
             break
@@ -194,7 +194,7 @@ def WaddlEDelivers():
     
     if DEBUG:
         print(f'DELIVERED: {toBeDelivered}\nREMAINING CUBES: {REMAINING_CUBES}')
-    sleep(0.01)
+    # sleep(0.01)
     # goStraight(30)
 
 def WaddleGoBackToLoadingBay():
@@ -214,7 +214,7 @@ def WaddleGoBackToLoadingBay():
     global LAST_TURN
     LAST_TURN = None
     resetRack()
-    turnAround()
+    turnAround(returning=True)
     
     while True:
         if STOP_BUTTON.is_pressed():
