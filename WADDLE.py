@@ -68,7 +68,7 @@ def WaddlEGoesNormally():
         if REMAINING_CUBES == 0:
             print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")
             goStraight(20)
-            sleep(1)
+            sleep(1.2)
             WaddleGoBackToLoadingBay()
             WaddleReset()
             break
@@ -145,10 +145,10 @@ def WaddlECalibratesToDeliver():
         sleep(0.05)
     elif frontColor == "red":
         # betterTurn("left")
-        slightTurn("left", 0.1, debug=DEBUG)
+        slightTurn("left", 0.15, debug=DEBUG)
     elif frontColor == "blue":
         # betterTurn("right")
-        slightTurn("right", 0.1, debug=DEBUG)
+        slightTurn("right", 0.15, debug=DEBUG)
     
 def WaddlEDelivers():
     """
@@ -263,8 +263,6 @@ def WaddleMain():
             break
     print(f'Departure in 1 second!')
     sleep(1)
-    
-    WaddlEGoesNormally()
 
 # Main function
 if __name__ == '__main__':
@@ -273,6 +271,7 @@ if __name__ == '__main__':
             
         while True:
             WaddleMain()
+            WaddlEGoesNormally()
     except KeyboardInterrupt:
         WaddleReset()
         exit()

@@ -110,7 +110,7 @@ def betterTurn(direction:str, debug=False):
     turn(direction=direction, delay=delay, debug=debug)
     
 
-def turnAround(power=50, timeDelay=0.9):
+def turnAround(power=30, timeDelay=1.6, returning=False):
     """
     ~ Small action ~
     When Waddl-E sees YELLOW, it turns around to reload (second trip).
@@ -126,6 +126,14 @@ def turnAround(power=50, timeDelay=0.9):
     # direction = random.choice(['left', 'right'])
     direction = 'left'
     turn(direction=direction, delay=timeDelay)
+    while True:
+        goStraight(10)
+        if getFrontColor() == 'red':
+            turn('right' if returning else 'left', 0.03)
+        elif getFrontColor() == 'blue':
+            turn('left' if returning else 'right', 0.03)
+        else:
+            break
     stop()
     
     
