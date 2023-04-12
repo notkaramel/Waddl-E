@@ -29,7 +29,7 @@ Sensors:
 """
 
 # Import Subsystems
-from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor
+from Vehicle import goStraight, turnAround, slightTurn, stop, pause, getFrontColor, betterTurn
 from Delivery import getSideColor, deliverCube, resetRack, ZONE_COLORS_STR, ZONE_COLORS
 from ColorDetection import Color, detects_RGB, SIDE_SENSOR
 from Button import READY_BUTTON, STOP_BUTTON
@@ -37,7 +37,7 @@ from time import sleep
 
 REMAINING_CUBES = 6
 DEBUG = False
-
+LAST_TURN = None
 """
 Idea: each color detected from the front sensor will correspond to an action. 
 The program will run on an infinite `while True:` loop
@@ -51,11 +51,11 @@ def WaddlEGoesNormally():
     The main function of Waddl-E.
     Waddl-E will go normally on the map until she sees green to "deliver mode".
     WADDL-E GOOOO!!! 
-    TODO: add a debug mode
     """
     if DEBUG:
         print("----- Go Normally -----")
-    global REMAINING_CUBES
+    
+    global REMAINING_CUBES, LAST_TURN
     while True:
         if STOP_BUTTON.is_pressed():
             stop()
@@ -64,28 +64,39 @@ def WaddlEGoesNormally():
                 print("Terminate program suddenly")
             WaddleMain()
         frontColor = getFrontColor()
+        if DEBUG:
+            print(frontColor)
         
         if REMAINING_CUBES == 0:
             print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")
+            goStraight(20)
+            sleep(2.1)
             WaddleGoBackToLoadingBay()
             WaddleReset()
             break
         
         if frontColor == 'None':
-            goStraight(power=18)
-            sleep(0.1)
+            goStraight(power=16)
+            sleep(0.05)
         elif frontColor == 'white':
             goStraight(power=32)
-            sleep(0.1)
+            sleep(0.05)
         elif frontColor == "red":
-            slightTurn("left", 0.3)
+            betterTurn("left")
+            LAST_TURN = "left"
+            # slightTurn("left", 0.3)
         elif frontColor == "blue":
-            slightTurn("right", 0.3)
+            betterTurn("right")
+            LAST_TURN = "right"
+            # slightTurn("right", 0.3)
         elif frontColor == "green": # Delivering
-            slightTurn("left", 0.1)
+            if LAST_TURN != None:
+                slightTurn(LAST_TURN, 0.05)
             WaddlEDelivers()
+            LAST_TURN = None
         elif frontColor == "yellow": # Reloading
-            break
+            # break
+            pass
         else:
             print(f'None detected')
 
@@ -132,21 +143,15 @@ def WaddlECalibratesToDeliver():
     # Proceed to travel as normal, but slowly
     
     if frontColor == 'None' or frontColor == "white":
-        goStraight(power=20,debug=DEBUG)
-        sleep(0.1)
+        goStraight(power=15,debug=DEBUG)
+        sleep(0.05)
     elif frontColor == "red":
-        slightTurn("left", 0.2, debug=DEBUG)
+        # betterTurn("left")
+        slightTurn("left", 0.15, debug=DEBUG)
     elif frontColor == "blue":
-        slightTurn("right", 0.2, debug=DEBUG)
+        # betterTurn("right")
+        slightTurn("right", 0.15, debug=DEBUG)
     
-def WaddlEGoesBackwardToCatchColorAgain():
-    if DEBUG:
-        print("----- Go backward to catch color -----")
-    goStraight(power=-20)
-    slightTurn("left", 0.1) # will turn right because power is negative
-    sleep(0.3)
-    stop()
-
 def WaddlEDelivers():
     """
     Triggered when Waddl-E sees green.
@@ -185,13 +190,12 @@ def WaddlEDelivers():
     stop()
     if deliverCube(toBeDelivered):
         # if cube is delivered, set speed to continue
-        goStraight(30)
         REMAINING_CUBES -= 1
     
     if DEBUG:
         print(f'DELIVERED: {toBeDelivered}\nREMAINING CUBES: {REMAINING_CUBES}')
-    
-    sleep(0.5)
+    # sleep(0.01)
+    # goStraight(30)
 
 def WaddleGoBackToLoadingBay():
     """
@@ -207,8 +211,10 @@ def WaddleGoBackToLoadingBay():
     if DEBUG:
         print("----- Going back to Loading Bay -----")
     
+    global LAST_TURN
+    LAST_TURN = None
     resetRack()
-    turnAround()
+    turnAround(returning=True)
     
     while True:
         if STOP_BUTTON.is_pressed():
@@ -220,14 +226,24 @@ def WaddleGoBackToLoadingBay():
         
         if frontColor == 'None':
             goStraight(power=18)
-            sleep(0.1)
-        elif frontColor == 'white' or frontColor == "green":
-            goStraight(power=40)
-            sleep(0.1)
+            sleep(0.05)
+        elif frontColor == "green":
+            if LAST_TURN != None:
+                slightTurn(LAST_TURN, 0.12)
+            goStraight(power=30)
+            LAST_TURN = None
+            sleep(0.05)
+        elif frontColor == 'white':
+            goStraight(power=32)
+            sleep(0.05)
         elif frontColor == "red":
-            slightTurn("right", 0.2)
+            betterTurn("right")
+            LAST_TURN = "right"
+            # slightTurn("right", 0.2)
         elif frontColor == "blue":
-            slightTurn("left", 0.2)
+            betterTurn("left")
+            LAST_TURN = "left"
+            # slightTurn("left", 0.2)
         elif frontColor == "yellow": # Finished returning
             turnAround()
             break
@@ -241,24 +257,23 @@ def WaddleReset():
     resetRack()
 
 def WaddleMain():
+    print("----- Waddle Main -----")
+    WaddleReset()
     print("Please reload the cubes in order: [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE]\nPress the button when done.")
     while True:
         if READY_BUTTON.is_pressed():
             break
     print(f'Departure in 1 second!')
     sleep(1)
-    
-    WaddlEGoesNormally()
 
 # Main function
 if __name__ == '__main__':
     try:
-        debugChoice = input("Debug? [Y/n]: ")
-        if debugChoice.lower == 'Y' or debugChoice == '':
-            DEBUG = True
+        DEBUG = True
             
         while True:
             WaddleMain()
+            WaddlEGoesNormally()
     except KeyboardInterrupt:
         WaddleReset()
         exit()

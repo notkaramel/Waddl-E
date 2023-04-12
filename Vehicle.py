@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from math import exp
 from Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
 from ColorDetection import FRONT_SENSOR, detects_RGB, Color
 from time import sleep
@@ -58,8 +59,9 @@ def turn(direction: str, delay: float, debug=False):
     rightSpeed = RIGHT_WHEEL.get_power()
     
     if(leftSpeed == 0 or rightSpeed == 0):
-        LEFT_WHEEL.set_power(10)
-        RIGHT_WHEEL.set_power(10)
+        LEFT_WHEEL.set_power(12)
+        RIGHT_WHEEL.set_power(12)
+        sleep(0.1)
 
     if direction == "right":
         RIGHT_WHEEL.set_power(-rightSpeed)
@@ -73,7 +75,7 @@ def turn(direction: str, delay: float, debug=False):
 
 # <-- IMPORT THESE FUNCTIONS TO INTEGRATION -->
 def getFrontColor() -> str:
-    # sleep(0.1)
+    # sleep(0.01)
     frontRGB = FRONT_SENSOR.get_rgb()
     frontColor = detects_RGB(frontRGB, MAP_COLORS)
     return frontColor
@@ -101,8 +103,17 @@ def slightTurn(direction:str, delay:float, debug=False):
     if debug:
         print(f'Turning slightly right (delay={delay}))')
     turn(direction, delay)
+    
+def betterTurn(direction:str, debug=False):
+    currentSpeed = abs(LEFT_WHEEL.get_power())
+    if currentSpeed < 10:
+        currentSpeed = 16
+        goStraight(currentSpeed)
+    delay = 2.1*exp(-7.5*10**-2*currentSpeed)+0
+    turn(direction=direction, delay=delay, debug=debug)
+    
 
-def turnAround(power=50, timeDelay=0.9):
+def turnAround(power=30, timeDelay=2, returning=False):
     """
     ~ Small action ~
     When Waddl-E sees YELLOW, it turns around to reload (second trip).
@@ -118,6 +129,14 @@ def turnAround(power=50, timeDelay=0.9):
     # direction = random.choice(['left', 'right'])
     direction = 'left'
     turn(direction=direction, delay=timeDelay)
+    while True:
+        goStraight(10)
+        if getFrontColor() == 'red':
+            turn('right' if returning else 'left', 0.03)
+        elif getFrontColor() == 'blue':
+            turn('left' if returning else 'right', 0.03)
+        else:
+            break
     stop()
     
     
