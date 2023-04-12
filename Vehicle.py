@@ -113,7 +113,7 @@ def betterTurn(direction:str, debug=False):
     turn(direction=direction, delay=delay, debug=debug)
     
 
-def turnAround(power=30, timeDelay=1.6, returning=False):
+def turnAround(power=30, timeDelay=2, returning=False):
     """
     ~ Small action ~
     When Waddl-E sees YELLOW, it turns around to reload (second trip).
