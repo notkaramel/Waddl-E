@@ -64,6 +64,8 @@ def WaddlEGoesNormally():
                 print("Terminate program suddenly")
             WaddleMain()
         frontColor = getFrontColor()
+        if DEBUG:
+            print(frontColor)
         
         if REMAINING_CUBES == 0:
             print("YAY! Waddl-E has finished her job.\nNow she will return to the Loading Bay")

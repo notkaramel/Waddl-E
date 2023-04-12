@@ -113,7 +113,7 @@ def deliverCube(color:str) -> bool:
     leverAngle = 80
     
     trayDPS = 500
-    trayAngle = 123
+    trayAngle = 120
     
     Delivered = False
     if rollTrayToCube(color=color, trayDPS=trayDPS, trayAngle=trayAngle):
