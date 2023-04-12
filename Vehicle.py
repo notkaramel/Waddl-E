@@ -61,6 +61,7 @@ def turn(direction: str, delay: float, debug=False):
     if(leftSpeed == 0 or rightSpeed == 0):
         LEFT_WHEEL.set_power(10)
         RIGHT_WHEEL.set_power(10)
+        sleep(0.02)
 
     if direction == "right":
         RIGHT_WHEEL.set_power(-rightSpeed)
@@ -74,7 +75,7 @@ def turn(direction: str, delay: float, debug=False):
 
 # <-- IMPORT THESE FUNCTIONS TO INTEGRATION -->
 def getFrontColor() -> str:
-    sleep(0.01)
+    # sleep(0.01)
     frontRGB = FRONT_SENSOR.get_rgb()
     frontColor = detects_RGB(frontRGB, MAP_COLORS)
     return frontColor
