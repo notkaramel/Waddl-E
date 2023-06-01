@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from Delivery import ZONE_COLORS, getSideColor, deliverCube, resetRack
+from subsystem.Delivery import getSideColor, deliverCube, resetRack
 
 if '__main__' == __name__:
     try:

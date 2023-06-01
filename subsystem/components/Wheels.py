@@ -3,19 +3,20 @@
 # Author: Antoine Phan @notkaramel
 
 from utils.brick import Motor
-from time import sleep
 
 LEFT_WHEEL = Motor("A")
 RIGHT_WHEEL = Motor("D")
 
 POWER_LIMIT = 80    # Power limit: up to 100 [%]
 
-def run(motor:Motor, power=50):
+
+def run(motor: Motor, power=50):
     """
     Use for `vehicle.py`
     Make right wheel go forward or backward at a certain speed.
     """
     motor.set_power(power)
+
 
 def stopMotor(motor: Motor):
     """
@@ -23,8 +24,3 @@ def stopMotor(motor: Motor):
     Stop a motor
     """
     motor.set_power(0)
-
-
-
-
-

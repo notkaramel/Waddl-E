@@ -9,6 +9,7 @@ SPEED_LIMIT = 1560  # [Degree per second] up to 1560dps
 LEVER = Motor("C")
 TRAY_ROLLER = Motor("B")
 
+
 def swingLever(dps=600, delay=1, angle=90):
     """
     Use for `delivery.py`
@@ -20,6 +21,7 @@ def swingLever(dps=600, delay=1, angle=90):
     LEVER.set_position_relative(angle)
     sleep(delay)
 
+
 def rollTray(dps=500, delay=2, angle=120):
     """
     Use for `delivery.py`
@@ -28,6 +30,7 @@ def rollTray(dps=500, delay=2, angle=120):
     TRAY_ROLLER.set_dps(dps)
     TRAY_ROLLER.set_position_relative(angle)
     sleep(delay)
+
 
 def readyToDeliver():
     return READY_BUTTON.is_pressed()

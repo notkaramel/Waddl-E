@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from time import sleep
-from ColorDetection import detects_RGB, SIDE_SENSOR, FRONT_SENSOR, AVAILABLE_COLORS
+from units.ColorDetection import detects_RGB
+from units.ColorDetection import SIDE_SENSOR, FRONT_SENSOR, AVAILABLE_COLORS
 from utils.brick import wait_ready_sensors
 
 
@@ -25,10 +26,12 @@ def test_color_detection():
     while True:
         frontRGB = FRONT_SENSOR.get_rgb()
         sideRGB = SIDE_SENSOR.get_rgb()
-        print(f"Front: \t{frontRGB} \t{detects_RGB(frontRGB, AVAILABLE_COLORS)}")
+        print(
+            f"Front: \t{frontRGB} \t{detects_RGB(frontRGB, AVAILABLE_COLORS)}")
         # test(FRONT_SENSOR.get_rgb())
         print(f"Side: \t{sideRGB} \t{detects_RGB(sideRGB, AVAILABLE_COLORS)}")
         # test(SIDE_SENSOR.get_rgb())
         sleep(0.75)
+
 
 test_color_detection()

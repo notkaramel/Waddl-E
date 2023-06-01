@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from math import exp
-from Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
-from ColorDetection import FRONT_SENSOR, detects_RGB, Color
+from components.Wheels import RIGHT_WHEEL, LEFT_WHEEL, run, stopMotor
+from components.ColorDetection import FRONT_SENSOR, detects_RGB, Color
 from time import sleep
 
 """
@@ -11,25 +11,28 @@ Define map colors
 MAP_COLORS_STR = ['white', 'blue', 'red', 'green', 'yellow']
 MAP_COLORS = [Color(c) for c in MAP_COLORS_STR]
 
+
 def go(power=50):
     """
-    ~ Small action ~ 
+    ~ Small action ~
     Waddl-E just go straight
     """
     run(RIGHT_WHEEL, power)
     run(LEFT_WHEEL, power)
 
+
 def stop():
     """
-    ~ Small action ~ 
+    ~ Small action ~
     Waddl-E stops
     """
     stopMotor(RIGHT_WHEEL)
     stopMotor(LEFT_WHEEL)
 
+
 def pause(pauseDelay: float, afterPauseDelay: float = 0.5):
     """
-    ~ Small action ~ 
+    ~ Small action ~
     Waddl-E sees green, she stops for pauseDelay seconds
     then she goes straight for afterPauseDelay seconds to make sure she is not stuck on green
     """
@@ -40,10 +43,11 @@ def pause(pauseDelay: float, afterPauseDelay: float = 0.5):
     run(LEFT_WHEEL, leftPower_temp)
     run(RIGHT_WHEEL, rightPower_temp)
     sleep(afterPauseDelay)
-                
+
+
 def turn(direction: str, delay: float, debug=False):
     """
-    ~ Small action, but a bit complex ~ 
+    ~ Small action, but a bit complex ~
     The method turns the system base on its direction and time delay
 
     @params:
@@ -51,14 +55,14 @@ def turn(direction: str, delay: float, debug=False):
     - delay (float): [in seconds] the system will turn for a time delay in seconds
     - debug (bool, optional): Print turning direction and delay. Defaults to False.
     """
-        
+
     if debug:
         print(f'Vehicle will turn {direction} for {delay}')
-    
-    leftSpeed = LEFT_WHEEL.get_power()    
+
+    leftSpeed = LEFT_WHEEL.get_power()
     rightSpeed = RIGHT_WHEEL.get_power()
-    
-    if(leftSpeed == 0 or rightSpeed == 0):
+
+    if (leftSpeed == 0 or rightSpeed == 0):
         LEFT_WHEEL.set_power(12)
         RIGHT_WHEEL.set_power(12)
         sleep(0.1)
@@ -79,9 +83,9 @@ def getFrontColor() -> str:
     frontRGB = FRONT_SENSOR.get_rgb()
     frontColor = detects_RGB(frontRGB, MAP_COLORS)
     return frontColor
-    
 
-def goStraight(power=30, debug=False): # speed in %
+
+def goStraight(power=30, debug=False):  # speed in %
     """
     When Waddl-E sees WHITE, it goes.
     The function uses go()
@@ -90,7 +94,8 @@ def goStraight(power=30, debug=False): # speed in %
         print(f'Going straight at {power}% speed.')
     go(power)
 
-def slightTurn(direction:str, delay:float, debug=False):
+
+def slightTurn(direction: str, delay: float, debug=False):
     """
     When Waddl-E sees BLUE, it turns slightly to the right.
     When Waddl-E sees RED, it turns slightly to the left.
@@ -99,19 +104,20 @@ def slightTurn(direction:str, delay:float, debug=False):
     - direction (str): "left" or "right"
     - delay (float): [in seconds] the system will turn for a time delay in seconds
     """
-    
+
     if debug:
         print(f'Turning slightly right (delay={delay}))')
     turn(direction, delay)
-    
-def betterTurn(direction:str, debug=False):
+
+
+def betterTurn(direction: str, debug=False):
     currentSpeed = abs(LEFT_WHEEL.get_power())
     if currentSpeed < 10:
         currentSpeed = 16
         goStraight(currentSpeed)
     delay = 2.1*exp(-7.5*10**-2*currentSpeed)+0
     turn(direction=direction, delay=delay, debug=debug)
-    
+
 
 def turnAround(power=30, timeDelay=2, returning=False):
     """
@@ -121,7 +127,7 @@ def turnAround(power=30, timeDelay=2, returning=False):
     @param:
     - power [%]: vehicle power level
     - timeDelay [s]: delay time for the turning motion
-    
+
     Default values are taken from the tests for optimal motions.
     """
     go(power=power)
@@ -138,5 +144,3 @@ def turnAround(power=30, timeDelay=2, returning=False):
         else:
             break
     stop()
-    
-    

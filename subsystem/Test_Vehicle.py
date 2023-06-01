@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
-from Button import STOP_BUTTON
-from Vehicle import *
+from subsystem.components.Button import STOP_BUTTON
+from subsystem.Vehicle import FRONT_SENSOR, detects_RGB, MAP_COLORS
+from subsystem.Vehicle import goStraight, slightTurn, turnAround, pause, run
+from time import sleep
+
 
 def GoByColor():
-    print(f'Waddl-E is running...')
+    print('Waddl-E is running...')
     old_color = None
     while True:
         if STOP_BUTTON.is_pressed():
@@ -13,9 +16,9 @@ def GoByColor():
         front_rgb = FRONT_SENSOR.get_rgb()
         frontColor = detects_RGB(front_rgb, MAP_COLORS)
         print(f'FR: {front_rgb} \t{frontColor}\t OLD: {old_color}')
-        
+
         if frontColor == 'None':
-            print(f'None detected')
+            print('None detected')
             goStraight(power=18)
             sleep(0.1)
         elif frontColor == 'white':
@@ -25,17 +28,19 @@ def GoByColor():
             slightTurn("left", 0.4)
         elif frontColor == "blue":
             slightTurn("right", 0.4)
-        elif frontColor == "green": # Delivering
-            pause(pauseDelay=1, afterPauseDelay=0.2) 
-        elif frontColor == "yellow": # Reloading
+        elif frontColor == "green":  # Delivering
+            pause(pauseDelay=1, afterPauseDelay=0.2)
+        elif frontColor == "yellow":  # Reloading
             turnAround()
 
-        if frontColor != None:
-            old_color = frontColor 
+        if frontColor is not None:
+            old_color = frontColor
+
 
 def main():
-    mode = int(input("\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\n\t[4] Turn Around motion\nSelect testing mode [1/2/3]: "))
-
+    mode = int(input(
+        "\t[1] Basic motions\n\t[2] Turning motions\n\t[3] Map Navigation\n\t\
+            [4] Turn Around motion\nSelect testing mode [1/2/3]: "))
 
     if mode == 1:
         sp = int(input("Speed (+: clockwise, -: counter-clockwise): "))
@@ -56,7 +61,7 @@ def main():
 
         go(sp)
         sleep(2)
-        
+
         go(0)
         sleep(1)
         print("returning...")
@@ -74,11 +79,11 @@ def main():
     else:
         print("Unrecognize mode")
 
+
 # main method to test things out
-if __name__=='__main__':
+if __name__ == '__main__':
     try:
         while True:
             main()
     except KeyboardInterrupt:
         exit()
-
