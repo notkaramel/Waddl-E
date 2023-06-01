@@ -49,8 +49,7 @@ Consulting for software: Adam Corbier
 - The wheels will turn the system using spinning motion around itself, rather than pivotal rotation movement.
 
 - List of functions (can be imported from `Wheels.py`)
-
-```python
+```py
 # Runs a motor at a power level (-100 to 100). Default power level is 50 [%]
 run(motor: Motor, power:int)
 
@@ -65,6 +64,7 @@ stop(motor: Motor)
 # Direction must be "left" or "right" string value, excluding the double quotes. Delay is a floating point number.
 turn(direction: str, delay:float)
 ```
+
 - Testing the wheels:
 	- [x] Basic movements (forward, backward, standstill)
 	- [x] Turning movements (turn left, turn right)
