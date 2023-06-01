@@ -18,12 +18,12 @@ Consulting for software: Adam Corbier
 # System level
 ├── WADDLE.py
 ├── subsystem
-|	# subsystem level
+│	# subsystem level
 │   ├── components
 │   │   # component level
 │   ├── Delivery.py
 │   ├── Vehicle.py
-│   │   | # unit level
+│   │   │ # unit level
 │   │   ├── utils # utility API
 │   │   │   ├── brick.py
 │   │   │   ├── ...
