@@ -15,51 +15,38 @@ Consulting for software: Adam Corbier
 
 ## File Structure
 ```shell
-├── Button.py							# (Unit) Buttons
-├── CollectColors.py					# (Unit) Collecting color data
-├── ColorDetection.py					# (Component) Color detection algorithm
-├── ColorTestData.md					# Color test data
-├── data								# Color data
-│   ├── color_data_blue_map.csv
-│   ├── ...
-├── Delivery.py							# (Subsystem) Delivery
-├── docs								# User's Requirement Documents
-├── LICENSE								# MIT License
-├── README.md							# Documentation for the project
-├── Test_ColorDetection.py				# (Component Test) Testing accuracy of color detection
-├── Test_Unloading.py					# (Component Test) Testing unloading mechanism
-├── Test_Vehicle.py						# (Subsystem Test) Testing vehicle subsystem
-├── Unloading.py						# (Component) Unloading mechanism
-├── utils								# The utils API
-│   ├── brick.py
-│   ├── ...
-├── Vehicle.py							# (Subsystem) Vehicle
-├── WADDLE.py							# (System) The final product
-└── Wheels.py							# (Unit) Basic motion for the wheels/motors
+# System level
+├── WADDLE.py
+├── subsystem
+|	# subsystem level
+│   ├── components
+│   │   # component level
+│   ├── Delivery.py
+│   ├── Vehicle.py
+│   │   | # unit level
+│   │   ├── utils # utility API
+│   │   │   ├── brick.py
+│   │   │   ├── ...
+│   │   ├── CollectColors.py
+│   │   ├── ColorDetection.py
+│   │   ├── Wheels.py
+│   │   ├── Button.py
+└───────└── Unloading.py
 ```
 
 ## System breakdown
-### Unit level
-- Define "Unit": Down to the most basic piece of hardware (e.g. motor, sensor, button)
-- Motor: testing of basic functions from the `utils.brick` API
-  - Testing `Motor.set_power(power)` for continuous movement
-	- `power` is a number from -100 to 100
-	- Positive `power` is for clockwise movement
-	- Negative `power` is for counter-clockwise movement
-- Color sensor: testing different modes, getting rgb values from the sensor
-- Unit files:
-	- `CollectColors.py`: 
-    	- Collecting data using the color sensor
-    	- Using color sensor to obtain rgb value of a selected color
-    	- Write the colected data into `./data/color_data_[color]`, where `[color]` is the selected color
-    	- Data will be used for color detection
-	- `Wheels.py`: controlling the wheels
+### A. System level: ***WADDLE***
+- The final system that will be run on the robot
 
-### Component level
-#### Wheels
-- Major design decisions:
-	- The wheels will turn the system using spinning motion around itself, rather than pivotal rotation movement.
-	- Tests will be implemented directly to the main method of the 
+### B. Subsystem level
+#### B.1. Vehicle
+- In charge of the movement of the robot
+#### B.2. Delivery
+- In charge of the delivery of the cubes to the designated area on the map
+
+### C. Component level
+#### C.1. Wheels
+- The wheels will turn the system using spinning motion around itself, rather than pivotal rotation movement.
 
 - List of functions (can be imported from `Wheels.py`)
 
@@ -82,7 +69,7 @@ turn(direction: str, delay:float)
 	- [x] Basic movements (forward, backward, standstill)
 	- [x] Turning movements (turn left, turn right)
 
-#### Color Detection
+#### C.2. Color Detection
 - Files: 
   - `ColorDetection.py`: color detection algorithm
 - Component testings
@@ -100,15 +87,30 @@ detects_RGB(input_RGB:list, availableColors:list[Color])
 # Sensors
 FRONT_SENSOR, SIDE_SENSOR
 ```
-#### Unloading
+#### C.3. Unloading
+- Implementation of the unloading mechanism
 
-### Subsystem level
-#### Vehicle
+### D. Unit level
+- Define "Unit": Down to the most basic piece of hardware (e.g. motor, sensor, button)
+- Motor: testing of basic functions from the `utils.brick` API
+  - Testing `Motor.set_power(power)` for continuous movement
+	- `power` is a number from -100 to 100
+	- Positive `power` is for clockwise movement
+	- Negative `power` is for counter-clockwise movement
+- Color sensor: testing different modes, getting rgb values from the sensor
+- Unit files:
+	- `CollectColors.py`: 
+    	- Collecting data using the color sensor
+    	- Using color sensor to obtain rgb value of a selected color
+    	- Write the colected data into `./data/color_data_[color]`, where `[color]` is the selected color
+    	- Data will be used for color detection
+	- `Wheels.py`: controlling the wheels
 
-#### Delivery
 
-### System level
-#### WADDLE
+
+
+
+
 
 
 
